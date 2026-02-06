@@ -5,10 +5,10 @@ import { Github } from "lucide-react";
 import { track } from "@vercel/analytics";
 
 const providerIcons = [
-  { Icon: CodexIcon, label: "Codex", color: "#74aa9c" },
-  { Icon: ClaudeIcon, label: "Claude", color: "#de7356" },
-  { Icon: CursorIcon, label: "Cursor", color: "#a0a0a0" },
-  { Icon: CopilotIcon, label: "Copilot", color: "#6e40c9" },
+  { Icon: CodexIcon, label: "Codex" },
+  { Icon: ClaudeIcon, label: "Claude" },
+  { Icon: CursorIcon, label: "Cursor" },
+  { Icon: CopilotIcon, label: "Copilot" },
 ];
 
 export function HeroContent() {
@@ -20,9 +20,7 @@ export function HeroContent() {
           className="text-5xl font-bold tracking-tight leading-[1.1]"
           style={{ fontFamily: "var(--font-syne)" }}
         >
-          You&apos;re about to hit your limit.
-          <br />
-          <span style={{ color: "var(--page-accent)" }}>Or are you?</span>
+          You&apos;re about to hit your limit. <span style={{ color: "var(--page-accent)" }}>Or are you?</span>
         </h1>
       </div>
 
@@ -38,9 +36,9 @@ export function HeroContent() {
 
       {/* Provider icons */}
       <div className="flex items-center gap-5 animate-fade-in-up stagger-3">
-        {providerIcons.map(({ Icon, label, color }) => (
+        {providerIcons.map(({ Icon, label }) => (
           <div key={label} className="flex items-center gap-2">
-            <Icon className="w-6 h-6" style={{ color }} />
+            <Icon className="w-6 h-6" style={{ color: "var(--page-fg-muted)" }} />
             <span
               className="text-sm font-medium"
               style={{ color: "var(--page-fg-muted)" }}

@@ -5,17 +5,17 @@ import { TrackedLink } from "@/components/tracked-link";
 import { CodexIcon, ClaudeIcon, CursorIcon, CopilotIcon } from "@/lib/icons";
 import { Github, Gauge, BarChart3, Zap, Puzzle } from "lucide-react";
 
-async function getVersion(): Promise<string> {
+async function getVersion(): Promise<string | null> {
   try {
     const res = await fetch(
       "https://github.com/robinebers/openusage/releases/latest/download/latest.json",
       { next: { revalidate: 86400 } }
     );
-    if (!res.ok) return "0.3.1";
+    if (!res.ok) return null;
     const data = await res.json();
-    return data.version || "0.3.1";
+    return data.version || null;
   } catch {
-    return "0.3.1";
+    return null;
   }
 }
 
@@ -36,7 +36,7 @@ export default async function Home() {
           </div>
 
           {/* Right: interactive panel prototype */}
-          <div className="flex-shrink-0 pt-4 animate-fade-in stagger-2 max-lg:hidden">
+          <div className="flex-shrink-0 pt-1 animate-fade-in stagger-2 max-lg:hidden">
             <Panel version={version} />
           </div>
         </div>
@@ -205,7 +205,7 @@ export default async function Home() {
           className="text-xs mt-4"
           style={{ color: "var(--page-fg-subtle)" }}
         >
-          Requires macOS 14+ &middot; v{version} &middot; MIT License
+          Requires macOS 14+{version ? <> &middot; v{version}</> : null} &middot; MIT License
         </p>
       </section>
 
@@ -217,10 +217,10 @@ export default async function Home() {
         >
           <div className="flex items-center gap-3">
             <div className="flex items-center gap-1.5">
-              <CodexIcon className="w-4 h-4" style={{ color: "#74aa9c" }} />
-              <ClaudeIcon className="w-4 h-4" style={{ color: "#de7356" }} />
-              <CursorIcon className="w-4 h-4" style={{ color: "#666" }} />
-              <CopilotIcon className="w-4 h-4" style={{ color: "#6e40c9" }} />
+              <CodexIcon className="w-4 h-4" style={{ color: "var(--page-fg-muted)" }} />
+              <ClaudeIcon className="w-4 h-4" style={{ color: "var(--page-fg-muted)" }} />
+              <CursorIcon className="w-4 h-4" style={{ color: "var(--page-fg-muted)" }} />
+              <CopilotIcon className="w-4 h-4" style={{ color: "var(--page-fg-muted)" }} />
             </div>
             <span
               className="text-xs"
@@ -228,7 +228,7 @@ export default async function Home() {
             >
               OpenUsage &middot; by{" "}
               <a
-                href="https://github.com/robinebers"
+                href="https://itsbyrob.in/youtube"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="transition-colors hover:text-white"
@@ -248,20 +248,6 @@ export default async function Home() {
             >
               GitHub
             </TrackedLink>
-            <span
-              className="text-xs"
-              style={{ color: "var(--page-fg-subtle)" }}
-            >
-              Inspired by{" "}
-              <a
-                href="https://github.com/steipete/CodexBar"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="transition-colors hover:text-white"
-              >
-                CodexBar
-              </a>
-            </span>
           </div>
         </div>
       </footer>

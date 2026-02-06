@@ -68,18 +68,42 @@ export function AppleIcon(props: IconProps) {
   );
 }
 
+type PixelTriplet = readonly [x: number, y: number, alphaByte: number];
+
+function base64ToBytes(b64: string): Uint8Array {
+  // Browser: atob. Server: Buffer.
+  if (typeof atob === "function") {
+    const bin = atob(b64);
+    const out = new Uint8Array(bin.length);
+    for (let i = 0; i < bin.length; i++) out[i] = bin.charCodeAt(i);
+    return out;
+  }
+  if (typeof Buffer !== "undefined") {
+    return Uint8Array.from(Buffer.from(b64, "base64"));
+  }
+  throw new Error("No base64 decoder available in this runtime.");
+}
+
+function decodePixelTriplets(b64: string): PixelTriplet[] {
+  const bytes = base64ToBytes(b64);
+  const out: PixelTriplet[] = [];
+  for (let i = 0; i < bytes.length; i += 3) {
+    out.push([bytes[i]!, bytes[i + 1]!, bytes[i + 2]!]);
+  }
+  return out;
+}
+
+const CONTROL_CENTER_PIXELS: PixelTriplet[] = decodePixelTriplets(
+  "AgAxAwC9BADlBQDlBgDlBwDlCADlCQDlCgDlCwDlDADlDQDlDgDlDwDlEADlEQDlEgDlEwDlFADlFQDlFgDaFwBwAQFDAgHiAwHlBAHlBQHkBgHPBwHMCAHMCQHMCgHMCwHMDAHMDQHMDgHMDwHMEAHMEQHMEgHMEwHMFAHdFQHlFgHlFwHlGAGdAAIQAQLcAgLlAwLdBAJlBQITBgIqBwIvCAIvCQIvCgIvCwIOFQI8FgK9FwLlGALlGQJoAAN7AQPlAgPlAwNFBANgBQPdBgPlBwPlCAPlCQPlCgPlCwPkDAOCFgMNFwPJGAPlGQPTAATAAQTlAgSyAwQsBATlBQTlBgTlBwTlCATlCQTlCgTlCwTlDATlDQRYFwReGATlGQTlAAXdAQXlAgWBAwVwBAXlBQXlBgXlBwXlCAXlCQXlCgXlCwXlDAXlDQWbFwUvGAXlGQXlAAbXAQblAgaJAwZjBAblBQblBgblBwblCAblCQblCgblCwblDAblDQaQFwY2GAblGQblAAexAQflAgfIAwcVBAfXBQflBgflBwflCAflCQflCgflCwflDAfkDQc0Fwd6GAflGQflAAhjAQjlAgjlAwh7BAgpBQijBgjQBwjVCAjWCQjWCgjTCwiyDAg/FggyFwjdGAjlGQi9AQnFAgnlAwnlBAmpBQlNBgkpBwkkCAkmCQkmCgkmCwkmDAkmDQkmDgkmDwknEAkoEQknEgkpEwkpFAk8FQmCFgneFwnlGAnlGQlAAQogAgrKAwrlBArlBQrlBgrlBwrlCArlCQrlCgrlCwrlDArlDQrlDgrlDwrlEArlEQrlEgrmEwrlFArlFQrmFgrlFwrjGApjAgsMAwt/BAvWBQvlBgvlBwvlCAvlCQvlCgvlCwvlDAvlDQvlDgvlDwvlEAvlEQvlEgvmEwvlFAvlFQvjFguoFws1BQwoBgw6Bww/CAxACQw/Cgw/Cww/DAxADQxADgxADwxAEAxCEQxAEgxCEwxAFAwzFQwTAw4aBA5gBQ6EBg6NBw6NCA6OCQ6OCg6PCw6PDA6PDQ6PDg6PDw6PEA6PEQ6PEg6QEw6PFA6LFQ51Fg45Ag+AAw/hBA/lBQ/lBg/lBw/lCA/lCQ/lCg/lCw/lDA/lDQ/lDg/lDw/lEA/mEQ/mEg/mEw/mFA/mFQ/mFg/mFw+2GA8mARCbAhDlAxDlBBDlBRDlBhDlBxDlCBDlCRDmChDmCxDlDBDlDRDlDhDlDxDXEBC9ERC8EhC8ExC8FBC+FRDYFhDmFxDmGBDTGRAjABFOARHlAhHlAxHlBBHlBRHlBhHlBxHlCBHlCRHlChHmCxHlDBHmDRHeDhFYFhFZFxHeGBHmGRGmABKqARLlAhLlAxLlBBLlBRLlBhLlBxLlCBLlCRLlChLmCxLlDBLmDRJgFxJiGBLmGRLmABPWARPlAhPlAxPlBBPlBRPmBhPlBxPlCBPlCRPlChPmCxPlDBPmDRMOFxMQGBPmGRPmABTeARTlAhTlAxTlBBTlBRTmBhTlBxTlCBTmCRTmChTlCxTmDBTjGBTjGRTmABXAARXlAhXlAxXlBBXlBRXmBhXlBxXlCBXmCRXmChXmCxXmDBXmDRU6FxU5GBXmGRXmABZ3ARblAhblAxbmBBbmBRbmBhblBxbmCBbmCRbmChbmCxbmDBbmDRa+DhYXFhYXFxa9GBbmGRbMABcQARfPAhfmAxflBBflBRfmBhfmBxfmCBfmCRfmChfmCxfmDBfmDRfmDhfXDxeJEBdsERdpEhdqExdpFBdrFReJFhfWFxfmGBfmGRdSARgpAhjLAxjmBBjmBRjmBhjmBxjmCBjmCRjmChjmCxjmDBjmDRjmDhjmDxjmEBjmERjmEhjmExjmFBjmFRjmFhjmFxjjGBhqAhkPAxlvBBm5BRnbBhnmBxnmCBnmCRnmChnmCxnmDBnmDRnmDhnmDxnmEBnmERnmEhnmExnmFBniFRnLFhmRFxkw"
+);
+
 export function WifiIcon(props: IconProps) {
-  /* macOS-style filled WiFi fan — 3 arcs + bottom dot */
+  /* Traced from macOS SF Symbol "wifi" (medium weight, 16× render + potrace) */
   return (
-    <svg viewBox="0 0 24 18" fill="currentColor" {...props}>
-      {/* Bottom dot */}
-      <circle cx="12" cy="16" r="2" />
-      {/* Arc 1 — smallest */}
-      <path d="M12 11a5.5 5.5 0 0 1 3.89 1.61l-1.42 1.42a3.49 3.49 0 0 0-4.94 0L8.11 12.61A5.5 5.5 0 0 1 12 11z" />
-      {/* Arc 2 — medium */}
-      <path d="M12 6.5a10 10 0 0 1 7.07 2.93l-1.41 1.41A7.99 7.99 0 0 0 12 8.5a7.99 7.99 0 0 0-5.66 2.34L4.93 9.43A10 10 0 0 1 12 6.5z" />
-      {/* Arc 3 — largest */}
-      <path d="M12 2a14.5 14.5 0 0 1 10.25 4.25L20.84 7.66A12.49 12.49 0 0 0 12 4 12.49 12.49 0 0 0 3.16 7.66L1.75 6.25A14.5 14.5 0 0 1 12 2z" />
+    <svg viewBox="80 254 4060 2672" fill="currentColor" {...props}>
+      <g transform="translate(0,3200) scale(0.1,-0.1)">
+        <path d="M20470 29259 c-3746 -99 -7561 -1082 -10915 -2811 -154 -80 -316 -165 -360 -190 -44 -25 -168 -94 -275 -153 -2355 -1298 -4391 -2956 -5914 -4815 -209 -255 -259 -527 -146 -800 57 -138 107 -197 490 -585 2019 -2044 1976 -2002 2092 -2068 207 -119 503 -126 721 -16 116 59 178 110 359 297 3959 4082 8897 6172 14582 6172 5602 0 10449 -1992 14337 -5890 l506 -508 94 -46 c273 -134 589 -102 839 87 78 58 2321 2288 2381 2367 235 307 217 659 -50 990 -1444 1793 -3553 3514 -5882 4800 -112 62 -260 144 -329 183 -69 38 -269 143 -445 233 -3718 1893 -7971 2862 -12085 2753z M20505 19970 c-4339 -167 -8462 -1973 -10997 -4820 -342 -383 -418 -520 -418 -750 0 -258 64 -359 495 -781 1798 -1759 2284 -2231 2337 -2272 272 -206 640 -202 932 11 34 25 219 203 411 397 2564 2582 6249 3767 9725 3129 2302 -422 4512 -1607 6135 -3288 371 -385 563 -468 878 -382 242 66 260 82 1497 1291 113 110 351 342 530 516 1078 1047 1022 984 1080 1213 74 295 -8 490 -382 911 -2491 2798 -6478 4576 -10798 4815 -251 14 -1154 20 -1425 10z M20815 10769 c-648 -28 -1600 -221 -2000 -405 -16 -7 -71 -29 -121 -48 -1088 -412 -2133 -1169 -2838 -2056 -177 -222 -225 -355 -199 -539 32 -216 105 -324 441 -649 459 -444 1538 -1490 1902 -1843 2130 -2069 2175 -2111 2510 -2315 433 -264 856 -247 1297 52 273 185 442 343 2248 2089 149 144 353 341 455 440 1131 1090 1568 1511 1688 1625 256 242 340 389 358 625 23 288 -105 496 -620 1011 -1361 1359 -3236 2096 -5121 2013z" />
+      </g>
     </svg>
   );
 }
@@ -99,18 +123,24 @@ export function BatteryIcon(props: IconProps) {
 }
 
 export function ControlCenterIcon(props: IconProps) {
-  /* macOS Control Center — two horizontal pill toggles, knobs at opposite ends.
-     Reference: user-provided screenshot showing two rounded capsules. */
   return (
-    <svg viewBox="0 0 20 14" fill="currentColor" {...props}>
-      {/* Top pill track */}
-      <rect x="0" y="0" width="20" height="6" rx="3" opacity="0.35" />
-      {/* Top pill knob — right side */}
-      <circle cx="17" cy="3" r="3" opacity="0.95" />
-      {/* Bottom pill track */}
-      <rect x="0" y="8" width="20" height="6" rx="3" opacity="0.35" />
-      {/* Bottom pill knob — left side */}
-      <circle cx="3" cy="11" r="3" opacity="0.95" />
+    <svg
+      viewBox="0 0 26 26"
+      fill="currentColor"
+      shapeRendering="crispEdges"
+      {...props}
+    >
+      {CONTROL_CENTER_PIXELS.map(([x, y, a], i) => (
+        <rect
+          key={i}
+          x={x}
+          y={y}
+          width="1"
+          height="1"
+          fill="currentColor"
+          fillOpacity={a / 255}
+        />
+      ))}
     </svg>
   );
 }
