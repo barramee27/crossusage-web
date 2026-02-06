@@ -1,5 +1,8 @@
+"use client";
+
 import { CodexIcon, ClaudeIcon, CursorIcon, CopilotIcon } from "@/lib/icons";
 import { Github } from "lucide-react";
+import { track } from "@vercel/analytics";
 
 const providerIcons = [
   { Icon: CodexIcon, label: "Codex", color: "#74aa9c" },
@@ -65,6 +68,7 @@ export function HeroContent() {
             backgroundColor: "var(--page-accent)",
             color: "#000",
           }}
+          onClick={() => track("hero_download_clicked")}
         >
           Download for macOS
         </a>
@@ -77,9 +81,10 @@ export function HeroContent() {
             border: "1px solid var(--page-border)",
             color: "var(--page-fg)",
           }}
+          onClick={() => track("hero_contribute_clicked")}
         >
           <Github className="w-4 h-4" />
-          View Source
+          Contribute
         </a>
       </div>
 

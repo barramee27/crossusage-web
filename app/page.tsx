@@ -1,6 +1,7 @@
 import { MenuBar } from "@/components/menu-bar";
 import { Panel } from "@/components/panel/panel";
 import { HeroContent } from "@/components/hero-content";
+import { TrackedLink } from "@/components/tracked-link";
 import { CodexIcon, ClaudeIcon, CursorIcon, CopilotIcon } from "@/lib/icons";
 import { Github, Gauge, BarChart3, Zap, Puzzle } from "lucide-react";
 
@@ -153,7 +154,8 @@ export default async function Home() {
               <TechBadge>QuickJS</TechBadge>
             </div>
           </div>
-          <a
+          <TrackedLink
+            event="view_on_github_clicked"
             href="https://github.com/robinebers/openusage"
             target="_blank"
             rel="noopener noreferrer"
@@ -165,7 +167,7 @@ export default async function Home() {
           >
             <Github className="w-4 h-4" />
             View on GitHub
-          </a>
+          </TrackedLink>
         </div>
       </section>
 
@@ -185,7 +187,8 @@ export default async function Home() {
           never have to guess your quota again.
         </p>
         <div className="flex items-center justify-center gap-4">
-          <a
+          <TrackedLink
+            event="cta_download_clicked"
             href="https://github.com/robinebers/openusage/releases/latest"
             target="_blank"
             rel="noopener noreferrer"
@@ -196,7 +199,7 @@ export default async function Home() {
             }}
           >
             Download for macOS
-          </a>
+          </TrackedLink>
         </div>
         <p
           className="text-xs mt-4"
@@ -235,7 +238,8 @@ export default async function Home() {
             </span>
           </div>
           <div className="flex items-center gap-4">
-            <a
+            <TrackedLink
+              event="footer_github_clicked"
               href="https://github.com/robinebers/openusage"
               target="_blank"
               rel="noopener noreferrer"
@@ -243,7 +247,7 @@ export default async function Home() {
               style={{ color: "var(--page-fg-subtle)" }}
             >
               GitHub
-            </a>
+            </TrackedLink>
             <span
               className="text-xs"
               style={{ color: "var(--page-fg-subtle)" }}

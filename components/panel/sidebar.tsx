@@ -3,6 +3,7 @@
 import type { ActiveView, ProviderId } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import { GaugeIcon, SettingsIcon, CodexIcon, ClaudeIcon, CursorIcon, CopilotIcon } from "@/lib/icons";
+import { track } from "@vercel/analytics";
 
 const providerNav: {
   id: ProviderId;
@@ -26,7 +27,10 @@ export function Sidebar({
       {/* Home / Overview */}
       <NavButton
         isActive={activeView === "overview"}
-        onClick={() => onNavigate("overview")}
+        onClick={() => {
+          track("panel_tab_clicked", { tab: "overview" });
+          onNavigate("overview");
+        }}
       >
         <GaugeIcon
           className={cn("w-6 h-6", activeView === "overview" ? "text-foreground" : "text-muted-foreground")}
@@ -38,7 +42,10 @@ export function Sidebar({
         <NavButton
           key={id}
           isActive={activeView === id}
-          onClick={() => onNavigate(id)}
+          onClick={() => {
+            track("panel_tab_clicked", { tab: id });
+            onNavigate(id);
+          }}
         >
           <Icon
             className="w-6 h-6"
@@ -47,18 +54,24 @@ export function Sidebar({
         </NavButton>
       ))}
 
-      {/* Copilot — visible but not clickable */}
-      <div className="w-full p-2.5 flex items-center justify-center">
+      {/* Copilot — visible but not navigable */}
+      <button
+        className="w-full p-2.5 flex items-center justify-center"
+        onClick={() => track("panel_tab_clicked", { tab: "copilot" })}
+      >
         <CopilotIcon className="w-6 h-6 text-muted-foreground" />
-      </div>
+      </button>
 
       {/* Spacer */}
       <div className="flex-1" />
 
-      {/* Settings (non-clickable) */}
-      <div className="w-full p-2.5 flex items-center justify-center">
+      {/* Settings — visible but not navigable */}
+      <button
+        className="w-full p-2.5 flex items-center justify-center"
+        onClick={() => track("panel_tab_clicked", { tab: "settings" })}
+      >
         <SettingsIcon className="w-6 h-6 text-muted-foreground opacity-40" />
-      </div>
+      </button>
     </div>
   );
 }

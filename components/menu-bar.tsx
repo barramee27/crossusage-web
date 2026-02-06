@@ -158,7 +158,7 @@ export function MenuBar() {
     >
       {/* Left: Apple icon + app name */}
       <div className="flex items-center gap-4">
-        <AppleIcon className="w-[11px] h-[13px] opacity-90" />
+        <AppleIcon className="w-[11px] h-[13px] -translate-y-[1px] opacity-90" />
         <span className="text-[13px] font-semibold opacity-90">Finder</span>
         <span className="text-[13px] opacity-60">File</span>
         <span className="text-[13px] opacity-60">Edit</span>
