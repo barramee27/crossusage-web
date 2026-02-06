@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { AppleIcon, ControlCenterIcon, WifiIcon } from "@/lib/icons";
 import { trayBarData } from "@/lib/mock-data";
 
-function TrayIcon() {
+function TrayIcon({ id = "tray-icon" }: { id?: string }) {
   const barWidth = 18;
   const barHeight = 18;
   const padding = 1.5;
@@ -17,7 +17,7 @@ function TrayIcon() {
 
   return (
     <svg
-      id="tray-icon"
+      id={id}
       width={barWidth}
       height={barHeight}
       viewBox={`0 0 ${barWidth} ${barHeight}`}
@@ -143,10 +143,10 @@ export function MenuBar() {
   );
 }
 
-export function MenuBarTray() {
+export function MenuBarTray({ trayIconId }: { trayIconId?: string } = {}) {
   return (
     <div className="flex items-center gap-[10px]">
-      <TrayIcon />
+      <TrayIcon id={trayIconId} />
       <WifiIcon className="h-[11px] w-auto opacity-85" />
       <BatteryIcon className="w-[24px] h-[11px] opacity-85" />
       <ControlCenterIcon className="h-[11px] w-auto opacity-85" />

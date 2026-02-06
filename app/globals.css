@@ -106,7 +106,7 @@
   --page-fg: #ededed;
   --page-fg-muted: #888888;
   --page-fg-subtle: #444444;
-  --page-accent: #ededed;
+  --page-accent: #BFFF00;
   --page-border: #222222;
 
   /* macOS menu bar */
@@ -170,14 +170,9 @@ body {
 .stagger-4 { animation-delay: 0.5s; }
 .stagger-5 { animation-delay: 0.65s; }
 
-/* ── Hero highlight (wavy underline) ── */
+/* ── Hero highlight ── */
 .hero-highlight {
-  text-decoration-line: underline;
-  text-decoration-style: wavy;
-  text-decoration-color: rgba(255, 255, 255, 0.4);
-  text-decoration-thickness: 2px;
-  text-underline-offset: 8px;
-  text-decoration-skip-ink: none;
+  color: var(--page-accent);
 }
 
 /* ── Selection ── */

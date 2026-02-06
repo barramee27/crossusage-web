@@ -1,6 +1,6 @@
 "use client";
 
-import { CodexIcon, ClaudeIcon, CursorIcon, CopilotIcon } from "@/lib/icons";
+import { CodexIcon, ClaudeIcon, CursorIcon, CopilotIcon, GaugeIcon } from "@/lib/icons";
 import { Github } from "lucide-react";
 import { track } from "@vercel/analytics";
 
@@ -13,20 +13,31 @@ const providerIcons = [
 
 export function HeroContent() {
   return (
-    <div className="flex flex-col justify-center gap-8 pt-24 pb-16 max-w-xl">
+    <div className="flex flex-col justify-center gap-6 lg:gap-8 pt-12 lg:pt-24 pb-16 max-w-xl">
+      {/* Logo */}
+      <div className="flex items-center gap-2 animate-fade-in-up">
+        <GaugeIcon className="w-5 h-5" style={{ color: "var(--page-fg)" }} />
+        <span
+          className="text-sm font-semibold tracking-tight"
+          style={{ color: "var(--page-fg)" }}
+        >
+          OpenUsage
+        </span>
+      </div>
+
       {/* Headline */}
       <div className="space-y-4 animate-fade-in-up stagger-1 text-pretty">
         <h1
-          className="text-5xl font-bold tracking-tight leading-[1.1]"
+          className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight leading-[1.1]"
           style={{ fontFamily: "var(--font-jetbrains-mono)" }}
         >
-          All Your <span className="hero-highlight">AI Coding Limits</span> In One Place
+          All Your <span style={{ color: "var(--page-accent)" }}>AI Coding Limits</span> In One Place
         </h1>
       </div>
 
       {/* Tagline */}
       <p
-        className="text-lg leading-relaxed animate-fade-in-up stagger-2"
+        className="text-sm sm:text-base lg:text-lg leading-relaxed animate-fade-in-up stagger-2"
         style={{ color: "var(--page-fg-muted)" }}
       >
         Burning through your subscriptions too fast? Paying for stuff you never use? Stop guessing. OpenUsage is free and open source.

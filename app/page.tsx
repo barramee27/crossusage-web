@@ -4,6 +4,7 @@ import { HeroContent } from "@/components/hero-content";
 import { TrackedLink } from "@/components/tracked-link";
 import { CodexIcon, ClaudeIcon, CursorIcon, CopilotIcon } from "@/lib/icons";
 import { Github, Gauge, BarChart3, Zap, Puzzle } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
 
 async function getVersion(): Promise<string | null> {
   try {
@@ -26,11 +27,14 @@ export default async function Home() {
     <div className="min-h-screen" style={{ background: "var(--page-bg)" }}>
       {/* ── Menu bar + hero wrapper (positioning context for panel) ── */}
       <div className="relative">
-        <MenuBar />
+        {/* Full macOS menu bar — desktop only */}
+        <div className="max-lg:hidden">
+          <MenuBar />
+        </div>
 
         {/* Hero: just the marketing content */}
         <section className="max-w-7xl mx-auto px-6 lg:px-12 lg:pr-[440px]">
-          <div className="min-h-[600px]">
+          <div className="lg:min-h-[600px]">
             <HeroContent />
           </div>
         </section>
@@ -40,11 +44,11 @@ export default async function Home() {
           <Panel version={version} />
         </div>
 
-        {/* Mobile panel: visible only below lg */}
-        <div className="lg:hidden flex flex-col items-center px-6 pb-12 animate-fade-in stagger-2">
-          {/* Mini tray bar */}
+        {/* Mobile: tray bar + panel below hero */}
+        <div className="lg:hidden flex flex-col items-center md:items-end px-3 md:px-12 pb-12 animate-fade-in stagger-2">
+          {/* Full-width tray bar, items right-aligned */}
           <div
-            className="w-full max-w-[400px] h-[28px] flex items-center justify-end px-4 rounded-t-xl select-none"
+            className="w-full h-[28px] flex items-center justify-end px-4 select-none"
             style={{
               background: "var(--bar-bg)",
               color: "var(--bar-fg)",
@@ -53,24 +57,24 @@ export default async function Home() {
               fontFamily: "system-ui, -apple-system, sans-serif",
             }}
           >
-            <MenuBarTray />
+            <MenuBarTray trayIconId="tray-icon-mobile" />
           </div>
-          {/* Inline panel */}
-          <Panel version={version} inline />
+          {/* Normal panel with arrow, flow-positioned */}
+          <Panel version={version} trayIconId="tray-icon-mobile" placement="flow" />
         </div>
       </div>
 
       {/* ── Features Section ── */}
-      <section className="max-w-7xl mx-auto px-6 lg:px-12 py-24">
+      <section className="max-w-7xl mx-auto px-6 lg:px-12 py-16 lg:py-24">
         <div className="mb-12">
           <h2
-            className="text-3xl font-bold tracking-tight text-pretty"
+            className="text-2xl lg:text-3xl font-bold tracking-tight text-pretty"
             style={{ fontFamily: "var(--font-jetbrains-mono)" }}
           >
             Never wonder again
           </h2>
           <p
-            className="mt-3 text-base max-w-lg"
+            className="mt-3 text-sm lg:text-base max-w-lg"
             style={{ color: "var(--page-fg-muted)" }}
           >
             Everything you need to build without token anxiety.
@@ -106,9 +110,9 @@ export default async function Home() {
       </section>
 
       {/* ── How It Works ── */}
-      <section className="max-w-7xl mx-auto px-6 lg:px-12 py-24">
+      <section className="max-w-7xl mx-auto px-6 lg:px-12 py-16 lg:py-24">
         <h2
-            className="text-3xl font-bold tracking-tight text-pretty mb-12"
+            className="text-2xl lg:text-3xl font-bold tracking-tight text-pretty mb-12"
             style={{ fontFamily: "var(--font-jetbrains-mono)" }}
           >
             Two minutes to peace of mind
@@ -141,9 +145,9 @@ export default async function Home() {
       </section>
 
       {/* ── Open Source ── */}
-      <section className="max-w-7xl mx-auto px-6 lg:px-12 py-24">
+      <section className="max-w-7xl mx-auto px-6 lg:px-12 py-16 lg:py-24">
         <div
-          className="rounded-2xl p-8 md:p-12 flex flex-col md:flex-row items-start md:items-center justify-between gap-8"
+          className="rounded-2xl p-6 md:p-12 flex flex-col md:flex-row items-start md:items-center justify-between gap-8"
           style={{
             border: "1px solid var(--page-border)",
             backgroundColor: "rgba(255,255,255,0.02)",
@@ -151,24 +155,24 @@ export default async function Home() {
         >
           <div className="space-y-3 max-w-lg">
             <h2
-            className="text-3xl font-bold tracking-tight text-pretty"
+            className="text-2xl lg:text-3xl font-bold tracking-tight text-pretty"
             style={{ fontFamily: "var(--font-jetbrains-mono)" }}
           >
             Read every line.
             </h2>
             <p
-              className="text-base leading-relaxed"
+              className="text-sm lg:text-base leading-relaxed"
               style={{ color: "var(--page-fg-muted)" }}
             >
               MIT licensed. Built with Tauri 2, React 19, and TypeScript. Plugins
               are just JavaScript. Write one, drop it in, done. Fork it, change it,
               ship your own provider by Friday.
             </p>
-            <div className="flex items-center gap-3 pt-2">
-              <TechBadge>Tauri 2</TechBadge>
-              <TechBadge>React 19</TechBadge>
-              <TechBadge>TypeScript</TechBadge>
-              <TechBadge>QuickJS</TechBadge>
+            <div className="flex flex-wrap items-center gap-2 sm:gap-3 pt-2">
+              <Badge variant="outline">Tauri 2</Badge>
+              <Badge variant="outline">React 19</Badge>
+              <Badge variant="outline">TypeScript</Badge>
+              <Badge variant="outline">QuickJS</Badge>
             </div>
           </div>
           <TrackedLink
@@ -189,15 +193,15 @@ export default async function Home() {
       </section>
 
       {/* ── Download CTA ── */}
-      <section className="max-w-7xl mx-auto px-6 lg:px-12 py-24 text-center">
+      <section className="max-w-7xl mx-auto px-6 lg:px-12 py-16 lg:py-24 text-center">
         <h2
-            className="text-4xl font-bold tracking-tight text-pretty mb-4"
+            className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-pretty mb-4"
             style={{ fontFamily: "var(--font-jetbrains-mono)" }}
           >
             Never get cut off by surprise.
         </h2>
         <p
-          className="text-base mb-8 max-w-md mx-auto"
+          className="text-sm lg:text-base mb-8 max-w-md mx-auto"
           style={{ color: "var(--page-fg-muted)" }}
         >
           Download OpenUsage for macOS. It&apos;s free, and you&apos;ll
@@ -349,17 +353,3 @@ const steps = [
   },
 ];
 
-function TechBadge({ children }: { children: React.ReactNode }) {
-  return (
-    <span
-      className="text-xs font-mono px-2 py-0.5 rounded"
-      style={{
-        color: "var(--page-fg-subtle)",
-        backgroundColor: "rgba(255,255,255,0.05)",
-        border: "1px solid var(--page-border)",
-      }}
-    >
-      {children}
-    </span>
-  );
-}
