@@ -33,12 +33,12 @@ export function HeroContent() {
       </p>
 
       {/* Provider icons */}
-      <div className="flex items-center gap-5 animate-fade-in-up stagger-3">
+      <div className="flex flex-wrap items-center gap-3 sm:gap-5 animate-fade-in-up stagger-3">
         {providerIcons.map(({ Icon, label }) => (
           <div key={label} className="flex items-center gap-2">
             <Icon className="w-6 h-6" style={{ color: "var(--page-fg-muted)" }} />
             <span
-              className="text-sm font-medium"
+              className="hidden sm:inline text-sm font-medium"
               style={{ color: "var(--page-fg-muted)" }}
             >
               {label}
@@ -54,12 +54,12 @@ export function HeroContent() {
       </div>
 
       {/* CTAs */}
-      <div className="flex items-center gap-4 animate-fade-in-up stagger-4">
+      <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 animate-fade-in-up stagger-4">
         <a
           href="https://github.com/robinebers/openusage/releases/latest"
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 px-6 py-3 rounded-lg text-sm font-semibold transition-all hover:brightness-110"
+          className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg text-sm font-semibold transition-all hover:brightness-110"
           style={{
             backgroundColor: "var(--page-accent)",
             color: "#000",
@@ -72,7 +72,7 @@ export function HeroContent() {
           href="https://github.com/robinebers/openusage"
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 px-6 py-3 rounded-lg text-sm font-semibold transition-colors hover:bg-white/10"
+          className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg text-sm font-semibold transition-colors hover:bg-white/10"
           style={{
             border: "1px solid var(--page-border)",
             color: "var(--page-fg)",

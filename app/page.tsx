@@ -1,4 +1,4 @@
-import { MenuBar } from "@/components/menu-bar";
+import { MenuBar, MenuBarTray } from "@/components/menu-bar";
 import { Panel } from "@/components/panel/panel";
 import { HeroContent } from "@/components/hero-content";
 import { TrackedLink } from "@/components/tracked-link";
@@ -35,9 +35,28 @@ export default async function Home() {
           </div>
         </section>
 
-        {/* Panel: absolutely positioned, aligned to tray icon */}
+        {/* Panel: absolutely positioned, aligned to tray icon (desktop) */}
         <div className="absolute top-[28px] right-0 max-lg:hidden animate-fade-in stagger-2">
           <Panel version={version} />
+        </div>
+
+        {/* Mobile panel: visible only below lg */}
+        <div className="lg:hidden flex flex-col items-center px-6 pb-12 animate-fade-in stagger-2">
+          {/* Mini tray bar */}
+          <div
+            className="w-full max-w-[400px] h-[28px] flex items-center justify-end px-4 rounded-t-xl select-none"
+            style={{
+              background: "var(--bar-bg)",
+              color: "var(--bar-fg)",
+              backdropFilter: "blur(30px)",
+              WebkitBackdropFilter: "blur(30px)",
+              fontFamily: "system-ui, -apple-system, sans-serif",
+            }}
+          >
+            <MenuBarTray />
+          </div>
+          {/* Inline panel */}
+          <Panel version={version} inline />
         </div>
       </div>
 

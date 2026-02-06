@@ -12,15 +12,17 @@ const ARROW_HALF_W = 7; // border-left/right on .tray-arrow
 
 interface PanelProps {
   version: string | null;
+  inline?: boolean;
 }
 
-export function Panel({ version }: PanelProps) {
+export function Panel({ version, inline }: PanelProps) {
   const [activeView, setActiveView] = useState<ActiveView>("overview");
   const panelRef = useRef<HTMLDivElement>(null);
   const [arrowRight, setArrowRight] = useState<number | null>(null);
   const [panelRight, setPanelRight] = useState<number | null>(null);
 
   const measure = useCallback(() => {
+    if (inline) return;
     const tray = document.getElementById("tray-icon");
     if (!tray) return;
 
@@ -41,9 +43,10 @@ export function Panel({ version }: PanelProps) {
     const panelRightEdge = viewportW - clampedRight;
     const arrowOffset = panelRightEdge - trayCenterX - ARROW_HALF_W;
     setArrowRight(arrowOffset);
-  }, []);
+  }, [inline]);
 
   useEffect(() => {
+    if (inline) return;
     // Measure after layout settles (fonts, CSS)
     requestAnimationFrame(measure);
     document.fonts.ready.then(measure);
@@ -58,12 +61,40 @@ export function Panel({ version }: PanelProps) {
       clearTimeout(timer);
       window.removeEventListener("resize", onResize);
     };
-  }, [measure]);
+  }, [inline, measure]);
 
   const activeProvider = activeView !== "overview"
     ? providers.find((p) => p.id === activeView)
     : null;
 
+  /* ── Inline mode: no arrow, no positioning, responsive width ── */
+  if (inline) {
+    return (
+      <div
+        className="panel rounded-b-xl overflow-hidden w-full max-w-[400px] bg-card border border-border shadow-lg"
+        style={{ fontFamily: "system-ui, -apple-system, BlinkMacSystemFont, sans-serif" }}
+      >
+        <div className="flex" style={{ maxHeight: "580px" }}>
+          <Sidebar activeView={activeView} onNavigate={setActiveView} />
+          <div className="flex-1 overflow-y-auto px-3 pt-2 pb-1.5 flex flex-col min-h-0">
+            <div className="flex-1">
+              {activeView === "overview" ? (
+                <Overview />
+              ) : activeProvider ? (
+                <ProviderCard
+                  provider={activeProvider}
+                  metrics={activeProvider.detailMetrics}
+                />
+              ) : null}
+            </div>
+            <PanelFooter version={version} />
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  /* ── Default mode: absolute-positioned with arrow ── */
   return (
     <div
       ref={panelRef}

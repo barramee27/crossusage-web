@@ -138,13 +138,19 @@ export function MenuBar() {
       </div>
 
       {/* Right: OpenUsage tray first, then system icons, then date/time */}
-      <div className="flex items-center gap-[10px]">
-        <TrayIcon />
-        <WifiIcon className="h-[11px] w-auto opacity-85" />
-        <BatteryIcon className="w-[24px] h-[11px] opacity-85" />
-        <ControlCenterIcon className="h-[11px] w-auto opacity-85" />
-        <TimeDisplay />
-      </div>
+      <MenuBarTray />
+    </div>
+  );
+}
+
+export function MenuBarTray() {
+  return (
+    <div className="flex items-center gap-[10px]">
+      <TrayIcon />
+      <WifiIcon className="h-[11px] w-auto opacity-85" />
+      <BatteryIcon className="w-[24px] h-[11px] opacity-85" />
+      <ControlCenterIcon className="h-[11px] w-auto opacity-85" />
+      <TimeDisplay />
     </div>
   );
 }
