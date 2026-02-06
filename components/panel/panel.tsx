@@ -18,17 +18,29 @@ export function Panel({ version }: PanelProps) {
   const [activeView, setActiveView] = useState<ActiveView>("overview");
   const panelRef = useRef<HTMLDivElement>(null);
   const [arrowRight, setArrowRight] = useState<number | null>(null);
+  const [panelRight, setPanelRight] = useState<number | null>(null);
 
   const measure = useCallback(() => {
     const tray = document.getElementById("tray-icon");
-    const panel = panelRef.current;
-    if (!tray || !panel) return;
+    if (!tray) return;
+
+    const PANEL_W = 400;
+    const MIN_RIGHT_PAD = 12;
 
     const trayRect = tray.getBoundingClientRect();
-    const panelRect = panel.getBoundingClientRect();
+    const viewportW = window.innerWidth;
     const trayCenterX = trayRect.left + trayRect.width / 2;
-    const offset = panelRect.right - trayCenterX - ARROW_HALF_W;
-    setArrowRight(offset);
+
+    // Ideal: center the panel under the tray icon
+    const idealRight = viewportW - trayCenterX - PANEL_W / 2;
+    // Clamp: never less than MIN_RIGHT_PAD from viewport edge
+    const clampedRight = Math.max(MIN_RIGHT_PAD, idealRight);
+    setPanelRight(clampedRight);
+
+    // Arrow always points at tray icon center, independent of clamping
+    const panelRightEdge = viewportW - clampedRight;
+    const arrowOffset = panelRightEdge - trayCenterX - ARROW_HALF_W;
+    setArrowRight(arrowOffset);
   }, []);
 
   useEffect(() => {
@@ -53,7 +65,11 @@ export function Panel({ version }: PanelProps) {
     : null;
 
   return (
-    <div ref={panelRef} className="panel flex flex-col items-end">
+    <div
+      ref={panelRef}
+      className="panel flex flex-col items-end pt-1"
+      style={{ marginRight: panelRight ?? 16 }}
+    >
       {/* Arrow / notch — dynamically aligned to the tray icon */}
       <div
         className="w-[400px] flex justify-end"

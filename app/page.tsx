@@ -24,30 +24,29 @@ export default async function Home() {
 
   return (
     <div className="min-h-screen" style={{ background: "var(--page-bg)" }}>
-      {/* ── macOS Menu Bar ── */}
-      <MenuBar />
+      {/* ── Menu bar + hero wrapper (positioning context for panel) ── */}
+      <div className="relative">
+        <MenuBar />
 
-      {/* ── Hero: marketing content + interactive panel ── */}
-      <section className="relative max-w-7xl mx-auto px-6 lg:px-12">
-        <div className="flex items-start justify-between gap-12 min-h-[600px]">
-          {/* Left: marketing */}
-          <div className="flex-1 min-w-0">
+        {/* Hero: just the marketing content */}
+        <section className="max-w-7xl mx-auto px-6 lg:px-12 lg:pr-[440px]">
+          <div className="min-h-[600px]">
             <HeroContent />
           </div>
+        </section>
 
-          {/* Right: interactive panel prototype */}
-          <div className="flex-shrink-0 pt-1 animate-fade-in stagger-2 max-lg:hidden">
-            <Panel version={version} />
-          </div>
+        {/* Panel: absolutely positioned, aligned to tray icon */}
+        <div className="absolute top-[28px] right-0 max-lg:hidden animate-fade-in stagger-2">
+          <Panel version={version} />
         </div>
-      </section>
+      </div>
 
       {/* ── Features Section ── */}
       <section className="max-w-7xl mx-auto px-6 lg:px-12 py-24">
         <div className="mb-12">
           <h2
-            className="text-3xl font-bold tracking-tight"
-            style={{ fontFamily: "var(--font-syne)" }}
+            className="text-3xl font-bold tracking-tight text-pretty"
+            style={{ fontFamily: "var(--font-jetbrains-mono)" }}
           >
             Never wonder again
           </h2>
@@ -55,7 +54,7 @@ export default async function Home() {
             className="mt-3 text-base max-w-lg"
             style={{ color: "var(--page-fg-muted)" }}
           >
-            Everything you need to stop guessing and start knowing.
+            Everything you need to build without token anxiety.
           </p>
         </div>
 
@@ -73,7 +72,7 @@ export default async function Home() {
                 className="w-5 h-5 mb-3"
                 style={{ color: "var(--page-accent)" }}
               />
-              <h3 className="text-sm font-semibold mb-1.5">
+              <h3 className="text-base font-bold text-pretty mb-1.5">
                 {feature.title}
               </h3>
               <p
@@ -90,10 +89,10 @@ export default async function Home() {
       {/* ── How It Works ── */}
       <section className="max-w-7xl mx-auto px-6 lg:px-12 py-24">
         <h2
-          className="text-3xl font-bold tracking-tight mb-12"
-          style={{ fontFamily: "var(--font-syne)" }}
-        >
-          Two minutes to peace of mind
+            className="text-3xl font-bold tracking-tight text-pretty mb-12"
+            style={{ fontFamily: "var(--font-jetbrains-mono)" }}
+          >
+            Two minutes to peace of mind
         </h2>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -102,14 +101,14 @@ export default async function Home() {
               <span
                 className="text-2xl font-bold tabular-nums flex-shrink-0"
                 style={{
-                  fontFamily: "var(--font-syne)",
+                  fontFamily: "var(--font-jetbrains-mono)",
                   color: "var(--page-fg-subtle)",
                 }}
               >
                 {String(i + 1).padStart(2, "0")}
               </span>
               <div>
-                <h3 className="text-sm font-semibold mb-1">{step.title}</h3>
+                <h3 className="text-base font-bold text-pretty mb-1">{step.title}</h3>
                 <p
                   className="text-sm leading-relaxed"
                   style={{ color: "var(--page-fg-muted)" }}
@@ -133,19 +132,18 @@ export default async function Home() {
         >
           <div className="space-y-3 max-w-lg">
             <h2
-              className="text-3xl font-bold tracking-tight"
-              style={{ fontFamily: "var(--font-syne)" }}
-            >
-              Read every line.
+            className="text-3xl font-bold tracking-tight text-pretty"
+            style={{ fontFamily: "var(--font-jetbrains-mono)" }}
+          >
+            Read every line.
             </h2>
             <p
               className="text-base leading-relaxed"
               style={{ color: "var(--page-fg-muted)" }}
             >
-              MIT licensed. Tauri 2, React 19, TypeScript. Plugins run in a
-              sandboxed QuickJS runtime &mdash; write one in JavaScript, drop
-              it in, done. Fork it, extend it, ship your own provider by
-              Friday.
+              MIT licensed. Built with Tauri 2, React 19, and TypeScript. Plugins
+              are just JavaScript. Write one, drop it in, done. Fork it, change it,
+              ship your own provider by Friday.
             </p>
             <div className="flex items-center gap-3 pt-2">
               <TechBadge>Tauri 2</TechBadge>
@@ -174,16 +172,16 @@ export default async function Home() {
       {/* ── Download CTA ── */}
       <section className="max-w-7xl mx-auto px-6 lg:px-12 py-24 text-center">
         <h2
-          className="text-4xl font-bold tracking-tight mb-4"
-          style={{ fontFamily: "var(--font-syne)" }}
-        >
-          Never get cut off by surprise.
+            className="text-4xl font-bold tracking-tight text-pretty mb-4"
+            style={{ fontFamily: "var(--font-jetbrains-mono)" }}
+          >
+            Never get cut off by surprise.
         </h2>
         <p
           className="text-base mb-8 max-w-md mx-auto"
           style={{ color: "var(--page-fg-muted)" }}
         >
-          Download OpenUsage for macOS. It&apos;s free &mdash; and you&apos;ll
+          Download OpenUsage for macOS. It&apos;s free, and you&apos;ll
           never have to guess your quota again.
         </p>
         <div className="flex items-center justify-center gap-4">
@@ -248,6 +246,36 @@ export default async function Home() {
             >
               GitHub
             </TrackedLink>
+            <TrackedLink
+              event="footer_youtube_clicked"
+              href="https://itsbyrob.in/youtube"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-xs transition-colors hover:text-white"
+              style={{ color: "var(--page-fg-subtle)" }}
+            >
+              YouTube
+            </TrackedLink>
+            <TrackedLink
+              event="footer_twitter_clicked"
+              href="https://itsbyrob.in/x"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-xs transition-colors hover:text-white"
+              style={{ color: "var(--page-fg-subtle)" }}
+            >
+              Twitter
+            </TrackedLink>
+            <TrackedLink
+              event="footer_newsletter_clicked"
+              href="https://itsbyrob.in/lab"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-xs transition-colors hover:text-white"
+              style={{ color: "var(--page-fg-subtle)" }}
+            >
+              Newsletter
+            </TrackedLink>
           </div>
         </div>
       </footer>
@@ -262,25 +290,25 @@ const features = [
     icon: Gauge,
     title: "Every tool, one glance",
     description:
-      "Cursor, Claude, Codex, Copilot — all your limits in a single panel. No more hunting through settings pages.",
+      "All your AI coding tools in one panel. No more digging through dashboards.",
   },
   {
     icon: BarChart3,
     title: "Always visible",
     description:
-      "Usage lives in your menu bar. You never have to open anything — just look up and know.",
+      "OpenUsage lives in your menu bar. Just look up and know where you stand.",
   },
   {
     icon: Zap,
     title: "Know before you run out",
     description:
-      "Pace tracking shows if you're burning too fast. Get ahead of the limit, not surprised by it.",
+      "See if you're using too much too fast. Stay ahead of your limits before it's too late.",
   },
   {
     icon: Puzzle,
     title: "Plugin-based",
     description:
-      "Every provider is a JS plugin. Write your own in an afternoon — don't wait for us.",
+      "Every provider is a plugin and open source, when things breaks, they get fixed fast.",
   },
 ];
 
@@ -288,17 +316,17 @@ const steps = [
   {
     title: "Download",
     description:
-      "One binary from GitHub Releases. No dependencies, no installer headaches.",
+      "One download from GitHub, zero terminals or setup fuss",
   },
   {
     title: "Sign in",
     description:
-      "OpenUsage picks up your existing Cursor, Claude, and Codex credentials automatically.",
+      "OpenUsage automatically finds your accounts like Cursor and Claude Code",
   },
   {
-    title: "Never guess again",
+    title: "Automated updates",
     description:
-      "Usage refreshes in the background. Your quota is always one glance away.",
+      "Your usage stats refresh in the background, and so does the app",
   },
 ];
 

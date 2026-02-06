@@ -13,14 +13,14 @@ const providerIcons = [
 
 export function HeroContent() {
   return (
-    <div className="flex flex-col justify-center gap-8 py-16 max-w-xl">
+    <div className="flex flex-col justify-center gap-8 pt-24 pb-16 max-w-xl">
       {/* Headline */}
-      <div className="space-y-4 animate-fade-in-up stagger-1">
+      <div className="space-y-4 animate-fade-in-up stagger-1 text-pretty">
         <h1
           className="text-5xl font-bold tracking-tight leading-[1.1]"
-          style={{ fontFamily: "var(--font-syne)" }}
+          style={{ fontFamily: "var(--font-jetbrains-mono)" }}
         >
-          You&apos;re about to hit your limit. <span style={{ color: "var(--page-accent)" }}>Or are you?</span>
+          All Your <span className="hero-highlight">AI Coding Limits</span> In One Place
         </h1>
       </div>
 
@@ -29,9 +29,7 @@ export function HeroContent() {
         className="text-lg leading-relaxed animate-fade-in-up stagger-2"
         style={{ color: "var(--page-fg-muted)" }}
       >
-        See your Cursor, Claude, Codex, and Copilot limits in the menu bar.
-        How much you&apos;ve used, how fast you&apos;re going, when it resets.
-        No account needed. Free and open source.
+        Burning through your subscriptions too fast? Paying for stuff you never use? Stop guessing. OpenUsage is free and open source.
       </p>
 
       {/* Provider icons */}
