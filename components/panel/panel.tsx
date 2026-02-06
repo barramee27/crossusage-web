@@ -87,12 +87,17 @@ export function Panel({ version, trayIconId = "tray-icon", placement = "absolute
     : null;
 
   const widthClass = isFlow ? "w-full max-w-[400px]" : "w-[400px]";
+  const measured = isFlow ? arrowRight != null : panelRight != null;
 
   return (
     <div
       ref={panelRef}
       className={`panel flex flex-col items-end pt-1${isFlow ? " w-full max-w-[400px]" : ""}`}
-      style={isFlow ? undefined : { marginRight: panelRight ?? 16 }}
+      style={{
+        ...(isFlow ? {} : { marginRight: panelRight ?? 16 }),
+        // Hide until JS has measured the correct position (avoids SSR flash)
+        visibility: measured ? "visible" : "hidden",
+      }}
     >
       {/* Arrow / notch — dynamically aligned to the tray icon */}
       <div

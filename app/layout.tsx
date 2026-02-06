@@ -9,22 +9,24 @@ const jetbrainsMono = JetBrains_Mono({
   display: "swap",
 });
 
+const title =
+  "OpenUsage - AI Limits Tracker for Cursor, Claude Code, Codex and more";
+const description =
+  "Never hit your AI limits by surprise. Know exactly where you stand without ever leaving your AI coding tool. Track Cursor, Claude Code, Codex, Copilot and more. Free and open source.";
+
 export const metadata: Metadata = {
-  title: "OpenUsage — Know Exactly How Much AI Quota You Have Left",
-  description:
-    "Never run out of AI quota by surprise. OpenUsage shows your Cursor, Claude, Codex, and Copilot limits in the macOS menu bar. Free and open source.",
+  title,
+  description,
   openGraph: {
-    title: "OpenUsage — Know Exactly How Much AI Quota You Have Left",
-    description:
-      "Never run out of AI quota by surprise. OpenUsage shows your Cursor, Claude, Codex, and Copilot limits in the macOS menu bar.",
+    title,
+    description,
     type: "website",
     url: "https://openusage.dev",
   },
   twitter: {
     card: "summary_large_image",
-    title: "OpenUsage — Know Exactly How Much AI Quota You Have Left",
-    description:
-      "Never run out of AI quota by surprise. OpenUsage shows your Cursor, Claude, Codex, and Copilot limits in the macOS menu bar.",
+    title,
+    description,
   },
 };
 

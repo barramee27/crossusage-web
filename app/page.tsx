@@ -165,7 +165,7 @@ export default async function Home() {
               style={{ color: "var(--page-fg-muted)" }}
             >
               Proudly open source. Built with Tauri, React, and TypeScript.
-              Jump in, fix a bug, add a provider &mdash; every contribution
+              Jump in, fix a bug, add a provider, every contribution
               makes it better for everyone.
             </p>
             <div className="flex flex-wrap items-center gap-2 sm:gap-3 pt-2">
@@ -205,7 +205,7 @@ export default async function Home() {
           style={{ color: "var(--page-fg-muted)" }}
         >
           Download OpenUsage for macOS. It&apos;s free, and you&apos;ll
-          never have to guess your quota again.
+          never have to guess your limits again.
         </p>
         <div className="flex items-center justify-center gap-4">
           <TrackedLink

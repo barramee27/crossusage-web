@@ -49,7 +49,7 @@ export function Sidebar({
         >
           <Icon
             className="w-6 h-6"
-            style={{ color: activeView === id ? brandColor : "var(--muted-foreground)" }}
+            style={{ color: brandColor }}
           />
         </NavButton>
       ))}
