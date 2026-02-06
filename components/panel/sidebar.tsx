@@ -1,6 +1,7 @@
 "use client";
 
 import type { ActiveView, ProviderId } from "@/lib/types";
+import { cn } from "@/lib/utils";
 import { GaugeIcon, SettingsIcon, CodexIcon, ClaudeIcon, CursorIcon, CopilotIcon } from "@/lib/icons";
 
 const providerNav: {
@@ -21,23 +22,14 @@ export function Sidebar({
   onNavigate: (view: ActiveView) => void;
 }) {
   return (
-    <div
-      className="w-12 flex flex-col items-center py-3 flex-shrink-0"
-      style={{
-        backgroundColor: "var(--sidebar-bg)",
-        borderRight: "1px solid var(--border)",
-      }}
-    >
+    <div className="w-12 flex flex-col items-center py-3 flex-shrink-0 bg-sidebar/30 border-r border-sidebar-border">
       {/* Home / Overview */}
       <NavButton
         isActive={activeView === "overview"}
         onClick={() => onNavigate("overview")}
       >
         <GaugeIcon
-          className="w-6 h-6"
-          style={{
-            color: activeView === "overview" ? "var(--foreground)" : "var(--muted-foreground)",
-          }}
+          className={cn("w-6 h-6", activeView === "overview" ? "text-foreground" : "text-muted-foreground")}
         />
       </NavButton>
 
@@ -50,19 +42,14 @@ export function Sidebar({
         >
           <Icon
             className="w-6 h-6"
-            style={{
-              color: activeView === id ? brandColor : "var(--muted-foreground)",
-            }}
+            style={{ color: activeView === id ? brandColor : "var(--muted-foreground)" }}
           />
         </NavButton>
       ))}
 
       {/* Copilot — visible but not clickable */}
       <div className="w-full p-2.5 flex items-center justify-center">
-        <CopilotIcon
-          className="w-6 h-6"
-          style={{ color: "var(--muted-foreground)" }}
-        />
+        <CopilotIcon className="w-6 h-6 text-muted-foreground" />
       </div>
 
       {/* Spacer */}
@@ -70,10 +57,7 @@ export function Sidebar({
 
       {/* Settings (non-clickable) */}
       <div className="w-full p-2.5 flex items-center justify-center">
-        <SettingsIcon
-          className="w-6 h-6 opacity-40"
-          style={{ color: "var(--muted-foreground)" }}
-        />
+        <SettingsIcon className="w-6 h-6 text-muted-foreground opacity-40" />
       </div>
     </div>
   );
@@ -91,17 +75,13 @@ function NavButton({
   return (
     <button
       onClick={onClick}
-      className="relative w-full p-2.5 flex items-center justify-center transition-colors"
-      style={{
-        backgroundColor: isActive ? "rgba(0,0,0,0.04)" : "transparent",
-      }}
+      className={cn(
+        "relative w-full p-2.5 flex items-center justify-center transition-colors",
+        isActive && "bg-accent"
+      )}
     >
-      {/* Active indicator — left bar */}
       {isActive && (
-        <span
-          className="absolute left-0 top-1.5 bottom-1.5 w-0.5 rounded-r-full"
-          style={{ backgroundColor: "var(--primary)" }}
-        />
+        <span className="absolute left-0 top-1.5 bottom-1.5 w-0.5 rounded-r-full bg-sidebar-primary" />
       )}
       {children}
     </button>

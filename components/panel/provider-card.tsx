@@ -1,4 +1,5 @@
 import type { Provider, MetricLine as MetricLineType } from "@/lib/types";
+import { Badge } from "@/components/ui/badge";
 import { MetricLine } from "./metric-line";
 
 export function ProviderCard({
@@ -12,21 +13,12 @@ export function ProviderCard({
     <div className="py-3">
       {/* Header: name + badge */}
       <div className="flex items-center justify-between mb-2">
-        <h3
-          className="text-lg font-semibold"
-          style={{ color: "var(--foreground)" }}
-        >
+        <h3 className="text-lg font-semibold text-foreground">
           {provider.name}
         </h3>
-        <span
-          className="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium max-w-[40%] truncate"
-          style={{
-            color: "var(--foreground)",
-            borderColor: "var(--border)",
-          }}
-        >
+        <Badge variant="outline" className="max-w-[40%] truncate">
           {provider.planBadge}
-        </span>
+        </Badge>
       </div>
 
       {/* Metric lines */}

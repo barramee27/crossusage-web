@@ -123,9 +123,10 @@ function formatTime(date: Date) {
 }
 
 function TimeDisplay() {
-  const [display, setDisplay] = useState(() => formatTime(new Date()));
+  const [display, setDisplay] = useState<string | null>(null);
 
   useEffect(() => {
+    setDisplay(formatTime(new Date()));
     const id = setInterval(() => {
       setDisplay(formatTime(new Date()));
     }, 60_000);
@@ -136,8 +137,9 @@ function TimeDisplay() {
     <span
       className="text-[13px] font-medium whitespace-nowrap"
       style={{ fontFamily: "system-ui, -apple-system, sans-serif" }}
+      suppressHydrationWarning
     >
-      {display}
+      {display ?? "\u00A0"}
     </span>
   );
 }
@@ -156,7 +158,7 @@ export function MenuBar() {
     >
       {/* Left: Apple icon + app name */}
       <div className="flex items-center gap-4">
-        <AppleIcon className="w-[13px] h-[16px] opacity-90" />
+        <AppleIcon className="w-[11px] h-[13px] opacity-90" />
         <span className="text-[13px] font-semibold opacity-90">Finder</span>
         <span className="text-[13px] opacity-60">File</span>
         <span className="text-[13px] opacity-60">Edit</span>

@@ -21,21 +21,21 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "OpenUsage — Track AI Coding Tool Usage in One Place",
+  title: "OpenUsage — Know Exactly How Much AI Quota You Have Left",
   description:
-    "A menu bar app that aggregates usage from Cursor, Claude Code, Codex, and more. Open source, plugin-based, built with Tauri.",
+    "Never run out of AI quota by surprise. OpenUsage shows your Cursor, Claude, Codex, and Copilot limits in the macOS menu bar. Free and open source.",
   openGraph: {
-    title: "OpenUsage — Track AI Coding Tool Usage in One Place",
+    title: "OpenUsage — Know Exactly How Much AI Quota You Have Left",
     description:
-      "A menu bar app that aggregates usage from Cursor, Claude Code, Codex, and more.",
+      "Never run out of AI quota by surprise. OpenUsage shows your Cursor, Claude, Codex, and Copilot limits in the macOS menu bar.",
     type: "website",
     url: "https://openusage.dev",
   },
   twitter: {
     card: "summary_large_image",
-    title: "OpenUsage — Track AI Coding Tool Usage in One Place",
+    title: "OpenUsage — Know Exactly How Much AI Quota You Have Left",
     description:
-      "A menu bar app that aggregates usage from Cursor, Claude Code, Codex, and more.",
+      "Never run out of AI quota by surprise. OpenUsage shows your Cursor, Claude, Codex, and Copilot limits in the macOS menu bar.",
   },
 };
 

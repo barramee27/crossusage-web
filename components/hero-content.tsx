@@ -17,9 +17,9 @@ export function HeroContent() {
           className="text-5xl font-bold tracking-tight leading-[1.1]"
           style={{ fontFamily: "var(--font-syne)" }}
         >
-          All your AI usage.
+          You&apos;re about to hit your limit.
           <br />
-          <span style={{ color: "var(--page-accent)" }}>One menu bar.</span>
+          <span style={{ color: "var(--page-accent)" }}>Or are you?</span>
         </h1>
       </div>
 
@@ -28,10 +28,9 @@ export function HeroContent() {
         className="text-lg leading-relaxed animate-fade-in-up stagger-2"
         style={{ color: "var(--page-fg-muted)" }}
       >
-        OpenUsage is a menu bar app that tracks your AI coding tool
-        subscriptions — Cursor, Claude Code, Codex, and more — all in one
-        place. Open source. Plugin-based. Built for developers who use
-        multiple tools.
+        See your Cursor, Claude, Codex, and Copilot limits in the menu bar.
+        How much you&apos;ve used, how fast you&apos;re going, when it resets.
+        No account needed. Free and open source.
       </p>
 
       {/* Provider icons */}
@@ -51,7 +50,7 @@ export function HeroContent() {
           className="text-sm"
           style={{ color: "var(--page-fg-subtle)" }}
         >
-          + more coming
+          + more
         </span>
       </div>
 
@@ -80,7 +79,7 @@ export function HeroContent() {
           }}
         >
           <Github className="w-4 h-4" />
-          Contribute
+          View Source
         </a>
       </div>
 
@@ -93,7 +92,7 @@ export function HeroContent() {
             backgroundColor: "rgba(255,255,255,0.04)",
           }}
         >
-          MIT Licensed &middot; Open Source &middot; macOS
+          Free &middot; Open Source &middot; macOS
         </span>
       </div>
     </div>

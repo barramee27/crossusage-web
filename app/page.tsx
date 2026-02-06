@@ -48,13 +48,13 @@ export default async function Home() {
             className="text-3xl font-bold tracking-tight"
             style={{ fontFamily: "var(--font-syne)" }}
           >
-            Built for how you work
+            Never wonder again
           </h2>
           <p
             className="mt-3 text-base max-w-lg"
             style={{ color: "var(--page-fg-muted)" }}
           >
-            Fast, focused, and out of the way until you need it.
+            Everything you need to stop guessing and start knowing.
           </p>
         </div>
 
@@ -92,7 +92,7 @@ export default async function Home() {
           className="text-3xl font-bold tracking-tight mb-12"
           style={{ fontFamily: "var(--font-syne)" }}
         >
-          Three steps. That&apos;s it.
+          Two minutes to peace of mind
         </h2>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -135,15 +135,16 @@ export default async function Home() {
               className="text-3xl font-bold tracking-tight"
               style={{ fontFamily: "var(--font-syne)" }}
             >
-              Open source. Always.
+              Read every line.
             </h2>
             <p
               className="text-base leading-relaxed"
               style={{ color: "var(--page-fg-muted)" }}
             >
-              MIT licensed. Built with Tauri 2, React 19, and TypeScript.
-              Plugins are JavaScript running in a sandboxed QuickJS runtime.
-              Extend it, fork it, make it yours.
+              MIT licensed. Tauri 2, React 19, TypeScript. Plugins run in a
+              sandboxed QuickJS runtime &mdash; write one in JavaScript, drop
+              it in, done. Fork it, extend it, ship your own provider by
+              Friday.
             </p>
             <div className="flex items-center gap-3 pt-2">
               <TechBadge>Tauri 2</TechBadge>
@@ -174,13 +175,14 @@ export default async function Home() {
           className="text-4xl font-bold tracking-tight mb-4"
           style={{ fontFamily: "var(--font-syne)" }}
         >
-          Ready to try it?
+          Never get cut off by surprise.
         </h2>
         <p
           className="text-base mb-8 max-w-md mx-auto"
           style={{ color: "var(--page-fg-muted)" }}
         >
-          Download OpenUsage for macOS. Cross-platform support coming soon.
+          Download OpenUsage for macOS. It&apos;s free &mdash; and you&apos;ll
+          never have to guess your quota again.
         </p>
         <div className="flex items-center justify-center gap-4">
           <a
@@ -268,45 +270,45 @@ export default async function Home() {
 const features = [
   {
     icon: Gauge,
-    title: "Unified dashboard",
+    title: "Every tool, one glance",
     description:
-      "All your AI tool usage in one panel. No more jumping between dashboards.",
+      "Cursor, Claude, Codex, Copilot — all your limits in a single panel. No more hunting through settings pages.",
   },
   {
     icon: BarChart3,
-    title: "Tray icon progress",
+    title: "Always visible",
     description:
-      "See usage at a glance — progress bars right in your menu bar, no click needed.",
+      "Usage lives in your menu bar. You never have to open anything — just look up and know.",
   },
   {
     icon: Zap,
-    title: "Pace tracking",
+    title: "Know before you run out",
     description:
-      "Know if you're burning through your quota too fast before it resets.",
+      "Pace tracking shows if you're burning too fast. Get ahead of the limit, not surprised by it.",
   },
   {
     icon: Puzzle,
-    title: "Plugin architecture",
+    title: "Plugin-based",
     description:
-      "Each provider is a JS plugin. Add new ones yourself — don't wait for updates.",
+      "Every provider is a JS plugin. Write your own in an afternoon — don't wait for us.",
   },
 ];
 
 const steps = [
   {
-    title: "Install the app",
+    title: "Download",
     description:
-      "Download from GitHub Releases or build from source. One binary, no dependencies.",
+      "One binary from GitHub Releases. No dependencies, no installer headaches.",
   },
   {
-    title: "Sign into your tools",
+    title: "Sign in",
     description:
-      "OpenUsage detects your existing credentials for Cursor, Claude, and Codex.",
+      "OpenUsage picks up your existing Cursor, Claude, and Codex credentials automatically.",
   },
   {
-    title: "Glance at the menu bar",
+    title: "Never guess again",
     description:
-      "Usage data refreshes automatically. Everything you need, always one click away.",
+      "Usage refreshes in the background. Your quota is always one glance away.",
   },
 ];
 
