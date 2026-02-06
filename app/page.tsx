@@ -164,9 +164,9 @@ export default async function Home() {
               className="text-sm lg:text-base leading-relaxed"
               style={{ color: "var(--page-fg-muted)" }}
             >
-              MIT licensed. Built with Tauri 2, React 19, and TypeScript. Plugins
-              are just JavaScript. Write one, drop it in, done. Fork it, change it,
-              ship your own provider by Friday.
+              Proudly open source. Built with Tauri, React, and TypeScript.
+              Jump in, fix a bug, add a provider &mdash; every contribution
+              makes it better for everyone.
             </p>
             <div className="flex flex-wrap items-center gap-2 sm:gap-3 pt-2">
               <Badge variant="outline">Tauri 2</Badge>

@@ -61,6 +61,9 @@ export function Panel({ version, trayIconId = "tray-icon", placement = "absolute
   // Measure before first paint so the panel doesn't flash at the wrong position
   useLayoutEffect(() => {
     measure();
+    // Retry after browser has done layout -- catches cases where
+    // CSS/fonts aren't applied yet during hydration
+    requestAnimationFrame(() => requestAnimationFrame(measure));
   }, [measure]);
 
   useEffect(() => {
