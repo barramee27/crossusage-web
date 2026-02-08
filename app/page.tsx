@@ -70,7 +70,7 @@ export default async function Home() {
         </section>
 
         {/* Panel: absolutely positioned, aligned to tray icon (desktop) */}
-        <div className="absolute top-[28px] right-0 max-lg:hidden animate-fade-in">
+        <div className="absolute top-[28px] right-0 max-lg:hidden">
           <Panel version={version} />
         </div>
 
@@ -88,7 +88,7 @@ export default async function Home() {
             <MenuBarTray trayIconId="tray-icon-mobile" />
           </div>
           {/* Normal panel with arrow, flow-positioned */}
-          <div className="px-3 md:px-12 w-full flex flex-col items-center md:items-end animate-fade-in">
+          <div className="px-3 md:px-12 w-full flex flex-col items-center md:items-end">
             <Panel version={version} trayIconId="tray-icon-mobile" placement="flow" />
           </div>
         </div>

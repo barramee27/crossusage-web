@@ -95,8 +95,9 @@ export function Panel({ version, trayIconId = "tray-icon", placement = "absolute
       className={`panel flex flex-col items-end pt-1${isFlow ? " w-full max-w-[400px]" : ""}`}
       style={{
         ...(isFlow ? {} : { marginRight: panelRight ?? 16 }),
-        // Hide until JS has measured the correct position (avoids SSR flash)
-        visibility: measured ? "visible" : "hidden",
+        // Fade in once JS has measured the correct position
+        opacity: measured ? 1 : 0,
+        transition: "opacity 0.5s ease-out",
       }}
     >
       {/* Arrow / notch — dynamically aligned to the tray icon */}
