@@ -88,18 +88,13 @@ function formatTime(date: Date) {
 }
 
 function TimeDisplay() {
-  const [display, setDisplay] = useState<string | null>(null);
+  const [display, setDisplay] = useState(() => formatTime(new Date()));
 
   useEffect(() => {
     const update = () => setDisplay(formatTime(new Date()));
-    const t = setTimeout(update, 0);
-    const id = setInterval(() => {
-      update();
-    }, 60_000);
-    return () => {
-      clearTimeout(t);
-      clearInterval(id);
-    };
+    update();
+    const id = setInterval(update, 60_000);
+    return () => clearInterval(id);
   }, []);
 
   return (
@@ -108,7 +103,7 @@ function TimeDisplay() {
       style={{ fontFamily: "system-ui, -apple-system, sans-serif" }}
       suppressHydrationWarning
     >
-      {display ?? "\u00A0"}
+      {display}
     </span>
   );
 }
@@ -118,10 +113,10 @@ export function MenuBar() {
     <div
       className="w-full h-[28px] flex items-center justify-between px-4 select-none"
       style={{
-        background: "var(--bar-bg)",
+        background: "rgba(0, 0, 0, 0.5)",
         color: "var(--bar-fg)",
-        backdropFilter: "blur(30px)",
-        WebkitBackdropFilter: "blur(30px)",
+        backdropFilter: "saturate(180%) blur(20px)",
+        WebkitBackdropFilter: "saturate(180%) blur(20px)",
         fontFamily: "system-ui, -apple-system, sans-serif",
       }}
     >

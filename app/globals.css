@@ -35,9 +35,9 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
-  --font-sans: var(--font-jetbrains-mono);
-  --font-display: var(--font-jetbrains-mono);
-  --font-mono: var(--font-jetbrains-mono);
+  --font-sans: var(--font-geist-sans), sans-serif;
+  --font-display: var(--font-geist-pixel-circle), monospace;
+  --font-mono: var(--font-geist-pixel-circle), monospace;
 }
 
 /* ── Panel theme (light — same as openusage app :root) ── */
@@ -76,7 +76,7 @@
   --radius: 0.625rem;
   --background: #0a0a0a;
   --foreground: #ededed;
-  --card: #0a0a0a;
+  --card: #111111;
   --card-foreground: #ededed;
   --popover: #0a0a0a;
   --popover-foreground: #ededed;
@@ -110,13 +110,16 @@
   --page-border: #222222;
 
   /* macOS menu bar */
-  --bar-bg: rgba(0, 0, 0, 0.82);
+  --bar-bg: rgba(30, 30, 30, 0.55);
   --bar-fg: rgba(255, 255, 255, 0.9);
 
   /* Provider brand colors */
   --brand-cursor: #000000;
   --brand-claude: #de7356;
   --brand-codex: #74aa9c;
+  --brand-copilot: #a855f7;
+  --brand-windsurf: #111111;
+  --brand-antigravity: #4285f4;
 
   /* Pace indicators */
   --pace-green: #22c55e;
@@ -127,7 +130,7 @@
 body {
   background: var(--page-bg);
   color: var(--page-fg);
-  font-family: var(--font-jetbrains-mono), monospace;
+  font-family: var(--font-geist-sans), sans-serif;
   overflow-x: hidden;
 }
 
@@ -153,22 +156,12 @@ body {
   border-bottom: 6px solid oklch(1 0 0);
 }
 
-/* ── Animations ── */
-@keyframes fade-in-up {
-  from { opacity: 0; transform: translateY(16px); }
-  to { opacity: 1; transform: translateY(0); }
-}
+/* ── Panel fade-in ── */
 @keyframes fade-in {
   from { opacity: 0; }
   to { opacity: 1; }
 }
-.animate-fade-in-up { animation: fade-in-up 0.6s ease-out both; }
-.animate-fade-in { animation: fade-in 0.5s ease-out both; }
-.stagger-1 { animation-delay: 0.1s; }
-.stagger-2 { animation-delay: 0.2s; }
-.stagger-3 { animation-delay: 0.35s; }
-.stagger-4 { animation-delay: 0.5s; }
-.stagger-5 { animation-delay: 0.65s; }
+.animate-fade-in { animation: fade-in 0.5s ease-out 0.2s both; }
 
 /* ── Hero highlight ── */
 .hero-highlight {

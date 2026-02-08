@@ -1,10 +1,18 @@
 import { MenuBar, MenuBarTray } from "@/components/menu-bar";
 import { Panel } from "@/components/panel/panel";
 import { HeroContent } from "@/components/hero-content";
+import { ProviderGrid } from "@/components/provider-grid";
+import { NoiseOverlay } from "@/components/noise-overlay";
 import { TrackedLink } from "@/components/tracked-link";
-import { CodexIcon, ClaudeIcon, CursorIcon, CopilotIcon } from "@/lib/icons";
 import { Github, Gauge, BarChart3, Zap, Puzzle } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+
+interface Contributor {
+  login: string;
+  avatar_url: string;
+  html_url: string;
+  contributions: number;
+}
 
 async function getVersion(): Promise<string | null> {
   try {
@@ -20,11 +28,33 @@ async function getVersion(): Promise<string | null> {
   }
 }
 
+async function getContributors(): Promise<Contributor[]> {
+  try {
+    const res = await fetch(
+      "https://api.github.com/repos/robinebers/openusage/contributors?per_page=30",
+      { next: { revalidate: 86400 } }
+    );
+    if (!res.ok) return [];
+    const data = await res.json();
+    // Filter out bots
+    return (data as Contributor[]).filter(
+      (c) => !c.login.includes("[bot]") && c.login !== "dependabot"
+    );
+  } catch {
+    return [];
+  }
+}
+
 export default async function Home() {
-  const version = await getVersion();
+  const [version, contributors] = await Promise.all([
+    getVersion(),
+    getContributors(),
+  ]);
 
   return (
-    <div className="min-h-screen" style={{ background: "var(--page-bg)" }}>
+    <div className="relative min-h-screen" style={{ background: "var(--page-bg)" }}>
+      <NoiseOverlay />
+
       {/* ── Menu bar + hero wrapper (positioning context for panel) ── */}
       <div className="relative">
         {/* Full macOS menu bar — desktop only */}
@@ -40,12 +70,12 @@ export default async function Home() {
         </section>
 
         {/* Panel: absolutely positioned, aligned to tray icon (desktop) */}
-        <div className="absolute top-[28px] right-0 max-lg:hidden animate-fade-in stagger-2">
+        <div className="absolute top-[28px] right-0 max-lg:hidden animate-fade-in">
           <Panel version={version} />
         </div>
 
         {/* Mobile: tray bar + panel below hero */}
-        <div className="lg:hidden flex flex-col items-center md:items-end px-3 md:px-12 pb-12 animate-fade-in stagger-2">
+        <div className="lg:hidden flex flex-col items-center md:items-end pb-12">
           {/* Full-width tray bar, items right-aligned */}
           <div
             className="w-full h-[28px] flex items-center justify-end px-4 select-none"
@@ -60,21 +90,26 @@ export default async function Home() {
             <MenuBarTray trayIconId="tray-icon-mobile" />
           </div>
           {/* Normal panel with arrow, flow-positioned */}
-          <Panel version={version} trayIconId="tray-icon-mobile" placement="flow" />
+          <div className="px-3 md:px-12 w-full flex flex-col items-center md:items-end animate-fade-in">
+            <Panel version={version} trayIconId="tray-icon-mobile" placement="flow" />
+          </div>
         </div>
       </div>
+
+      {/* ── Provider Grid ── */}
+      <ProviderGrid />
 
       {/* ── Features Section ── */}
       <section className="max-w-7xl mx-auto px-6 lg:px-12 py-16 lg:py-24">
         <div className="mb-12">
           <h2
-            className="text-2xl lg:text-3xl font-bold tracking-tight text-pretty"
-            style={{ fontFamily: "var(--font-jetbrains-mono)" }}
+            className="text-3xl lg:text-4xl font-bold tracking-tight text-pretty"
+            style={{ fontFamily: "var(--font-geist-pixel-circle)" }}
           >
-            Never wonder again
+            Never Wonder Again
           </h2>
           <p
-            className="mt-3 text-sm lg:text-base max-w-lg"
+            className="mt-3 text-sm lg:text-base max-w-lg text-pretty"
             style={{ color: "var(--page-fg-muted)" }}
           >
             Everything you need to build without token anxiety.
@@ -88,7 +123,7 @@ export default async function Home() {
               className="p-5 rounded-xl transition-colors"
               style={{
                 border: "1px solid var(--page-border)",
-                backgroundColor: "rgba(255,255,255,0.02)",
+                backgroundColor: "rgba(0, 0, 0, 0.2)",
               }}
             >
               <feature.icon
@@ -99,7 +134,7 @@ export default async function Home() {
                 {feature.title}
               </h3>
               <p
-                className="text-sm leading-relaxed"
+                className="text-sm leading-relaxed text-pretty"
                 style={{ color: "var(--page-fg-muted)" }}
               >
                 {feature.description}
@@ -112,10 +147,10 @@ export default async function Home() {
       {/* ── How It Works ── */}
       <section className="max-w-7xl mx-auto px-6 lg:px-12 py-16 lg:py-24">
         <h2
-            className="text-2xl lg:text-3xl font-bold tracking-tight text-pretty mb-12"
-            style={{ fontFamily: "var(--font-jetbrains-mono)" }}
-          >
-            Two minutes to peace of mind
+          className="text-3xl lg:text-4xl font-bold tracking-tight text-pretty mb-12"
+          style={{ fontFamily: "var(--font-geist-pixel-circle)" }}
+        >
+          Two Minutes to Peace of Mind
         </h2>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -124,7 +159,7 @@ export default async function Home() {
               <span
                 className="text-2xl font-bold tabular-nums flex-shrink-0"
                 style={{
-                  fontFamily: "var(--font-jetbrains-mono)",
+                  fontFamily: "var(--font-geist-pixel-circle)",
                   color: "var(--page-fg-subtle)",
                 }}
               >
@@ -133,7 +168,7 @@ export default async function Home() {
               <div>
                 <h3 className="text-base font-bold text-pretty mb-1">{step.title}</h3>
                 <p
-                  className="text-sm leading-relaxed"
+                  className="text-sm leading-relaxed text-pretty"
                   style={{ color: "var(--page-fg-muted)" }}
                 >
                   {step.description}
@@ -150,18 +185,18 @@ export default async function Home() {
           className="rounded-2xl p-6 md:p-12 flex flex-col md:flex-row items-start md:items-center justify-between gap-8"
           style={{
             border: "1px solid var(--page-border)",
-            backgroundColor: "rgba(255,255,255,0.02)",
+            backgroundColor: "rgba(0, 0, 0, 0.2)",
           }}
         >
           <div className="space-y-3 max-w-lg">
             <h2
-            className="text-2xl lg:text-3xl font-bold tracking-tight text-pretty"
-            style={{ fontFamily: "var(--font-jetbrains-mono)" }}
+            className="text-3xl lg:text-4xl font-bold tracking-tight text-pretty"
+            style={{ fontFamily: "var(--font-geist-pixel-circle)" }}
           >
-            Read every line.
+            Read Every Line.
             </h2>
             <p
-              className="text-sm lg:text-base leading-relaxed"
+              className="text-sm lg:text-base leading-relaxed text-pretty"
               style={{ color: "var(--page-fg-muted)" }}
             >
               Proudly open source. Built with Tauri, React, and TypeScript.
@@ -174,15 +209,46 @@ export default async function Home() {
               <Badge variant="outline">TypeScript</Badge>
               <Badge variant="outline">QuickJS</Badge>
             </div>
+            {contributors.length > 0 && (
+              <div className="flex flex-wrap items-center gap-3 pt-4">
+                <div className="flex -space-x-2">
+                  {contributors.map((c) => (
+                    <a
+                      key={c.login}
+                      href={c.html_url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      title={c.login}
+                    >
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        src={`${c.avatar_url}&s=64`}
+                        alt={c.login}
+                        width={32}
+                        height={32}
+                        className="rounded-full ring-2 ring-[var(--card)] hover:ring-[var(--page-accent)] transition-all"
+                      />
+                    </a>
+                  ))}
+                </div>
+                <span
+                  className="text-xs"
+                  style={{ color: "var(--page-fg-subtle)" }}
+                >
+                  {contributors.length} contributor{contributors.length !== 1 && "s"}
+                </span>
+              </div>
+            )}
           </div>
           <TrackedLink
             event="view_on_github_clicked"
             href="https://github.com/robinebers/openusage"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-lg text-sm font-semibold transition-colors hover:bg-white/10 flex-shrink-0"
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-lg text-sm font-semibold transition-colors hover:brightness-125 flex-shrink-0"
             style={{
               border: "1px solid var(--page-border)",
+              backgroundColor: "rgba(0, 0, 0, 0.2)",
               color: "var(--page-fg)",
             }}
           >
@@ -195,13 +261,13 @@ export default async function Home() {
       {/* ── Download CTA ── */}
       <section className="max-w-7xl mx-auto px-6 lg:px-12 py-16 lg:py-24 text-center">
         <h2
-            className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-pretty mb-4"
-            style={{ fontFamily: "var(--font-jetbrains-mono)" }}
+            className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-pretty mb-4"
+            style={{ fontFamily: "var(--font-geist-pixel-circle)" }}
           >
-            Never get cut off by surprise.
+            Never Get Cut Off by Surprise.
         </h2>
         <p
-          className="text-sm lg:text-base mb-8 max-w-md mx-auto"
+          className="text-sm lg:text-base mb-8 max-w-md mx-auto text-pretty"
           style={{ color: "var(--page-fg-muted)" }}
         >
           Download OpenUsage for macOS. It&apos;s free, and you&apos;ll
@@ -223,7 +289,7 @@ export default async function Home() {
           </TrackedLink>
         </div>
         <p
-          className="text-xs mt-4"
+          className="text-xs mt-4 text-pretty"
           style={{ color: "var(--page-fg-subtle)" }}
         >
           Requires macOS 14+{version ? <> &middot; v{version}</> : null} &middot; MIT License
@@ -237,12 +303,6 @@ export default async function Home() {
           style={{ borderTop: "1px solid var(--page-border)" }}
         >
           <div className="flex items-center gap-3">
-            <div className="flex items-center gap-1.5">
-              <CodexIcon className="w-4 h-4" style={{ color: "var(--page-fg-muted)" }} />
-              <ClaudeIcon className="w-4 h-4" style={{ color: "var(--page-fg-muted)" }} />
-              <CursorIcon className="w-4 h-4" style={{ color: "var(--page-fg-muted)" }} />
-              <CopilotIcon className="w-4 h-4" style={{ color: "var(--page-fg-muted)" }} />
-            </div>
             <span
               className="text-xs"
               style={{ color: "var(--page-fg-subtle)" }}
@@ -311,25 +371,25 @@ export default async function Home() {
 const features = [
   {
     icon: Gauge,
-    title: "Every tool, one glance",
+    title: "Every Tool, One Glance",
     description:
       "All your AI coding tools in one panel. No more digging through dashboards.",
   },
   {
     icon: BarChart3,
-    title: "Always visible",
+    title: "Always Visible",
     description:
       "OpenUsage lives in your menu bar. Just look up and know where you stand.",
   },
   {
     icon: Zap,
-    title: "Know before you run out",
+    title: "Know Before You Run Out",
     description:
       "See if you're using too much too fast. Stay ahead of your limits before it's too late.",
   },
   {
     icon: Puzzle,
-    title: "Plugin-based",
+    title: "Plugin-Based",
     description:
       "Every provider is a plugin and open source, when things breaks, they get fixed fast.",
   },
@@ -342,12 +402,12 @@ const steps = [
       "One download from GitHub, zero terminals or setup fuss",
   },
   {
-    title: "Sign in",
+    title: "Sign In",
     description:
       "OpenUsage automatically finds your accounts like Cursor and Claude Code",
   },
   {
-    title: "Automated updates",
+    title: "Automated Updates",
     description:
       "Your usage stats refresh in the background, and so does the app",
   },
