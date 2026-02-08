@@ -34,6 +34,8 @@ export function ProviderGrid() {
               className="flex flex-col items-center justify-center gap-2.5 py-8 px-4"
               style={{
                 backgroundColor: "rgba(0, 0, 0, 0.2)",
+                backdropFilter: "blur(20px)",
+                WebkitBackdropFilter: "blur(20px)",
                 borderRight: isLastCol ? "none" : "1px solid var(--page-border)",
                 borderBottom: isLastRow ? "none" : "1px solid var(--page-border)",
               }}

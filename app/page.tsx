@@ -52,9 +52,10 @@ export default async function Home() {
   ]);
 
   return (
-    <div className="relative min-h-screen" style={{ background: "var(--page-bg)" }}>
+    <div className="min-h-screen" style={{ background: "var(--page-bg)" }}>
       <NoiseOverlay />
 
+      <div className="relative z-[2]">
       {/* ── Menu bar + hero wrapper (positioning context for panel) ── */}
       <div className="relative">
         {/* Full macOS menu bar — desktop only */}
@@ -124,6 +125,8 @@ export default async function Home() {
               style={{
                 border: "1px solid var(--page-border)",
                 backgroundColor: "rgba(0, 0, 0, 0.2)",
+                backdropFilter: "blur(20px)",
+                WebkitBackdropFilter: "blur(20px)",
               }}
             >
               <feature.icon
@@ -186,6 +189,8 @@ export default async function Home() {
           style={{
             border: "1px solid var(--page-border)",
             backgroundColor: "rgba(0, 0, 0, 0.2)",
+            backdropFilter: "blur(20px)",
+            WebkitBackdropFilter: "blur(20px)",
           }}
         >
           <div className="space-y-3 max-w-lg">
@@ -249,6 +254,8 @@ export default async function Home() {
             style={{
               border: "1px solid var(--page-border)",
               backgroundColor: "rgba(0, 0, 0, 0.2)",
+              backdropFilter: "blur(20px)",
+              WebkitBackdropFilter: "blur(20px)",
               color: "var(--page-fg)",
             }}
           >
@@ -362,6 +369,7 @@ export default async function Home() {
           </div>
         </div>
       </footer>
+      </div>
     </div>
   );
 }

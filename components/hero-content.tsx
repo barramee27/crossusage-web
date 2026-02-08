@@ -86,6 +86,8 @@ export function HeroContent() {
           style={{
             border: "1px solid var(--page-border)",
             backgroundColor: "rgba(0, 0, 0, 0.2)",
+            backdropFilter: "blur(20px)",
+            WebkitBackdropFilter: "blur(20px)",
             color: "var(--page-fg)",
           }}
           onClick={() => track("hero_contribute_clicked")}
