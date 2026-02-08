@@ -121,7 +121,7 @@ export default async function Home() {
               className="p-5 rounded-xl transition-colors"
               style={{
                 border: "1px solid var(--page-border)",
-                backgroundColor: "rgba(0, 0, 0, 0.2)",
+                backgroundColor: "rgba(0, 0, 0, 0.15)",
                 backdropFilter: "blur(20px)",
                 WebkitBackdropFilter: "blur(20px)",
               }}
@@ -185,7 +185,7 @@ export default async function Home() {
           className="rounded-2xl p-6 md:p-12 flex flex-col md:flex-row items-start md:items-center justify-between gap-8"
           style={{
             border: "1px solid var(--page-border)",
-            backgroundColor: "rgba(0, 0, 0, 0.2)",
+            backgroundColor: "rgba(0, 0, 0, 0.15)",
             backdropFilter: "blur(20px)",
             WebkitBackdropFilter: "blur(20px)",
           }}
@@ -250,7 +250,7 @@ export default async function Home() {
             className="inline-flex items-center gap-2 px-6 py-3 rounded-lg text-sm font-semibold transition-colors hover:brightness-125 flex-shrink-0"
             style={{
               border: "1px solid var(--page-border)",
-              backgroundColor: "rgba(0, 0, 0, 0.2)",
+              backgroundColor: "rgba(0, 0, 0, 0.15)",
               backdropFilter: "blur(20px)",
               WebkitBackdropFilter: "blur(20px)",
               color: "var(--page-fg)",
