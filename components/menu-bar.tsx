@@ -115,8 +115,6 @@ export function MenuBar() {
       style={{
         background: "rgba(0, 0, 0, 0.5)",
         color: "var(--bar-fg)",
-        backdropFilter: "saturate(180%) blur(20px)",
-        WebkitBackdropFilter: "saturate(180%) blur(20px)",
         fontFamily: "system-ui, -apple-system, sans-serif",
       }}
     >
