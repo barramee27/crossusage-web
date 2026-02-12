@@ -7,6 +7,9 @@ import {
   AntigravityIcon,
   AmpIcon,
   KimiIcon,
+  FactoryIcon,
+  PerplexityIcon,
+  ZaiIcon,
 } from "./icons";
 
 export interface Plugin {
@@ -27,6 +30,9 @@ export const plugins: Plugin[] = [
   { id: "antigravity", name: "Antigravity", brandColor: "#4285F4", Icon: AntigravityIcon, featured: false },
   { id: "amp",         name: "Amp",         brandColor: "#F34E3F", Icon: AmpIcon,         featured: false },
   { id: "kimi",        name: "Kimi",        brandColor: "#000000", Icon: KimiIcon,        featured: false },
+  { id: "factory",     name: "Factory",     brandColor: "#020202", Icon: FactoryIcon,     featured: false },
+  { id: "perplexity",  name: "Perplexity",  brandColor: "#20808D", Icon: PerplexityIcon,  featured: false },
+  { id: "zai",         name: "Z.ai",        brandColor: "#2D2D2D", Icon: ZaiIcon,         featured: false },
 ];
 
 /**
@@ -37,5 +43,5 @@ export function displayColor(hex: string): string {
   const r = parseInt(hex.slice(1, 3), 16);
   const g = parseInt(hex.slice(3, 5), 16);
   const b = parseInt(hex.slice(5, 7), 16);
-  return (r + g + b) / 3 < 30 ? "#ffffff" : hex;
+  return (r + g + b) / 3 < 50 ? "#ffffff" : hex;
 }
