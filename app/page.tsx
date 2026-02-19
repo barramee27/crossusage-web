@@ -235,7 +235,7 @@ export default async function Home() {
                 </div>
                 <span
                   className="text-xs"
-                  style={{ color: "var(--page-fg-subtle)" }}
+                  style={{ color: "var(--page-fg-muted)" }}
                 >
                   {contributors.length} contributor{contributors.length !== 1 && "s"}
                 </span>
@@ -249,8 +249,8 @@ export default async function Home() {
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 px-6 py-3 rounded-lg text-sm font-semibold transition-colors hover:brightness-125 flex-shrink-0"
             style={{
-              border: "1px solid var(--page-border)",
-              backgroundColor: "rgba(0, 0, 0, 0.15)",
+              border: "1px solid var(--btn-secondary-border)",
+              backgroundColor: "var(--btn-secondary-bg)",
               backdropFilter: "blur(20px)",
               WebkitBackdropFilter: "blur(20px)",
               color: "var(--page-fg)",

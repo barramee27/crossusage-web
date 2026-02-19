@@ -56,7 +56,7 @@ export function HeroContent() {
         {moreCount > 0 && (
           <span
             className="text-sm"
-            style={{ color: "var(--page-fg-subtle)" }}
+            style={{ color: "var(--page-fg-muted)" }}
           >
             + {moreCount} more
           </span>
@@ -84,8 +84,8 @@ export function HeroContent() {
           rel="noopener noreferrer"
           className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg text-sm font-semibold transition-colors hover:brightness-125"
           style={{
-            border: "1px solid var(--page-border)",
-            backgroundColor: "rgba(0, 0, 0, 0.15)",
+            border: "1px solid var(--btn-secondary-border)",
+            backgroundColor: "var(--btn-secondary-bg)",
             backdropFilter: "blur(20px)",
             WebkitBackdropFilter: "blur(20px)",
             color: "var(--page-fg)",

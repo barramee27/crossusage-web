@@ -109,6 +109,10 @@
   --page-accent: #BFFF00;
   --page-border: #222222;
 
+  /* Secondary button */
+  --btn-secondary-bg: rgba(255, 255, 255, 0.08);
+  --btn-secondary-border: rgba(255, 255, 255, 0.15);
+
   /* macOS menu bar */
   --bar-bg: rgba(30, 30, 30, 0.55);
   --bar-fg: rgba(255, 255, 255, 0.9);
@@ -122,6 +126,7 @@
   --brand-antigravity: #4285f4;
   --brand-amp: #f34e3f;
   --brand-kimi: #000000;
+  --brand-gemini: #4285f4;
   --brand-factory: #020202;
   --brand-perplexity: #20808d;
   --brand-zai: #2d2d2d;
