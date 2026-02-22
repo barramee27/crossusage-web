@@ -227,6 +227,28 @@ export function ZaiIcon(props: IconProps) {
   );
 }
 
+export function MiniMaxIcon(props: IconProps) {
+  return (
+    <svg
+      width="100"
+      height="100"
+      viewBox="0 0 100 100"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <path
+        d="M50 10 L85 90 L50 70 L15 90 Z"
+        fill="currentColor"
+      />
+      <path
+        d="M50 25 L70 75 L50 60 L30 75 Z"
+        fill="currentColor"
+      />
+    </svg>
+  );
+}
+
 /* ── macOS system icons ── */
 
 export function AppleIcon(props: IconProps) {

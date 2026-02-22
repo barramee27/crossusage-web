@@ -11,6 +11,7 @@ import {
   FactoryIcon,
   PerplexityIcon,
   ZaiIcon,
+  MiniMaxIcon,
 } from "./icons";
 
 export interface Plugin {
