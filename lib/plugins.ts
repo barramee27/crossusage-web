@@ -8,10 +8,10 @@ import {
   AmpIcon,
   KimiIcon,
   GeminiIcon,
+  MiniMaxIcon,
   FactoryIcon,
   PerplexityIcon,
   ZaiIcon,
-  MiniMaxIcon,
 } from "./icons";
 
 export interface Plugin {
@@ -33,6 +33,7 @@ export const plugins: Plugin[] = [
   { id: "amp",         name: "Amp",         brandColor: "#F34E3F", Icon: AmpIcon,         featured: false },
   { id: "kimi",        name: "Kimi",        brandColor: "#000000", Icon: KimiIcon,        featured: false },
   { id: "gemini",      name: "Gemini",      brandColor: "#4285F4", Icon: GeminiIcon,      featured: false },
+  { id: "minimax",     name: "MiniMax",     brandColor: "#F5433C", Icon: MiniMaxIcon,     featured: false },
   { id: "factory",     name: "Factory",     brandColor: "#020202", Icon: FactoryIcon,     featured: false },
   { id: "perplexity",  name: "Perplexity",  brandColor: "#20808D", Icon: PerplexityIcon,  featured: false },
   { id: "zai",         name: "Z.ai",        brandColor: "#2D2D2D", Icon: ZaiIcon,         featured: false },
