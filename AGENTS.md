@@ -1,0 +1,1 @@
+- When asked to update the icons, sync with available plugins in ../openusage
