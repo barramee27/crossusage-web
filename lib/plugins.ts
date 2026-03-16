@@ -13,6 +13,7 @@ import {
   FactoryIcon,
   PerplexityIcon,
   ZaiIcon,
+  OpenCodeGoIcon,
 } from "./icons";
 
 export interface Plugin {
@@ -39,6 +40,7 @@ export const plugins: Plugin[] = [
   { id: "factory",     name: "Factory",     brandColor: "#020202", Icon: FactoryIcon,     featured: false },
   { id: "perplexity",  name: "Perplexity",  brandColor: "#20808D", Icon: PerplexityIcon,  featured: false },
   { id: "zai",         name: "Z.ai",        brandColor: "#2D2D2D", Icon: ZaiIcon,         featured: false },
+  { id: "opencode-go", name: "OpenCode Go", brandColor: "#000000", Icon: OpenCodeGoIcon,  featured: false },
 ];
 
 /**

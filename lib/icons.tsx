@@ -264,6 +264,24 @@ export function ZaiIcon(props: IconProps) {
   );
 }
 
+export function OpenCodeGoIcon(props: IconProps) {
+  return (
+    <svg
+      width="100"
+      height="100"
+      viewBox="0 0 24 30"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <path
+        d="M18 6H6V24H18V6ZM24 30H0V0H24V30Z"
+        fill="currentColor"
+      />
+    </svg>
+  );
+}
+
 /* ── macOS system icons ── */
 
 export function AppleIcon(props: IconProps) {
