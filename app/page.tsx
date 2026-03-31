@@ -4,8 +4,9 @@ import { HeroContent } from "@/components/hero-content";
 import { ProviderGrid } from "@/components/provider-grid";
 import { NoiseOverlay } from "@/components/noise-overlay";
 import { TrackedLink } from "@/components/tracked-link";
-import { Github, Gauge, BarChart3, Zap, Puzzle } from "lucide-react";
+import { Github, Gauge, BarChart3, Zap, Puzzle, Radio } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { ApiExample } from "@/components/api-example";
 
 interface Contributor {
   login: string;
@@ -96,6 +97,78 @@ export default async function Home() {
 
       {/* ── Provider Grid ── */}
       <ProviderGrid />
+
+      {/* ── Local HTTP API ── */}
+      <section className="max-w-7xl mx-auto px-6 lg:px-12 py-8 lg:py-12">
+        <div
+          className="rounded-2xl p-6 md:p-10"
+          style={{
+            border: "1px solid var(--page-border)",
+            backgroundColor: "rgba(0, 0, 0, 0.15)",
+            backdropFilter: "blur(20px)",
+            WebkitBackdropFilter: "blur(20px)",
+          }}
+        >
+          <div className="flex flex-col lg:flex-row items-start lg:items-center gap-8 lg:gap-12">
+            {/* Copy */}
+            <div className="space-y-3 lg:max-w-sm flex-shrink-0">
+              <Radio
+                className="w-12 h-12 mb-3"
+                style={{ color: "var(--page-accent)" }}
+              />
+              <h2
+                className="text-3xl lg:text-4xl font-bold tracking-tight text-pretty"
+                style={{ fontFamily: "var(--font-geist-pixel-circle)" }}
+              >
+                One Signal. Every Screen.
+              </h2>
+              <p
+                className="text-sm lg:text-base leading-relaxed text-pretty"
+                style={{ color: "var(--page-fg-muted)" }}
+              >
+                Think of it like a weather station &ndash; OpenUsage does all
+                the measuring. Your status line, your editor, your scripts?
+                They just read the forecast through a local API. No tokens, no
+                auth, no setup.
+              </p>
+              <div
+                className="text-sm font-mono pt-2 space-y-1"
+                style={{ color: "var(--page-fg-muted)" }}
+              >
+                <p>
+                  <span style={{ color: "var(--page-fg-subtle)" }}>$ </span>
+                  curl{" "}
+                  <a
+                    href="http://localhost:6736/v1/usage"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="transition-colors hover:text-white"
+                  >
+                    localhost:6736/v1/usage
+                  </a>
+                </p>
+                <p>
+                  <span style={{ color: "var(--page-fg-subtle)" }}>$ </span>
+                  curl{" "}
+                  <a
+                    href="http://localhost:6736/v1/usage/claude"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="transition-colors hover:text-white"
+                  >
+                    localhost:6736/v1/usage/claude
+                  </a>
+                </p>
+              </div>
+            </div>
+
+            {/* Code example */}
+            <div className="w-full lg:flex-1 min-w-0">
+              <ApiExample />
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* ── Features Section ── */}
       <section className="max-w-7xl mx-auto px-6 lg:px-12 py-16 lg:py-24">
