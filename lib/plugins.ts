@@ -13,6 +13,7 @@ import {
   MiniMaxIcon,
   FactoryIcon,
   PerplexityIcon,
+  SyntheticIcon,
   ZaiIcon,
   OpenCodeGoIcon,
 } from "./icons";
@@ -41,6 +42,7 @@ export const plugins: Plugin[] = [
   { id: "minimax",     name: "MiniMax",     brandColor: "#F5433C", Icon: MiniMaxIcon,     featured: false },
   { id: "opencode-go", name: "OpenCode Go", brandColor: "#000000", Icon: OpenCodeGoIcon,  featured: false },
   { id: "perplexity",  name: "Perplexity",  brandColor: "#20808D", Icon: PerplexityIcon,  featured: false },
+  { id: "synthetic",   name: "Synthetic",   brandColor: "#000000", Icon: SyntheticIcon,   featured: false },
   { id: "windsurf",    name: "Windsurf",    brandColor: "#111111", Icon: WindsurfIcon,    featured: false },
   { id: "zai",         name: "Z.ai",        brandColor: "#2D2D2D", Icon: ZaiIcon,         featured: false },
 ];
