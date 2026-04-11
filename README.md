@@ -1,36 +1,41 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# CrossUsage marketing site (`crossusage.dev`)
 
-## Getting Started
+Fork of **[robinebers/openusage-web](https://github.com/robinebers/openusage-web)** (Robin’s OpenUsage landing page), retuned for **CrossUsage**:
 
-First, run the development server:
+- Branding, metadata, and GitHub links point at **[barramee27/crossusage](https://github.com/barramee27/crossusage)**.
+- Hero and download CTAs emphasize **Linux & Windows** builds; **macOS** links to upstream **OpenUsage** releases.
+- Footer and open-source section credit **OpenUsage** and **Robin Ebers**.
+- **Static export** (`output: "export"`) so `out/` can be served by **nginx** (no Node on the VPS).
+- **Vercel Analytics** removed; `track()` is a no-op (self-hosted).
+
+## Develop
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Production build
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npm run build
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Upload the **`out/`** directory to the server (see `deploy/crossusage.dev/` in the main CrossUsage repo). The export uses **`trailingSlash: true`** so routes are `out/download/index.html`, etc., which matches typical nginx `try_files` rules.
 
-## Learn More
+**Routes:** `/` (home), `/download/`, `/privacy/`, `/credits/`. Shared header and footer live in `components/site-header.tsx` and `components/site-footer.tsx`.
 
-To learn more about Next.js, take a look at the following resources:
+Hero imagery: `public/hero-crossusage.png` is used for the landing visual and social cards; replace it with a higher-resolution capture if you want a sharper hero or OG preview.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Git remote
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+This directory was cloned from upstream. Point `origin` at your own repo when you publish the fork:
 
-## Deploy on Vercel
+```bash
+git remote rename origin upstream
+git remote add origin git@github.com:YOUR_USER/crossusage-web.git
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## GitHub Actions
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Workflow: `.github/workflows/deploy.yml`. Set repository variable **`ENABLE_VPS_DEPLOY=true`** and secrets: `DEPLOY_HOST`, `DEPLOY_USER`, `DEPLOY_PATH` (e.g. `/var/www/crossusage.dev/html`), `DEPLOY_SSH_KEY`. Optional: `DEPLOY_PORT`, `DEPLOY_RELOAD_CMD` (e.g. `sudo /usr/local/sbin/crossusage-nginx-reload`).

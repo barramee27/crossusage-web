@@ -1,0 +1,58 @@
+name: Deploy site
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-crossusage-dev
+  cancel-in-progress: true
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+
+      - name: Install and build
+        run: |
+          npm ci
+          npm run build
+
+      - name: Rsync to VPS
+        if: ${{ vars.ENABLE_VPS_DEPLOY == 'true' }}
+        env:
+          SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
+          HOST: ${{ secrets.DEPLOY_HOST }}
+          USER: ${{ secrets.DEPLOY_USER }}
+          PATH_REMOTE: ${{ secrets.DEPLOY_PATH }}
+          PORT: ${{ secrets.DEPLOY_PORT }}
+        run: |
+          mkdir -p ~/.ssh
+          echo "$SSH_KEY" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          SSH_OPTS="-i ~/.ssh/deploy_key -o StrictHostKeyChecking=accept-new"
+          if [ -n "$PORT" ]; then SSH_OPTS="$SSH_OPTS -p $PORT"; fi
+          rsync -avz --delete \
+            -e "ssh $SSH_OPTS" \
+            out/ "${USER}@${HOST}:${PATH_REMOTE}/"
+
+      - name: Reload nginx (optional)
+        if: ${{ vars.ENABLE_VPS_DEPLOY == 'true' }}
+        env:
+          SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
+          HOST: ${{ secrets.DEPLOY_HOST }}
+          USER: ${{ secrets.DEPLOY_USER }}
+          PORT: ${{ secrets.DEPLOY_PORT }}
+          RELOAD: ${{ secrets.DEPLOY_RELOAD_CMD }}
+        run: |
+          if [ -z "${RELOAD:-}" ]; then echo "Skipping reload (set secret DEPLOY_RELOAD_CMD to enable)."; exit 0; fi
+          SSH_OPTS="-i ~/.ssh/deploy_key -o StrictHostKeyChecking=accept-new"
+          if [ -n "$PORT" ]; then SSH_OPTS="$SSH_OPTS -p $PORT"; fi
+          ssh $SSH_OPTS "${USER}@${HOST}" "$RELOAD"

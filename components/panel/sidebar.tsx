@@ -3,7 +3,7 @@
 import type { ActiveView, ProviderId } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import { GaugeIcon, SettingsIcon, CodexIcon, ClaudeIcon, CursorIcon, CopilotIcon, WindsurfIcon, AntigravityIcon } from "@/lib/icons";
-import { track } from "@vercel/analytics";
+import { track } from "@/lib/track";
 
 const providerNav: {
   id: ProviderId;

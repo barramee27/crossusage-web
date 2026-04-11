@@ -1,55 +1,78 @@
 import { plugins, displayColor } from "@/lib/plugins";
+import { Eyebrow } from "@/components/marketing/eyebrow";
 
 export function ProviderGrid() {
   return (
-    <section className="max-w-7xl mx-auto px-6 lg:px-12 py-16 lg:py-24">
-      <div className="mb-8">
+    <section className="fx-section-bleed relative z-[1] border-b border-[var(--page-border)] bg-[var(--page-stripe)]">
+      <div className="fx-reveal mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
+        <Eyebrow>plugins.json</Eyebrow>
         <h2
-          className="text-3xl lg:text-4xl font-bold tracking-tight text-pretty"
-          style={{ fontFamily: "var(--font-geist-pixel-circle)" }}
+          id="providers-heading"
+          className="mt-4 text-2xl font-bold tracking-tight text-[var(--page-fg)] sm:text-3xl"
         >
-          Works with Your Tools
+          Providers
         </h2>
-        <p
-          className="mt-3 text-sm lg:text-base max-w-lg text-pretty"
-          style={{ color: "var(--page-fg-muted)" }}
-        >
-          Every provider is a plugin. Add what you use, ignore what you don&apos;t.
+        <p className="mt-2 max-w-lg font-mono text-xs text-[var(--page-fg-muted)] sm:text-sm">
+          Each row is a plugin id. The <strong className="text-[var(--page-fg)]">swatch</strong> column
+          is the brand tint (hover for canonical hex). Icons use a bright substitute when the brand
+          color is nearly black so you can still see them on this background.
         </p>
-      </div>
 
-      {/* Flush tile grid — transparent cells, border separators */}
-      <div
-        className="rounded-xl overflow-hidden grid grid-cols-2 sm:grid-cols-4"
-        style={{ border: "1px solid var(--page-border)" }}
-      >
-        {plugins.map(({ id, name, brandColor, Icon }, i) => {
-          const color = displayColor(brandColor);
-          const cols = 4;
-          const isLastRow = i >= plugins.length - cols;
-          const isLastCol = (i + 1) % cols === 0;
-          return (
-            <div
-              key={id}
-              className="flex flex-col items-center justify-center gap-2.5 py-8 px-4"
-              style={{
-                backgroundColor: "rgba(0, 0, 0, 0.15)",
-                backdropFilter: "blur(20px)",
-                WebkitBackdropFilter: "blur(20px)",
-                borderRight: isLastCol ? "none" : "1px solid var(--page-border)",
-                borderBottom: isLastRow ? "none" : "1px solid var(--page-border)",
-              }}
-            >
-              <Icon className="w-8 h-8" style={{ color }} />
-              <span
-                className="text-sm font-semibold"
-                style={{ color }}
-              >
-                {name}
-              </span>
-            </div>
-          );
-        })}
+        <div className="fx-table-wrap mt-10 overflow-hidden rounded-sm signal-block">
+          <table className="w-full border-collapse text-left font-mono text-xs sm:text-sm">
+            <thead>
+              <tr className="border-b border-[var(--page-border)] bg-[var(--surface-2)] text-[var(--page-fg-dim)]">
+                <th scope="col" className="px-3 py-2.5 font-normal sm:px-4">
+                  id
+                </th>
+                <th scope="col" className="px-3 py-2.5 font-normal sm:px-4">
+                  label
+                </th>
+                <th
+                  scope="col"
+                  className="hidden px-4 py-2.5 font-normal sm:table-cell"
+                  title="Brand color sample; hover cell for #hex"
+                >
+                  swatch
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {plugins.map(({ id, name, brandColor, Icon }, i) => {
+                const color = displayColor(brandColor);
+                return (
+                  <tr
+                    key={id}
+                    className={`fx-table-glow-row transition-colors duration-150 hover:bg-[var(--surface-2)]/90 ${
+                      i % 2 === 0 ? "bg-[var(--surface)]" : "bg-[var(--page-bg)]/40"
+                    }`}
+                  >
+                    <td className="border-t border-[var(--page-border)] px-3 py-2.5 text-[var(--page-accent)] sm:px-4">
+                      {id}
+                    </td>
+                    <td className="border-t border-[var(--page-border)] px-3 py-2.5 text-[var(--page-fg-muted)] sm:px-4">
+                      <span className="inline-flex items-center gap-2">
+                        <Icon className="h-4 w-4 shrink-0" style={{ color }} />
+                        {name}
+                      </span>
+                    </td>
+                    <td className="hidden border-t border-[var(--page-border)] px-4 py-2.5 sm:table-cell">
+                      <abbr
+                        title={`Brand hex ${brandColor}`}
+                        className="cursor-help no-underline"
+                      >
+                        <span
+                          className="inline-block h-2.5 w-2.5 ring-1 ring-[var(--page-border)]"
+                          style={{ backgroundColor: color }}
+                        />
+                      </abbr>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
       </div>
     </section>
   );

@@ -1,113 +1,93 @@
 "use client";
 
-import { GaugeIcon } from "@/lib/icons";
+import Link from "next/link";
 import { plugins } from "@/lib/plugins";
 import { Github } from "lucide-react";
-import { track } from "@vercel/analytics";
+import { track } from "@/lib/track";
+import { forkRepo } from "@/lib/site";
+import { Eyebrow } from "@/components/marketing/eyebrow";
 
 const featured = plugins.filter((p) => p.featured);
 const moreCount = plugins.length - featured.length;
+const pluginCount = plugins.length;
 
 export function HeroContent() {
   return (
-    <div className="flex flex-col justify-center gap-6 lg:gap-8 pt-12 lg:pt-24 pb-16 max-w-xl">
-      {/* Logo */}
-      <div className="flex items-center gap-2">
-        <GaugeIcon className="w-5 h-5" style={{ color: "var(--page-fg)" }} />
-        <span
-          className="text-sm font-semibold tracking-tight"
-          style={{ color: "var(--page-fg)" }}
-        >
-          OpenUsage
-        </span>
-      </div>
+    <div className="flex flex-col gap-8 lg:gap-10">
+      <Eyebrow>scope · tray · panel · win · linux</Eyebrow>
 
-      {/* Headline */}
-      <div className="space-y-4 text-pretty">
+      <div className="space-y-4">
         <h1
-          className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight leading-[1.1] text-pretty"
-          style={{ fontFamily: "var(--font-geist-pixel-circle)" }}
+          id="hero-heading"
+          className="max-w-[16ch] text-4xl font-bold leading-[0.95] tracking-[-0.05em] sm:text-5xl lg:text-[3.5rem] xl:text-6xl"
         >
-          All Your <span style={{ color: "var(--page-accent)" }}>AI Coding Limits</span> In One Place
+          <span className="fx-headline">Telemetry</span>
+          <br />
+          <span className="text-[var(--page-fg)]">for every</span>{" "}
+          <span className="fx-accent-text">AI quota</span>
+          <span className="text-[var(--page-fg)]">.</span>
         </h1>
+        <p className="max-w-xl text-sm leading-relaxed text-[var(--page-fg-muted)] sm:text-base lg:text-[1.05rem] lg:leading-relaxed">
+          CrossUsage aggregates Cursor, Claude Code, Codex, Copilot, and the rest through
+          plugins—tray or panel on Linux and Windows. Local-first: your usage stays on disk until
+          you export it.
+        </p>
       </div>
 
-      {/* Tagline */}
-      <p
-        className="text-sm sm:text-base lg:text-lg leading-relaxed text-pretty"
-        style={{ color: "var(--page-fg-muted)" }}
-      >
-        Burning through your subscriptions too fast? Paying for stuff you never use? Stop guessing. OpenUsage is free and open source.
-      </p>
+      <dl className="grid max-w-md grid-cols-3 gap-3 font-mono text-[10px] sm:text-xs">
+        <div className="fx-glass-panel px-3 py-2.5 sm:px-4 sm:py-3">
+          <dt className="text-[var(--page-fg-dim)]">plugins</dt>
+          <dd className="mt-1 text-lg font-bold tabular-nums text-[var(--page-accent)] sm:text-xl">
+            {pluginCount}
+          </dd>
+        </div>
+        <div className="fx-glass-panel px-3 py-2.5 sm:px-4 sm:py-3">
+          <dt className="text-[var(--page-fg-dim)]">license</dt>
+          <dd className="mt-1 text-sm font-bold text-[var(--page-fg)] sm:text-base">MIT</dd>
+        </div>
+        <div className="fx-glass-panel px-3 py-2.5 sm:px-4 sm:py-3">
+          <dt className="text-[var(--page-fg-dim)]">api</dt>
+          <dd className="mt-1 text-sm font-bold text-[var(--page-fg)] sm:text-base">:6736</dd>
+        </div>
+      </dl>
 
-      {/* Provider icons */}
-      <div className="flex flex-wrap items-center gap-3 sm:gap-5">
+      <div className="fx-glass-panel flex flex-wrap items-center gap-4 px-4 py-3">
         {featured.map(({ id, name, Icon }) => (
           <div key={id} className="flex items-center gap-2">
-            <Icon className="w-6 h-6" style={{ color: "var(--page-fg-muted)" }} />
-            <span
-              className="hidden sm:inline text-sm font-medium"
-              style={{ color: "var(--page-fg-muted)" }}
-            >
+            <Icon className="h-5 w-5 text-[var(--page-fg-dim)]" />
+            <span className="hidden font-mono text-xs text-[var(--page-fg-muted)] sm:inline">
               {name}
             </span>
           </div>
         ))}
         {moreCount > 0 && (
-          <span
-            className="text-sm"
-            style={{ color: "var(--page-fg-muted)" }}
-          >
-            + {moreCount} more
-          </span>
+          <span className="font-mono text-xs text-[var(--page-fg-dim)]">+{moreCount}</span>
         )}
       </div>
 
-      {/* CTAs */}
-      <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4">
-        <a
-          href="https://github.com/robinebers/openusage/releases/latest"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg text-sm font-semibold transition-all hover:brightness-110"
-          style={{
-            backgroundColor: "var(--page-accent)",
-            color: "#000",
-          }}
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+        <Link
+          href="/download/"
+          className="signal-block-strong inline-flex items-center justify-center px-8 py-3.5 font-mono text-sm font-semibold text-[var(--page-accent)] hover:bg-[var(--page-accent)] hover:text-[var(--page-bg)]"
           onClick={() => track("hero_download_clicked")}
         >
-          Download for macOS
-        </a>
+          ./install
+        </Link>
         <a
-          href="https://github.com/robinebers/openusage"
+          href={forkRepo}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg text-sm font-semibold transition-colors hover:brightness-125"
-          style={{
-            border: "1px solid var(--btn-secondary-border)",
-            backgroundColor: "var(--btn-secondary-bg)",
-            backdropFilter: "blur(20px)",
-            WebkitBackdropFilter: "blur(20px)",
-            color: "var(--page-fg)",
-          }}
+          className="signal-block inline-flex items-center justify-center gap-2 px-8 py-3.5 font-mono text-sm font-medium text-[var(--page-fg-muted)] hover:border-[var(--page-accent)] hover:text-[var(--page-accent)]"
           onClick={() => track("hero_contribute_clicked")}
         >
-          <Github className="w-4 h-4" />
-          Contribute
+          <Github className="h-4 w-4" />
+          git clone
         </a>
       </div>
 
-      {/* MIT badge */}
-      <div>
-        <span
-          className="text-xs font-mono px-2 py-1 rounded"
-          style={{
-            color: "var(--page-fg-muted)",
-            backgroundColor: "rgba(255,255,255,0.08)",
-          }}
-        >
-          Free &middot; Open Source &middot; macOS
-        </span>
+      <div className="font-mono text-[10px] leading-relaxed text-[var(--page-fg-dim)] sm:text-[11px]">
+        <p className="text-[var(--page-accent)]">$ curl -s localhost:6736/v1/usage | head -c 120</p>
+        <p className="mt-1 opacity-80">{"{ \"ok\": true, \"providers\": [...] }  // truncated"}</p>
       </div>
     </div>
   );

@@ -1,32 +1,28 @@
 function highlightJson(json: string) {
   const parts: { text: string; color: string }[] = [];
-  // Simple tokenizer: strings, numbers, booleans/null, punctuation
   const regex =
     /("(?:[^"\\]|\\.)*")\s*(:)?|(\b(?:true|false|null)\b)|(-?\d+(?:\.\d+)?(?:[eE][+-]?\d+)?)|([{}[\],])/g;
   let last = 0;
   let match: RegExpExecArray | null;
 
   while ((match = regex.exec(json)) !== null) {
-    // plain whitespace before this token
     if (match.index > last) {
       parts.push({ text: json.slice(last, match.index), color: "" });
     }
 
     if (match[1] !== undefined) {
       if (match[2]) {
-        // key
-        parts.push({ text: match[1], color: "#93c5fd" }); // blue-300
+        parts.push({ text: match[1], color: "#7dd3fc" });
         parts.push({ text: match[2], color: "" });
       } else {
-        // string value
-        parts.push({ text: match[1], color: "#86efac" }); // green-300
+        parts.push({ text: match[1], color: "#86efac" });
       }
     } else if (match[3] !== undefined) {
-      parts.push({ text: match[3], color: "#fca5a5" }); // red-300
+      parts.push({ text: match[3], color: "#fca5a5" });
     } else if (match[4] !== undefined) {
-      parts.push({ text: match[4], color: "#fde68a" }); // amber-200
+      parts.push({ text: match[4], color: "#fde047" });
     } else if (match[5] !== undefined) {
-      parts.push({ text: match[5], color: "var(--page-fg-subtle)" });
+      parts.push({ text: match[5], color: "var(--page-fg-dim)" });
     }
 
     last = match.index + match[0].length;
@@ -67,30 +63,26 @@ const highlighted = highlightJson(response);
 
 export function ApiExample() {
   return (
-    <div
-      className="rounded-xl overflow-hidden font-mono text-xs"
-      style={{
-        backgroundColor: "rgba(0, 0, 0, 0.55)",
-        border: "1px solid var(--page-border)",
-      }}
-    >
-      {/* Response */}
-      <pre
-        className="px-4 py-4 leading-relaxed overflow-x-auto"
-        style={{ color: "var(--page-fg-subtle)" }}
-      >
-        <code>
-          {highlighted.map((part, i) =>
-            part.color ? (
-              <span key={i} style={{ color: part.color }}>
-                {part.text}
-              </span>
-            ) : (
-              part.text
-            )
-          )}
-        </code>
-      </pre>
+    <div className="fx-glass-panel overflow-hidden font-mono text-[11px] leading-relaxed sm:text-xs">
+      <div className="flex items-center justify-between border-b border-[var(--page-border)] px-4 py-2.5">
+        <span className="text-[10px] text-[var(--page-fg-dim)]">response.json</span>
+        <span className="text-[10px] text-[var(--page-accent)]">200 OK</span>
+      </div>
+      <div className="max-h-[min(70vh,420px)] overflow-auto px-2 py-3 sm:px-4">
+        <pre className="text-[var(--page-fg-muted)]">
+          <code>
+            {highlighted.map((part, i) =>
+              part.color ? (
+                <span key={i} style={{ color: part.color }}>
+                  {part.text}
+                </span>
+              ) : (
+                part.text
+              )
+            )}
+          </code>
+        </pre>
+      </div>
     </div>
   );
 }
