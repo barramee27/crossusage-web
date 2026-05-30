@@ -5,28 +5,28 @@ const blocks = [
   {
     icon: Gauge,
     title: "Aggregate",
-    body: "One surface for Cursor, Claude, Codex, Copilot, and the long tail.",
+    body: "Cursor, Claude, Codex, Copilot, and more in one desktop view. Add multiple Claude and Cursor accounts—work, personal, or team logins—each with its own credentials and usage.",
     gridClass: "md:row-span-2",
     large: true,
   },
   {
     icon: BarChart3,
     title: "Surface",
-    body: "Tray or panel—glance without alt-tabbing into five dashboards.",
+    body: "Tray icon or in-app panel: check limits and spend without opening every vendor dashboard.",
     gridClass: "md:col-start-2 md:row-start-1",
     large: false,
   },
   {
     icon: Zap,
     title: "Velocity",
-    body: "See burn rate while it still matters.",
+    body: "Auto-refresh on your schedule so burn, credits, and renewal windows stay visible when they matter.",
     gridClass: "md:col-start-2 md:row-start-2",
     large: false,
   },
   {
     icon: Puzzle,
     title: "Plugins",
-    body: "Providers ship separately; community patches land without a gatekeeper.",
+    body: "Providers ship as plugins—extend, fork, or patch without a single gatekeeper release train.",
     gridClass: "md:col-span-2 md:row-start-3",
     large: false,
   },
@@ -36,14 +36,17 @@ export function FeaturesSection() {
   return (
     <section className="fx-section-bleed relative z-[1] border-b border-[var(--page-border)]">
       <div className="fx-reveal mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
-        <Eyebrow>features.manifest</Eyebrow>
+        <Eyebrow>Overview</Eyebrow>
         <div className="mt-4 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
           <h2 className="text-3xl font-bold tracking-tight text-[var(--page-fg)] sm:text-4xl">
-            Why it exists
+            Why CrossUsage
           </h2>
-          <p className="max-w-md font-mono text-xs text-[var(--page-fg-muted)] lg:text-right lg:text-sm">
-            Bento grid: left column is the thesis (tall cell); right stack is supporting signals;
-            full-width row closes the argument.
+          <p className="max-w-xl text-sm leading-relaxed text-[var(--page-fg-muted)] lg:text-right">
+            CrossUsage brings AI subscription and usage signals into one desktop experience—including{" "}
+            <span className="font-medium text-[var(--page-fg)]">
+              multiple Claude and Cursor accounts
+            </span>{" "}
+            when you use more than one login.
           </p>
         </div>
 
