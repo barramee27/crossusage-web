@@ -12,7 +12,7 @@ export function HeroSection({ version }: { version: string | null }) {
 
       <div className="relative mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:flex lg:items-stretch lg:gap-16 lg:px-8 lg:py-24 xl:gap-24">
         <div className="fx-reveal animate-scan-in max-w-xl flex-1 lg:max-w-none lg:pt-2">
-          <HeroContent />
+          <HeroContent version={version} />
         </div>
 
         <div className="relative mt-16 flex flex-1 justify-center lg:mt-0 lg:max-w-md xl:max-w-lg">

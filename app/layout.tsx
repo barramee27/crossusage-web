@@ -22,9 +22,9 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 const defaultTitle =
-  "CrossUsage — AI limits tracker for Cursor, Claude Code, Codex, and more";
+  "CrossUsage — AI usage tracker for Linux & Windows (Classic + Modern UI)";
 const description =
-  "Track AI coding limits on Linux and Windows—CrossUsage shows Cursor, Claude, Codex, and more from your system tray or panel. Free, open source, MIT licensed.";
+  "Track Cursor, Claude, Codex, Copilot, and 26+ providers from your tray. Classic or Modern layout, usage insights, history charts. Free, open source, MIT. Fork of OpenUsage.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),

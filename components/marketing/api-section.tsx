@@ -29,12 +29,12 @@ export function ApiSection() {
             <li className="fx-glass-panel px-4 py-3">
               <span className="text-[var(--page-accent)]">GET</span>{" "}
               <a
-                href="http://localhost:6736/v1/usage/claude"
+                href="http://localhost:6736/v1/insights"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="break-all text-[var(--page-fg)] hover:text-[var(--page-accent)]"
               >
-                /v1/usage/claude
+                /v1/insights
               </a>
             </li>
           </ul>

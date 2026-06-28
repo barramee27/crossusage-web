@@ -22,16 +22,18 @@ export function OpenSourceSection({ contributors }: { contributors: ContributorA
           Source open
         </h2>
         <p className="mt-4 max-w-2xl font-mono text-xs leading-relaxed text-[var(--page-fg-muted)] sm:text-sm">
-          Fork lineage →{" "}
+          Fork of{" "}
           <a
             href={upstreamRepo}
             target="_blank"
             rel="noopener noreferrer"
             className="text-[var(--page-accent)] hover:underline"
           >
-            openusage
-          </a>
-          . Patch the fork, not a black box.
+            OpenUsage
+          </a>{" "}
+          by Robin Ebers. MIT licensed —{" "}
+          <span className="text-[var(--page-fg)]">pull requests welcome</span> for providers, UI,
+          and docs.
         </p>
 
         <div className="mt-10 fx-glass-panel p-6 sm:flex sm:items-start sm:justify-between sm:gap-12 sm:p-10">
@@ -88,7 +90,7 @@ export function OpenSourceSection({ contributors }: { contributors: ContributorA
             className="signal-block-strong mt-8 inline-flex w-full items-center justify-center gap-2 px-8 py-3.5 font-mono text-sm font-semibold text-[var(--page-accent)] hover:bg-[var(--page-accent)] hover:text-[var(--page-bg)] sm:mt-0 sm:w-auto"
           >
             <Github className="h-4 w-4" />
-            origin/main
+            contribute
           </TrackedLink>
         </div>
       </div>

@@ -412,3 +412,36 @@ export function SettingsIcon(props: IconProps) {
     </svg>
   );
 }
+
+/** Fallback when a plugin has no dedicated SVG in this package yet. */
+export function makeLetterIcon(letter: string) {
+  const ch = letter.slice(0, 1).toUpperCase();
+  return function LetterIcon(props: IconProps) {
+    return (
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+        <rect
+          x="1.5"
+          y="1.5"
+          width="21"
+          height="21"
+          rx="5"
+          stroke="currentColor"
+          strokeWidth="1.5"
+          fill="currentColor"
+          fillOpacity="0.1"
+        />
+        <text
+          x="12"
+          y="16.5"
+          textAnchor="middle"
+          fontSize="11"
+          fontWeight="700"
+          fill="currentColor"
+          fontFamily="ui-sans-serif, system-ui, sans-serif"
+        >
+          {ch}
+        </text>
+      </svg>
+    );
+  };
+}

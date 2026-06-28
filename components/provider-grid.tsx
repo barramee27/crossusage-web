@@ -13,12 +13,12 @@ export function ProviderGrid() {
           Providers
         </h2>
         <p className="mt-2 max-w-lg font-mono text-xs text-[var(--page-fg-muted)] sm:text-sm">
-          Each row is a plugin id. The <strong className="text-[var(--page-fg)]">swatch</strong> column
-          is the brand tint (hover for canonical hex). Icons use a bright substitute when the brand
-          color is nearly black so you can still see them on this background.
+          {plugins.length} bundled plugins — each row matches a{" "}
+          <code className="text-[var(--page-fg)]">plugin.json</code> in the repo. Swatch = brand
+          color from the plugin manifest.
         </p>
 
-        <div className="fx-table-wrap mt-10 overflow-hidden rounded-sm signal-block">
+        <div className="fx-table-wrap mt-10 max-h-[min(70vh,640px)] overflow-auto rounded-sm signal-block">
           <table className="w-full border-collapse text-left font-mono text-xs sm:text-sm">
             <thead>
               <tr className="border-b border-[var(--page-border)] bg-[var(--surface-2)] text-[var(--page-fg-dim)]">

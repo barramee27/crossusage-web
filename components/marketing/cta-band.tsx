@@ -9,10 +9,11 @@ export function CtaBand({ version }: { version: string | null }) {
           <div className="fx-cta-inner px-8 py-14 text-center sm:px-12 sm:py-16">
             <p className="font-mono text-[10px] tracking-[0.35em] text-[var(--page-accent)]">EOF</p>
             <h2 className="mt-4 text-3xl font-bold tracking-tight text-[var(--page-fg)] sm:text-4xl">
-              Ship the binary
+              Get CrossUsage
             </h2>
             <p className="mx-auto mt-5 max-w-md font-mono text-xs leading-relaxed text-[var(--page-fg-muted)] sm:text-sm">
-              Linux + Windows builds on the download route. macOS → upstream OpenUsage releases.
+              {version ? `v${version}` : "Latest"} — .deb, .rpm, AppImage, Windows installer, or
+              one-file portable exe. macOS → upstream OpenUsage.
             </p>
             <div className="mt-10 flex flex-col items-center gap-4">
               <Link

@@ -22,18 +22,17 @@ const links = [
 ] as const;
 
 const tickerItems = [
+  "v1.2.0",
+  "classic + modern",
+  "26 plugins",
   "tauri 2",
-  "react 19",
-  "typescript",
-  "next.js export",
-  "nginx",
-  "mit",
-  "quickjs",
-  "tray",
-  "plugins",
+  "insights",
+  "history charts",
   "localhost:6736",
   "linux",
   "windows",
+  "mit",
+  "prs welcome",
   "open source",
 ] as const;
 

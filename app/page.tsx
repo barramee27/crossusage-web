@@ -1,3 +1,4 @@
+import { WhatsNewSection } from "@/components/marketing/whats-new-section";
 import { ProviderGrid } from "@/components/provider-grid";
 import { HeroSection } from "@/components/marketing/hero-section";
 import { InteractivePreviewSection } from "@/components/marketing/interactive-preview-section";
@@ -53,6 +54,7 @@ export default async function Home() {
   return (
     <div className="min-h-0">
       <HeroSection version={version} />
+      <WhatsNewSection version={version} />
       <ProviderGrid />
       <InteractivePreviewSection version={version} />
       <ApiSection />

@@ -1,32 +1,32 @@
-import { Gauge, BarChart3, Zap, Puzzle } from "lucide-react";
+import { Gauge, BarChart3, LayoutGrid, Puzzle } from "lucide-react";
 import { Eyebrow } from "@/components/marketing/eyebrow";
 
 const blocks = [
   {
     icon: Gauge,
     title: "Aggregate",
-    body: "Cursor, Claude, Codex, Copilot, and more in one desktop view. Add multiple Claude and Cursor accounts—work, personal, or team logins—each with its own credentials and usage.",
+    body: "Twenty-six bundled plugins — Cursor, Claude, Codex, Devin, Perplexity, and more. Multiple accounts per provider when you run separate logins.",
     gridClass: "md:row-span-2",
     large: true,
   },
   {
-    icon: BarChart3,
-    title: "Surface",
-    body: "Tray icon or in-app panel: check limits and spend without opening every vendor dashboard.",
+    icon: LayoutGrid,
+    title: "Dual layout",
+    body: "Classic sidebar or Modern grouped dashboard. Same enabled providers in both; switch in Settings → Appearance.",
     gridClass: "md:col-start-2 md:row-start-1",
     large: false,
   },
   {
-    icon: Zap,
-    title: "Velocity",
-    body: "Auto-refresh on your schedule so burn, credits, and renewal windows stay visible when they matter.",
+    icon: BarChart3,
+    title: "Insights",
+    body: "Home banner for pace and reset timing, optional SQLite history, charts on provider detail, and CSV export.",
     gridClass: "md:col-start-2 md:row-start-2",
     large: false,
   },
   {
     icon: Puzzle,
     title: "Plugins",
-    body: "Providers ship as plugins—extend, fork, or patch without a single gatekeeper release train.",
+    body: "Providers ship as plugins — fork, patch, or add your own. Pull requests welcome on GitHub.",
     gridClass: "md:col-span-2 md:row-start-3",
     large: false,
   },
@@ -42,11 +42,9 @@ export function FeaturesSection() {
             Why CrossUsage
           </h2>
           <p className="max-w-xl text-sm leading-relaxed text-[var(--page-fg-muted)] lg:text-right">
-            CrossUsage brings AI subscription and usage signals into one desktop experience—including{" "}
-            <span className="font-medium text-[var(--page-fg)]">
-              multiple Claude and Cursor accounts
-            </span>{" "}
-            when you use more than one login.
+            A Tauri tray app for Linux and Windows — fork of{" "}
+            <span className="font-medium text-[var(--page-fg)]">OpenUsage</span> with native builds,
+            local history, and the 0.7 Modern UI port.
           </p>
         </div>
 
