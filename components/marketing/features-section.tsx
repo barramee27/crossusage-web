@@ -1,76 +1,80 @@
-import { Gauge, BarChart3, LayoutGrid, Puzzle } from "lucide-react";
+import { Gauge, LayoutGrid, Puzzle, Shield } from "lucide-react";
 import { Eyebrow } from "@/components/marketing/eyebrow";
+import { plugins } from "@/lib/plugins";
+import { upstreamRepo } from "@/lib/site";
 
 const blocks = [
   {
     icon: Gauge,
-    title: "Aggregate",
-    body: "Twenty-six bundled plugins — Cursor, Claude, Codex, Devin, Perplexity, and more. Multiple accounts per provider when you run separate logins.",
-    gridClass: "md:row-span-2",
+    title: "All your quotas, one glance",
+    body: `${plugins.length} bundled plugins — Cursor, Claude, Codex, Copilot, OpenRouter, Devin, and more. Multi-account when you run separate logins.`,
     large: true,
   },
   {
     icon: LayoutGrid,
-    title: "Dual layout",
-    body: "Classic sidebar or Modern grouped dashboard. Same enabled providers in both; switch in Settings → Appearance.",
-    gridClass: "md:col-start-2 md:row-start-1",
+    title: "Classic or Modern",
+    body: "Pick at first run or in Settings → Appearance. Same enabled providers in both layouts.",
     large: false,
   },
   {
-    icon: BarChart3,
-    title: "Insights",
-    body: "Home banner for pace and reset timing, optional SQLite history, charts on provider detail, and CSV export.",
-    gridClass: "md:col-start-2 md:row-start-2",
+    icon: Shield,
+    title: "Encrypted at rest",
+    body: "Account tokens use AES-256-GCM. Master key in OS keychain — not plaintext on disk.",
     large: false,
   },
   {
     icon: Puzzle,
-    title: "Plugins",
-    body: "Providers ship as plugins — fork, patch, or add your own. Pull requests welcome on GitHub.",
-    gridClass: "md:col-span-2 md:row-start-3",
+    title: "Plugin-based",
+    body: "Providers ship as plugins. Fork, patch, or add your own. PRs welcome.",
     large: false,
   },
 ] as const;
 
 export function FeaturesSection() {
   return (
-    <section className="fx-section-bleed relative z-[1] border-b border-[var(--page-border)]">
-      <div className="fx-reveal mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
-        <Eyebrow>Overview</Eyebrow>
+    <section className="relative z-[1] border-b border-[var(--page-border)]">
+      <div className="fx-reveal mx-auto max-w-6xl px-4 py-20 sm:px-6 lg:px-8 lg:py-24">
+        <Eyebrow>Why CrossUsage</Eyebrow>
         <div className="mt-4 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
-          <h2 className="text-3xl font-bold tracking-tight text-[var(--page-fg)] sm:text-4xl">
-            Why CrossUsage
+          <h2 className="font-display max-w-[16ch] text-3xl font-bold tracking-tight text-[var(--page-fg)] sm:text-4xl">
+            Built for Linux & Windows
           </h2>
-          <p className="max-w-xl text-sm leading-relaxed text-[var(--page-fg-muted)] lg:text-right">
-            A Tauri tray app for Linux and Windows — fork of{" "}
-            <span className="font-medium text-[var(--page-fg)]">OpenUsage</span> with native builds,
-            local history, and the 0.7 Modern UI port.
+          <p className="max-w-md text-sm leading-relaxed text-[var(--page-fg-muted)] lg:text-right">
+            A Tauri tray app — fork of{" "}
+            <a
+              href={upstreamRepo}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-medium text-[var(--page-fg)] underline-offset-2 hover:underline"
+            >
+              OpenUsage
+            </a>{" "}
+            with native packaging, local history, and the 0.7 Modern UI port.
           </p>
         </div>
 
-        <div className="mt-12 grid gap-3 md:grid-cols-2 md:grid-rows-3 lg:gap-4">
-          {blocks.map(({ icon: Icon, title, body, gridClass, large }) => (
+        <div className="mt-12 grid gap-4 md:grid-cols-2">
+          {blocks.map(({ icon: Icon, title, body, large }) => (
             <div
               key={title}
-              className={`fx-bento-cell fx-glass-panel p-5 sm:p-6 ${gridClass} ${
-                large ? "flex flex-col justify-between md:min-h-[280px] md:p-8" : ""
+              className={`surface-panel lift-card p-6 sm:p-7 ${
+                large ? "md:col-span-2 md:flex md:items-center md:gap-8 md:p-8" : ""
               }`}
             >
-              <Icon
-                className={`shrink-0 text-[var(--page-accent)] ${large ? "h-8 w-8" : "h-5 w-5"}`}
-                aria-hidden
-              />
-              <div className={large ? "mt-8 md:mt-auto" : "mt-4"}>
-                <h3
-                  className={`font-mono font-semibold text-[var(--page-fg)] ${
-                    large ? "text-base sm:text-lg" : "text-sm"
-                  }`}
-                >
+              <span
+                className={`inline-flex shrink-0 items-center justify-center rounded-2xl bg-[var(--page-accent-soft)] text-[var(--page-accent-ink)] ${
+                  large ? "h-14 w-14" : "h-11 w-11"
+                }`}
+              >
+                <Icon className={large ? "h-7 w-7" : "h-5 w-5"} aria-hidden />
+              </span>
+              <div className={large ? "mt-5 md:mt-0" : "mt-4"}>
+                <h3 className={`font-semibold text-[var(--page-fg)] ${large ? "text-xl" : "text-base"}`}>
                   {title}
                 </h3>
                 <p
                   className={`mt-2 leading-relaxed text-[var(--page-fg-muted)] ${
-                    large ? "max-w-prose text-sm sm:text-base" : "text-sm"
+                    large ? "max-w-3xl text-base" : "text-sm"
                   }`}
                 >
                   {body}

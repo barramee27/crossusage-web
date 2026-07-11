@@ -12,15 +12,15 @@ function highlightJson(json: string) {
 
     if (match[1] !== undefined) {
       if (match[2]) {
-        parts.push({ text: match[1], color: "#7dd3fc" });
+        parts.push({ text: match[1], color: "#0f766e" });
         parts.push({ text: match[2], color: "" });
       } else {
-        parts.push({ text: match[1], color: "#86efac" });
+        parts.push({ text: match[1], color: "#166534" });
       }
     } else if (match[3] !== undefined) {
-      parts.push({ text: match[3], color: "#fca5a5" });
+      parts.push({ text: match[3], color: "#b91c1c" });
     } else if (match[4] !== undefined) {
-      parts.push({ text: match[4], color: "#fde047" });
+      parts.push({ text: match[4], color: "#a16207" });
     } else if (match[5] !== undefined) {
       parts.push({ text: match[5], color: "var(--page-fg-dim)" });
     }
@@ -47,15 +47,15 @@ const response = `[
         "used": 7,
         "limit": 100,
         "format": { "kind": "percent" },
-        "resetsAt": "2026-03-31T08:00:00Z"
+        "resetsAt": "2026-07-10T08:00:00Z"
       },
       {
         "type": "text",
         "label": "Today",
-        "value": "$1.33 \u00b7 4.6M tokens"
+        "value": "$1.33 · 4.6M tokens"
       }
     ],
-    "fetchedAt": "2026-03-31T05:19:39Z"
+    "fetchedAt": "2026-07-10T05:19:39Z"
   }
 ]`;
 
@@ -63,17 +63,33 @@ const highlighted = highlightJson(response);
 
 export function ApiExample() {
   return (
-    <div className="fx-glass-panel overflow-hidden font-mono text-[11px] leading-relaxed sm:text-xs">
-      <div className="flex items-center justify-between border-b border-[var(--page-border)] px-4 py-2.5">
+    <div className="surface-panel overflow-hidden font-mono text-[11px] leading-relaxed sm:text-xs">
+      <div className="flex items-center justify-between border-b border-[var(--page-border)] bg-[var(--page-stripe)] px-4 py-2.5">
         <span className="text-[10px] text-[var(--page-fg-dim)]">response.json</span>
-        <span className="text-[10px] text-[var(--page-accent)]">200 OK</span>
+        <span className="text-[10px] font-semibold text-[var(--page-accent-ink)]">200 OK</span>
       </div>
-      <div className="max-h-[min(70vh,420px)] overflow-auto px-2 py-3 sm:px-4">
-        <pre className="text-[var(--page-fg-muted)]">
+      <div className="max-h-[min(70vh,420px)] overflow-auto bg-[#0c1222] px-2 py-3 sm:px-4">
+        <pre className="text-white/70">
           <code>
             {highlighted.map((part, i) =>
               part.color ? (
-                <span key={i} style={{ color: part.color }}>
+                <span
+                  key={i}
+                  style={{
+                    color:
+                      part.color === "#0f766e"
+                        ? "#5eead4"
+                        : part.color === "#166534"
+                          ? "#86efac"
+                          : part.color === "#b91c1c"
+                            ? "#fca5a5"
+                            : part.color === "#a16207"
+                              ? "#fde047"
+                              : part.color === "var(--page-fg-dim)"
+                                ? "rgba(255,255,255,0.35)"
+                                : part.color,
+                  }}
+                >
                   {part.text}
                 </span>
               ) : (

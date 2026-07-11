@@ -1,38 +1,34 @@
-import { Panel } from "@/components/panel/panel";
 import { Eyebrow } from "@/components/marketing/eyebrow";
+import { AppViewport } from "@/components/marketing/app-viewport";
 
 export function InteractivePreviewSection({ version }: { version: string | null }) {
   return (
-    <section className="relative z-[1] overflow-hidden">
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_60%_40%_at_50%_100%,rgba(167,139,250,0.06),transparent_60%)]" />
-      <div className="fx-reveal relative mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
-        <Eyebrow>live.mock.tsx</Eyebrow>
-        <h2
-          id="interactive-preview-heading"
-          className="mt-4 text-3xl font-bold tracking-tight text-[var(--page-fg)] sm:text-4xl"
-        >
-          Embedded UI
-        </h2>
-        <p className="mt-3 max-w-xl font-mono text-xs leading-relaxed text-[var(--page-fg-muted)] sm:text-sm">
-          Hydrated client island—sidebar state is ephemeral. Matches binary chrome so you know what
-          you are installing.
-        </p>
+    <section
+      id="try"
+      className="relative z-[1] scroll-mt-24 overflow-hidden border-b border-[var(--page-border)] bg-[var(--hero-wash)] text-white"
+    >
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_70%_50%_at_80%_20%,rgba(15,159,122,0.22),transparent_55%)]" />
+      <div className="fx-reveal relative mx-auto max-w-6xl px-4 py-20 sm:px-6 lg:px-8 lg:py-28">
+        <div className="mx-auto max-w-2xl text-center lg:mx-0 lg:max-w-xl lg:text-left">
+          <Eyebrow className="!border-white/15 !bg-white/10 !text-[var(--page-accent)] mx-auto lg:mx-0">
+            Try it
+          </Eyebrow>
+          <h2
+            id="interactive-preview-heading"
+            className="font-display mt-4 text-3xl font-bold tracking-tight sm:text-4xl"
+          >
+            Classic or Modern.
+            <span className="mt-2 block text-white/55">Click through both — no install.</span>
+          </h2>
+          <p className="mt-5 text-base leading-relaxed text-white/65">
+            Toggle layouts in the demo. Modern uses top tabs + grouped cards; Classic keeps the
+            sidebar. Same mock data as {version ? `v${version}` : "the desktop app"} — light React,
+            not WASM.
+          </p>
+        </div>
 
-        <div className="mt-14 flex justify-center">
-          <div className="w-full max-w-[460px]">
-            <div className="fx-glass-panel relative p-4 sm:p-5">
-              <div className="mb-4 flex items-center justify-between border-b border-[var(--page-border)] pb-3 font-mono text-[10px] text-[var(--page-fg-dim)] sm:text-[11px]">
-                <span className="flex items-center gap-2">
-                  <span className="h-1.5 w-1.5 rounded-full bg-[var(--page-accent)] shadow-[0_0_8px_var(--page-accent)]" />
-                  panel.preview
-                </span>
-                <span className="text-[var(--page-accent)]">● live</span>
-              </div>
-              <div className="flex justify-center">
-                <Panel version={version} />
-              </div>
-            </div>
-          </div>
+        <div id="layouts" className="mt-12 scroll-mt-24 lg:mt-14">
+          <AppViewport version={version} />
         </div>
       </div>
     </section>

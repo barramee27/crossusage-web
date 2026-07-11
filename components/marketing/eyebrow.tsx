@@ -1,10 +1,15 @@
-/** Small mono label — `[ topic ]` */
-export function Eyebrow({ children }: { children: React.ReactNode }) {
+export function Eyebrow({
+  children,
+  className = "",
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) {
   return (
-    <p className="signal-prompt">
-      <span className="text-[var(--page-fg-dim)]">[ </span>
+    <p
+      className={`pill pill-accent w-fit font-mono text-[11px] uppercase tracking-[0.16em] ${className}`}
+    >
       {children}
-      <span className="text-[var(--page-fg-dim)]"> ]</span>
     </p>
   );
 }

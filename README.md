@@ -25,7 +25,7 @@ Upload the **`out/`** directory to the server (see `deploy/crossusage.dev/` in t
 
 **Routes:** `/` (home), `/download/`, `/privacy/`, `/credits/`. Shared header and footer live in `components/site-header.tsx` and `components/site-footer.tsx`.
 
-Hero imagery: `public/hero-crossusage.png` is used for the landing visual and social cards; replace it with a higher-resolution capture if you want a sharper hero or OG preview.
+Hero: live Classic/Modern viewport demos in `hero-section.tsx` / `#try` (React, not a static PNG). Marketing stills: `public/og-crossusage.png` (OG/Twitter, 1536×1024) and `public/hero-crossusage.png` (same composite as OG for reuse in docs/deploy).
 
 ## Git remote
 

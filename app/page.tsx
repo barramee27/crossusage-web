@@ -1,5 +1,6 @@
 import { WhatsNewSection } from "@/components/marketing/whats-new-section";
 import { ProviderGrid } from "@/components/provider-grid";
+import { ProviderMarquee } from "@/components/marketing/provider-marquee";
 import { HeroSection } from "@/components/marketing/hero-section";
 import { InteractivePreviewSection } from "@/components/marketing/interactive-preview-section";
 import { ApiSection } from "@/components/marketing/api-section";
@@ -54,12 +55,13 @@ export default async function Home() {
   return (
     <div className="min-h-0">
       <HeroSection version={version} />
+      <ProviderMarquee />
       <WhatsNewSection version={version} />
-      <ProviderGrid />
-      <InteractivePreviewSection version={version} />
-      <ApiSection />
       <FeaturesSection />
+      <InteractivePreviewSection version={version} />
+      <ProviderGrid />
       <StepsSection />
+      <ApiSection />
       <OpenSourceSection contributors={contributors} />
       <CtaBand version={version} />
     </div>

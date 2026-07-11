@@ -51,6 +51,7 @@ export const plugins: Plugin[] = [
   { id: "neuralwatt", name: "Neuralwatt", brandColor: "#D55934", Icon: makeLetterIcon("N"), featured: false },
   { id: "ollama", name: "Ollama", brandColor: "#000000", Icon: makeLetterIcon("O"), featured: false },
   { id: "opencode-go", name: "OpenCode Go", brandColor: "#000000", Icon: OpenCodeGoIcon, featured: false },
+  { id: "openrouter", name: "OpenRouter", brandColor: "#8B5CF6", Icon: makeLetterIcon("O"), featured: false },
   { id: "perplexity", name: "Perplexity", brandColor: "#20808D", Icon: PerplexityIcon, featured: false },
   { id: "synthetic", name: "Synthetic", brandColor: "#000000", Icon: SyntheticIcon, featured: false },
   { id: "zai", name: "Z.ai", brandColor: "#2D2D2D", Icon: ZaiIcon, featured: false },

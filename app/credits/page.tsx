@@ -17,56 +17,60 @@ export const metadata: Metadata = {
 
 export default function CreditsPage() {
   return (
-    <DocPage title="Credits" kicker="thanks">
-      <p className="font-mono text-sm text-[var(--page-fg-muted)]">
-        Maintainers and strangers who filed issues—this fork is yours too.
+    <DocPage title="Credits" kicker="credits">
+      <p className="text-base text-[var(--page-fg-muted)]">
+        Maintainers and strangers who filed issues — this fork is yours too.
       </p>
 
       <div className="mt-10 space-y-4">
-        <div className="signal-block-strong p-5 sm:p-6">
-          <h2 className="font-mono text-sm text-[var(--page-accent)]">upstream</h2>
+        <div className="surface-panel border-[var(--page-accent)]/30 p-6">
+          <h2 className="text-sm font-semibold uppercase tracking-wide text-[var(--page-accent-ink)]">
+            Upstream
+          </h2>
           <p className="mt-3 text-sm leading-relaxed text-[var(--page-fg-muted)]">
             <a
               href={upstreamRepo}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-[var(--page-fg)] hover:text-[var(--page-accent)]"
+              className="font-medium text-[var(--page-fg)] underline-offset-2 hover:underline"
             >
               OpenUsage
             </a>{" "}
             by{" "}
             <a
-              href="https://github.com/RobinEbers"
+              href="https://github.com/robinebers"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-[var(--page-fg)] hover:text-[var(--page-accent)]"
+              className="font-medium text-[var(--page-fg)] underline-offset-2 hover:underline"
             >
               Robin Ebers
             </a>
-            —architecture, plugins, MIT license.
+            — architecture, plugins, MIT license. CrossUsage ports 0.7.x to Linux & Windows.
           </p>
         </div>
 
-        <div className="signal-block p-5 sm:p-6">
-          <h2 className="font-mono text-sm text-[var(--page-fg-dim)]">contributors</h2>
+        <div className="surface-panel p-6">
+          <h2 className="text-sm font-semibold uppercase tracking-wide text-[var(--page-fg-dim)]">
+            Contributors
+          </h2>
           <p className="mt-3 text-sm leading-relaxed text-[var(--page-fg-muted)]">
             PRs and reports on{" "}
             <a
               href={forkRepo}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-[var(--page-accent)] hover:underline"
+              className="font-medium text-[var(--page-accent-ink)] underline-offset-2 hover:underline"
             >
-              github
+              GitHub
             </a>
             .
           </p>
         </div>
       </div>
 
-      <p className="mt-14 font-mono text-xs">
+      <p className="mt-14 text-sm">
         <Link href="/" className="text-[var(--page-fg-muted)] hover:text-[var(--page-accent)]">
-          ← ../
+          ← Back home
         </Link>
       </p>
     </DocPage>

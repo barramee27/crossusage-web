@@ -8,11 +8,11 @@ export const dynamic = "force-static";
 export const metadata: Metadata = {
   title: "Download",
   description:
-    "Download CrossUsage 1.2.0 for Linux (.deb, .rpm, AppImage) and Windows (installer + portable onefile). macOS → upstream OpenUsage.",
+    "Download CrossUsage 1.3.1 for Linux (.deb, .rpm, AppImage) and Windows (NSIS installer + portable onefile). macOS → upstream OpenUsage.",
   openGraph: {
     title: "Download CrossUsage",
     description:
-      "Linux and Windows installers from GitHub Releases. MIT licensed, open source.",
+      "Linux and Windows installers from GitHub Releases. Multi-account, encrypted credentials. MIT licensed.",
   },
 };
 
@@ -42,12 +42,12 @@ export default async function DownloadPage() {
     : [];
 
   return (
-    <DocPage title="Download" kicker="dist">
-      <p className="font-mono text-sm leading-relaxed text-[var(--page-fg-muted)]">
+    <DocPage title="Download" kicker="download">
+      <p className="text-base leading-relaxed text-[var(--page-fg-muted)]">
         Installers and portable builds live on GitHub Releases. In-app updates use the{" "}
-        <code className="text-[var(--page-fg)]">.deb</code> / NSIS{" "}
-        <code className="text-[var(--page-fg)]">.exe</code> plus bundled{" "}
-        <code className="text-[var(--page-fg)]">.sig</code> files.
+        <code className="rounded bg-[var(--page-stripe)] px-1.5 py-0.5 text-sm">.deb</code> / NSIS{" "}
+        <code className="rounded bg-[var(--page-stripe)] px-1.5 py-0.5 text-sm">.exe</code> plus
+        bundled signatures.
       </p>
 
       <div className="mt-10 space-y-8">
@@ -55,24 +55,24 @@ export default async function DownloadPage() {
           href={forkReleasesLatest}
           target="_blank"
           rel="noopener noreferrer"
-          className="signal-block-strong inline-flex w-full items-center justify-center px-6 py-3.5 font-mono text-sm font-semibold text-[var(--page-accent)] hover:bg-[var(--page-accent)] hover:text-[var(--page-bg)] sm:w-auto"
+          className="btn-primary inline-flex w-full sm:w-auto"
         >
           Download {version ? `v${version}` : "latest release"}
         </a>
 
         {assets.length > 0 && (
-          <div className="signal-block overflow-hidden font-mono text-xs sm:text-sm">
-            <div className="border-b border-[var(--page-border)] bg-[var(--surface-2)] px-4 py-3 text-[var(--page-fg-dim)] sm:px-5">
+          <div className="surface-panel overflow-hidden text-sm">
+            <div className="border-b border-[var(--page-border)] bg-[var(--page-stripe)] px-5 py-3 text-[var(--page-fg-dim)]">
               Typical assets for v{version}
             </div>
             <ul className="divide-y divide-[var(--page-border)]">
               {assets.map(({ platform, file }) => (
                 <li
                   key={file}
-                  className="flex flex-col gap-1 px-4 py-3 sm:flex-row sm:items-center sm:justify-between sm:gap-4 sm:px-5"
+                  className="flex flex-col gap-1 px-5 py-3.5 sm:flex-row sm:items-center sm:justify-between sm:gap-4"
                 >
-                  <span className="text-[var(--page-accent)]">{platform}</span>
-                  <code className="break-all border border-[var(--page-border)] bg-[var(--surface-2)] px-2 py-1 text-[10px] text-[var(--page-fg)] sm:text-xs">
+                  <span className="font-medium text-[var(--page-fg)]">{platform}</span>
+                  <code className="break-all rounded-lg border border-[var(--page-border)] bg-[var(--page-stripe)] px-2 py-1 font-mono text-[11px] text-[var(--page-fg-muted)]">
                     {file}
                   </code>
                 </li>
@@ -81,36 +81,33 @@ export default async function DownloadPage() {
           </div>
         )}
 
-        <div className="signal-block divide-y divide-[var(--page-border)] font-mono text-xs sm:text-sm">
-          <div className="px-4 py-4 sm:px-5">
-            <p className="text-[var(--page-accent)]">quick install</p>
-            <p className="mt-2 text-[var(--page-fg-muted)]">
-              Linux:{" "}
-              <code className="text-[var(--page-fg)]">curl -fsSL …/install.sh | bash</code>
+        <div className="surface-panel divide-y divide-[var(--page-border)] text-sm">
+          <div className="px-5 py-4">
+            <p className="font-semibold text-[var(--page-fg)]">Quick install</p>
+            <p className="mt-2 font-mono text-xs leading-relaxed text-[var(--page-fg-muted)]">
+              Linux: <code className="text-[var(--page-fg)]">curl -fsSL …/install.sh | bash</code>
               <br />
-              Windows:{" "}
-              <code className="text-[var(--page-fg)]">irm …/install.ps1 | iex</code>
+              Windows: <code className="text-[var(--page-fg)]">irm …/install.ps1 | iex</code>
               <br />
               <span className="text-[var(--page-fg-dim)]">Scripts in the main repo README.</span>
             </p>
           </div>
-          <div className="px-4 py-4 sm:px-5">
-            <p className="text-[var(--page-accent)]">cli-only</p>
+          <div className="px-5 py-4">
+            <p className="font-semibold text-[var(--page-fg)]">CLI-only</p>
             <p className="mt-2 text-[var(--page-fg-muted)]">
-              Headless <code className="text-[var(--page-fg)]">crossusage-cli</code> tarballs/zips
-              on the same release or branch <code className="text-[var(--page-fg)]">releases/</code>{" "}
-              folder — see INSTALL.md.
+              Headless <code className="rounded bg-[var(--page-stripe)] px-1">crossusage-cli</code>{" "}
+              tarballs/zips on the same release — see INSTALL.md.
             </p>
           </div>
         </div>
 
         <p className="text-sm text-[var(--page-fg-muted)]">
-          <span className="font-mono text-[var(--page-fg-dim)]">macOS GUI</span> →{" "}
+          <span className="font-medium text-[var(--page-fg)]">macOS GUI</span> →{" "}
           <a
             href={upstreamReleasesLatest}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-[var(--page-accent)] hover:underline"
+            className="text-[var(--page-accent-ink)] underline-offset-2 hover:underline"
           >
             OpenUsage releases
           </a>{" "}
@@ -118,12 +115,14 @@ export default async function DownloadPage() {
         </p>
 
         {version && (
-          <p className="font-mono text-[10px] text-[var(--page-fg-dim)]">Updater manifest: latest.json · tag v{tag}</p>
+          <p className="font-mono text-[11px] text-[var(--page-fg-dim)]">
+            Updater manifest: latest.json · tag v{tag}
+          </p>
         )}
 
-        <p className="font-mono text-xs">
+        <p className="text-sm">
           <Link href="/" className="text-[var(--page-fg-muted)] hover:text-[var(--page-accent)]">
-            ← ../
+            ← Back home
           </Link>
         </p>
       </div>

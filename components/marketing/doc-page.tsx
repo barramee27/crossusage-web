@@ -10,26 +10,20 @@ export function DocPage({
   children: React.ReactNode;
 }) {
   return (
-    <article className="fx-section-bleed relative z-[1] mx-auto max-w-2xl px-4 py-16 sm:px-6 lg:py-24">
+    <article className="relative z-[1] mx-auto max-w-2xl px-4 py-16 sm:px-6 lg:py-24">
       <div className="fx-reveal">
-        <nav className="mb-8 font-mono text-xs text-[var(--page-fg-dim)]">
-          <Link
-            href="/"
-            className="rounded px-1 transition-colors hover:bg-[var(--page-accent)]/10 hover:text-[var(--page-accent)]"
-          >
-            ~
+        <nav className="mb-8 text-sm text-[var(--page-fg-dim)]">
+          <Link href="/" className="rounded-md px-1 transition-colors hover:text-[var(--page-accent)]">
+            Home
           </Link>
-          <span className="text-[var(--page-fg-dim)]"> / </span>
+          <span> / </span>
           <span className="text-[var(--page-fg-muted)]">{kicker}</span>
         </nav>
 
-        <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">
-          <span className="fx-headline">{title}</span>
+        <h1 className="font-display text-4xl font-bold tracking-tight text-[var(--page-fg)] sm:text-5xl">
+          {title}
         </h1>
-        <div
-          className="mt-5 h-0.5 w-32 max-w-full bg-gradient-to-r from-[var(--page-accent)] via-[var(--fx-magenta)] to-transparent"
-          aria-hidden
-        />
+        <div className="mt-5 h-1 w-16 rounded-full bg-[var(--page-accent)]" aria-hidden />
 
         <div className="mt-12">{children}</div>
       </div>

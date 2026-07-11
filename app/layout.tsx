@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { JetBrains_Mono, Space_Grotesk } from "next/font/google";
+import { IBM_Plex_Mono, Manrope, Syne } from "next/font/google";
 import "./globals.css";
 import { siteUrl } from "@/lib/site";
 import { SiteHeader } from "@/components/site-header";
@@ -7,24 +7,30 @@ import { SiteFooter } from "@/components/site-footer";
 import { MarketingShell } from "@/components/marketing/marketing-shell";
 import { SkipToContent } from "@/components/skip-to-content";
 
-const spaceGrotesk = Space_Grotesk({
+const syne = Syne({
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  variable: "--font-space-grotesk",
+  weight: ["500", "600", "700", "800"],
+  variable: "--font-syne",
   display: "swap",
 });
 
-const jetbrainsMono = JetBrains_Mono({
+const manrope = Manrope({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700", "800"],
+  variable: "--font-manrope",
+  display: "swap",
+});
+
+const ibmPlexMono = IBM_Plex_Mono({
   subsets: ["latin"],
   weight: ["400", "500", "600"],
-  variable: "--font-jetbrains-mono",
+  variable: "--font-ibm-plex-mono",
   display: "swap",
 });
 
-const defaultTitle =
-  "CrossUsage — AI usage tracker for Linux & Windows (Classic + Modern UI)";
+const defaultTitle = "CrossUsage — AI usage tracker for Linux & Windows";
 const description =
-  "Track Cursor, Claude, Codex, Copilot, and 26+ providers from your tray. Classic or Modern layout, usage insights, history charts. Free, open source, MIT. Fork of OpenUsage.";
+  "Track Cursor, Claude, Codex, Copilot, OpenRouter, and 25+ providers from your tray. Multi-account for every provider, Classic or Modern UI, encrypted credentials. Fork of OpenUsage — ports 0.7.2 + 0.7.3.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -38,12 +44,13 @@ export const metadata: Metadata = {
     description,
     type: "website",
     url: siteUrl,
+    siteName: "CrossUsage",
     images: [
       {
-        url: "/hero-crossusage.png",
-        width: 320,
-        height: 463,
-        alt: "CrossUsage usage panel",
+        url: "/og-crossusage.png",
+        width: 1536,
+        height: 1024,
+        alt: "CrossUsage — AI quotas for Linux & Windows, fork of OpenUsage 1.3.1",
       },
     ],
   },
@@ -51,7 +58,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: defaultTitle,
     description,
-    images: ["/hero-crossusage.png"],
+    images: ["/og-crossusage.png"],
   },
 };
 
@@ -63,8 +70,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${spaceGrotesk.variable} ${jetbrainsMono.variable} font-sans antialiased text-[var(--page-fg)]`}
+        className={`${syne.variable} ${manrope.variable} ${ibmPlexMono.variable} font-sans antialiased text-[var(--page-fg)]`}
       >
+        <div className="page-atmosphere" aria-hidden />
         <div className="relative z-[1] flex min-h-screen flex-col">
           <SkipToContent />
           <MarketingShell>

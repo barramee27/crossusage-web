@@ -2,17 +2,30 @@
 
 import type { ActiveView, ProviderId } from "@/lib/types";
 import { cn } from "@/lib/utils";
-import { GaugeIcon, SettingsIcon, CodexIcon, ClaudeIcon, CursorIcon, CopilotIcon, WindsurfIcon, AntigravityIcon } from "@/lib/icons";
+import {
+  GaugeIcon,
+  SettingsIcon,
+  CodexIcon,
+  ClaudeIcon,
+  CursorIcon,
+} from "@/lib/icons";
 import { track } from "@/lib/track";
 
 const providerNav: {
   id: ProviderId;
   Icon: typeof CodexIcon;
   brandColor: string;
+  title: string;
 }[] = [
-  { id: "codex", Icon: CodexIcon, brandColor: "var(--brand-codex)" },
-  { id: "claude", Icon: ClaudeIcon, brandColor: "var(--brand-claude)" },
-  { id: "cursor", Icon: CursorIcon, brandColor: "var(--brand-cursor)" },
+  { id: "codex", Icon: CodexIcon, brandColor: "var(--brand-codex)", title: "Codex" },
+  { id: "claude", Icon: ClaudeIcon, brandColor: "var(--brand-claude)", title: "Claude" },
+  { id: "cursor", Icon: CursorIcon, brandColor: "var(--brand-cursor)", title: "Cursor" },
+  {
+    id: "cursor-work",
+    Icon: CursorIcon,
+    brandColor: "var(--brand-cursor)",
+    title: "Cursor (Work)",
+  },
 ];
 
 export function Sidebar({
@@ -23,71 +36,59 @@ export function Sidebar({
   onNavigate: (view: ActiveView) => void;
 }) {
   return (
-    <div className="w-12 flex flex-col items-center py-3 flex-shrink-0 bg-sidebar/30 border-r border-sidebar-border">
-      {/* Home / Overview */}
+    <div className="flex w-12 flex-shrink-0 flex-col items-center border-r border-[var(--sidebar-border)] bg-[var(--sidebar)]/40 py-3">
       <NavButton
         isActive={activeView === "overview"}
+        title="Overview"
         onClick={() => {
           track("panel_tab_clicked", { tab: "overview" });
           onNavigate("overview");
         }}
       >
         <GaugeIcon
-          className={cn("w-6 h-6", activeView === "overview" ? "text-foreground" : "text-muted-foreground")}
+          className={cn(
+            "h-6 w-6",
+            activeView === "overview" ? "text-foreground" : "text-muted-foreground"
+          )}
         />
       </NavButton>
 
-      {/* Provider icons */}
-      {providerNav.map(({ id, Icon, brandColor }) => (
+      {providerNav.map(({ id, Icon, brandColor, title }) => (
         <NavButton
           key={id}
           isActive={activeView === id}
+          title={title}
           onClick={() => {
             track("panel_tab_clicked", { tab: id });
             onNavigate(id);
           }}
         >
-          <Icon
-            className="w-6 h-6"
-            style={{ color: brandColor }}
-          />
+          <span className="relative">
+            <Icon className="h-6 w-6" style={{ color: brandColor }} />
+            {id === "cursor-work" && (
+              <span className="absolute -right-0.5 -bottom-0.5 h-2 w-2 rounded-full border border-card bg-[var(--page-accent)]" />
+            )}
+          </span>
         </NavButton>
       ))}
 
-      {/* Copilot — visible but not navigable */}
-      <button
-        className="w-full p-2.5 flex items-center justify-center"
-        onClick={() => track("panel_tab_clicked", { tab: "copilot" })}
-      >
-        <CopilotIcon className="w-6 h-6" style={{ color: "var(--brand-copilot)" }} />
-      </button>
-
-      {/* Windsurf — visible but not navigable */}
-      <button
-        className="w-full p-2.5 flex items-center justify-center"
-        onClick={() => track("panel_tab_clicked", { tab: "windsurf" })}
-      >
-        <WindsurfIcon className="w-6 h-6" style={{ color: "var(--brand-windsurf)" }} />
-      </button>
-
-      {/* Antigravity — visible but not navigable */}
-      <button
-        className="w-full p-2.5 flex items-center justify-center"
-        onClick={() => track("panel_tab_clicked", { tab: "antigravity" })}
-      >
-        <AntigravityIcon className="w-6 h-6" style={{ color: "var(--brand-antigravity)" }} />
-      </button>
-
-      {/* Spacer */}
       <div className="flex-1" />
 
-      {/* Settings — visible but not navigable */}
-      <button
-        className="w-full p-2.5 flex items-center justify-center"
-        onClick={() => track("panel_tab_clicked", { tab: "settings" })}
+      <NavButton
+        isActive={activeView === "settings"}
+        title="Settings"
+        onClick={() => {
+          track("panel_tab_clicked", { tab: "settings" });
+          onNavigate("settings");
+        }}
       >
-        <SettingsIcon className="w-6 h-6 text-muted-foreground opacity-40" />
-      </button>
+        <SettingsIcon
+          className={cn(
+            "h-6 w-6",
+            activeView === "settings" ? "text-foreground" : "text-muted-foreground"
+          )}
+        />
+      </NavButton>
     </div>
   );
 }
@@ -95,22 +96,28 @@ export function Sidebar({
 function NavButton({
   isActive,
   onClick,
+  title,
   children,
 }: {
   isActive: boolean;
   onClick: () => void;
+  title: string;
   children: React.ReactNode;
 }) {
   return (
     <button
+      type="button"
+      title={title}
+      aria-label={title}
+      aria-current={isActive ? "page" : undefined}
       onClick={onClick}
       className={cn(
-        "relative w-full p-2.5 flex items-center justify-center transition-colors",
+        "relative flex w-full items-center justify-center p-2.5 transition-colors",
         isActive && "bg-accent"
       )}
     >
       {isActive && (
-        <span className="absolute left-0 top-1.5 bottom-1.5 w-0.5 rounded-r-full bg-sidebar-primary" />
+        <span className="absolute top-1.5 bottom-1.5 left-0 w-0.5 rounded-r-full bg-[var(--sidebar-primary)]" />
       )}
       {children}
     </button>

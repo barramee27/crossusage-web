@@ -4,36 +4,39 @@ import { upstreamReleasesLatest } from "@/lib/site";
 export function CtaBand({ version }: { version: string | null }) {
   return (
     <section className="relative z-[1] px-4 py-20 sm:px-6 lg:px-8 lg:py-28">
-      <div className="fx-reveal mx-auto max-w-3xl">
-        <div className="fx-cta-shell">
-          <div className="fx-cta-inner px-8 py-14 text-center sm:px-12 sm:py-16">
-            <p className="font-mono text-[10px] tracking-[0.35em] text-[var(--page-accent)]">EOF</p>
-            <h2 className="mt-4 text-3xl font-bold tracking-tight text-[var(--page-fg)] sm:text-4xl">
-              Get CrossUsage
-            </h2>
-            <p className="mx-auto mt-5 max-w-md font-mono text-xs leading-relaxed text-[var(--page-fg-muted)] sm:text-sm">
-              {version ? `v${version}` : "Latest"} — .deb, .rpm, AppImage, Windows installer, or
-              one-file portable exe. macOS → upstream OpenUsage.
+      <div className="fx-reveal mx-auto max-w-4xl">
+        <div className="relative overflow-hidden rounded-[2rem] bg-[var(--hero-wash)] px-8 py-16 text-center text-white sm:px-12 sm:py-20">
+          <div
+            className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_60%_50%_at_50%_0%,rgba(15,159,122,0.28),transparent_60%)]"
+            aria-hidden
+          />
+          <div className="relative">
+            <p className="font-mono text-[11px] uppercase tracking-[0.28em] text-[var(--page-accent)]">
+              Ready when you are
             </p>
-            <div className="mt-10 flex flex-col items-center gap-4">
+            <h2 className="font-display mt-4 text-3xl font-bold tracking-tight sm:text-5xl">
+              Get CrossUsage {version ? `v${version}` : ""}
+            </h2>
+            <p className="mx-auto mt-5 max-w-md text-sm leading-relaxed text-white/65 sm:text-base">
+              .deb, .rpm, AppImage, Windows installer, or one-file portable exe. macOS GUI → upstream
+              OpenUsage.
+            </p>
+            <div className="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
               <Link
                 href="/download/"
-                className="signal-block-strong inline-flex min-w-[220px] items-center justify-center px-10 py-3.5 font-mono text-sm font-semibold text-[var(--page-accent)] hover:bg-[var(--page-accent)] hover:text-[var(--page-bg)]"
+                className="inline-flex min-w-[200px] items-center justify-center rounded-full bg-[var(--page-accent)] px-8 py-3.5 text-sm font-semibold text-[var(--hero-wash)] transition-transform hover:-translate-y-0.5"
               >
-                /download/
+                Download
               </Link>
               <a
                 href={upstreamReleasesLatest}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="font-mono text-xs text-[var(--page-fg-dim)] transition-colors hover:text-[var(--fx-magenta)]"
+                className="text-sm font-medium text-white/55 transition-colors hover:text-white"
               >
-                openusage/releases (macOS)
+                OpenUsage releases (macOS)
               </a>
             </div>
-            {version && (
-              <p className="mt-10 font-mono text-[10px] text-[var(--page-fg-dim)]">tag v{version}</p>
-            )}
           </div>
         </div>
       </div>

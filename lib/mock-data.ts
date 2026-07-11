@@ -136,6 +136,51 @@ export const providers: Provider[] = [
       },
     ],
   },
+  {
+    id: "cursor-work",
+    name: "Cursor (Work)",
+    planBadge: "Business",
+    brandColor: "#000000",
+    overviewMetrics: [
+      {
+        label: "Total usage",
+        percent: 79,
+        primaryValue: "79% left",
+        secondaryValue: "Resets in 21d 23h",
+        pace: "on-track",
+      },
+    ],
+    detailMetrics: [
+      {
+        label: "Credits",
+        percent: 100,
+        primaryValue: "$122.22 left",
+        secondaryValue: "Included",
+        pace: "ahead",
+      },
+      {
+        label: "Total usage",
+        percent: 79,
+        primaryValue: "79% left",
+        secondaryValue: "Resets in 21d 23h",
+        pace: "on-track",
+      },
+      {
+        label: "Auto usage",
+        percent: 78,
+        primaryValue: "78% left",
+        secondaryValue: "Resets in 21d 23h",
+        pace: "on-track",
+      },
+      {
+        label: "API usage",
+        percent: 94,
+        primaryValue: "94% left",
+        secondaryValue: "Resets in 21d 23h",
+        pace: "ahead",
+      },
+    ],
+  },
 ];
 
 /** Primary metric percent per provider for the tray icon mini bars */
@@ -143,4 +188,5 @@ export const trayBarData = [
   { percent: 73, label: "Codex" },
   { percent: 42, label: "Claude" },
   { percent: 67, label: "Cursor" },
+  { percent: 79, label: "Work" },
 ];
