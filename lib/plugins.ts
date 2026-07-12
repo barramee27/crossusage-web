@@ -58,12 +58,13 @@ export const plugins: Plugin[] = [
 ];
 
 /**
- * Returns white for very dark brand colors (so they're visible on the dark page).
- * Used by the provider grid and footer — NOT the light panel sidebar.
+ * Visible ink for brand accents on the light marketing page.
+ * Near-white brands → dark ink; dark brands stay as-is (old dark-page
+ * logic mapped blacks to white and made Cursor/Grok/etc invisible).
  */
 export function displayColor(hex: string): string {
   const r = parseInt(hex.slice(1, 3), 16);
   const g = parseInt(hex.slice(3, 5), 16);
   const b = parseInt(hex.slice(5, 7), 16);
-  return (r + g + b) / 3 < 50 ? "#ffffff" : hex;
+  return (r + g + b) / 3 > 220 ? "#111111" : hex;
 }
