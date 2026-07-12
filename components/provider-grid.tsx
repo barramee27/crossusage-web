@@ -1,4 +1,5 @@
 import { plugins, displayColor } from "@/lib/plugins";
+import { ProviderIcon } from "@/components/provider-icon";
 import { Eyebrow } from "@/components/marketing/eyebrow";
 
 export function ProviderGrid() {
@@ -19,7 +20,7 @@ export function ProviderGrid() {
         </p>
 
         <div className="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {plugins.map(({ id, name, brandColor, Icon }) => {
+          {plugins.map(({ id, name, brandColor, icon }) => {
             const color = displayColor(brandColor);
             return (
               <div
@@ -30,7 +31,7 @@ export function ProviderGrid() {
                   className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-xl"
                   style={{ backgroundColor: `${color}18`, color }}
                 >
-                  <Icon className="h-4 w-4" />
+                  <ProviderIcon src={icon} color={color} className="h-4 w-4" />
                 </span>
                 <div className="min-w-0">
                   <p className="truncate text-sm font-semibold text-[var(--page-fg)]">{name}</p>

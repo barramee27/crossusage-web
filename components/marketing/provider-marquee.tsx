@@ -1,4 +1,5 @@
 import { displayColor, plugins } from "@/lib/plugins";
+import { ProviderIcon } from "@/components/provider-icon";
 
 /** Continuous provider strip under the hero — ambient, not a card grid. */
 export function ProviderMarquee() {
@@ -11,14 +12,14 @@ export function ProviderMarquee() {
     >
       <div className="provider-marquee-wrap overflow-hidden">
         <div className="provider-marquee gap-8 px-4">
-          {row.map(({ id, name, brandColor, Icon }, i) => {
+          {row.map(({ id, name, brandColor, icon }, i) => {
             const color = displayColor(brandColor);
             return (
               <div
                 key={`${id}-${i}`}
                 className="flex shrink-0 items-center gap-2.5 text-sm font-medium text-[var(--page-fg-muted)]"
               >
-                <Icon className="h-4 w-4 shrink-0" style={{ color }} />
+                <ProviderIcon src={icon} color={color} className="h-4 w-4" />
                 <span>{name}</span>
               </div>
             );
