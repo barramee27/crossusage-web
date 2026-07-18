@@ -1,8 +1,20 @@
-import { KeyRound, LayoutGrid, LineChart, ShieldCheck, Sparkles, Users } from "lucide-react";
+import { KeyRound, LayoutGrid, LineChart, PieChart, ShieldCheck, Users } from "lucide-react";
 import { Eyebrow } from "@/components/marketing/eyebrow";
 import { forkReleasesLatest } from "@/lib/site";
 
 const highlights = [
+  {
+    icon: PieChart,
+    title: "Total Spend ring",
+    body: "Cross-provider spend sectors with Cost / Cost·MTok / Tokens — see where money goes at a glance.",
+    badge: "1.3.2+",
+  },
+  {
+    icon: LineChart,
+    title: "Accurate Codex & Claude spend",
+    body: "Subagent replay dedup, session-log fast tier, 272k long-context pricing, and pi agent fold-in so tiles match reality.",
+    badge: "1.3.3",
+  },
   {
     icon: Users,
     title: "Multi-account everywhere",
@@ -16,21 +28,9 @@ const highlights = [
     badge: "CrossUsage",
   },
   {
-    icon: Sparkles,
-    title: "Native spend scanners",
-    body: "Claude and Codex spend tiles use native log scanners — with per-model hover breakdown on Today / Yesterday / 30d.",
-    badge: "OpenUsage 0.7.2/0.7.3",
-  },
-  {
     icon: LayoutGrid,
     title: "Classic & Modern",
     body: "Two layouts, same providers. Modern is the 0.7-style grouped dashboard; Classic stays for anyone who prefers it.",
-    badge: "Both",
-  },
-  {
-    icon: LineChart,
-    title: "Insights & history",
-    body: "Pace warnings, tightest quota, next reset, 7-day rollup, and charts on provider detail when history is on.",
     badge: "Both",
   },
   {
@@ -54,8 +54,10 @@ export function WhatsNewSection({ version }: { version: string | null }) {
               What&apos;s new in {label}
             </h2>
             <p className="mt-3 max-w-2xl text-base leading-relaxed text-[var(--page-fg-muted)]">
-              Ports OpenUsage <strong className="font-semibold text-[var(--page-fg)]">v0.7.2 + v0.7.3</strong>{" "}
-              to Linux & Windows, plus CrossUsage-only multi-account and encrypted credentials.
+              Ports OpenUsage through{" "}
+              <strong className="font-semibold text-[var(--page-fg)]">v0.7.6</strong> to Linux &amp;
+              Windows — Total Spend, Codex claim resets, spend-accuracy fixes, Cursor Enterprise
+              meters, plus CrossUsage multi-account and encrypted credentials.
             </p>
           </div>
           <a

@@ -8,7 +8,7 @@ export const dynamic = "force-static";
 export const metadata: Metadata = {
   title: "Download",
   description:
-    "Download CrossUsage 1.3.1 for Linux (.deb, .rpm, AppImage) and Windows (NSIS installer + portable onefile). macOS → upstream OpenUsage.",
+    "Download CrossUsage 1.3.3 for Linux (.deb, .rpm, AppImage) and Windows (NSIS installer + portable zip). macOS → upstream OpenUsage.",
   openGraph: {
     title: "Download CrossUsage",
     description:
@@ -34,7 +34,7 @@ export default async function DownloadPage() {
   const assets = version
     ? [
         { platform: "Windows installer", file: `crossusage_${version}_x64-setup.exe` },
-        { platform: "Windows portable (one file)", file: `crossusage_${version}_windows_amd64_onefile.exe` },
+        { platform: "Windows portable zip", file: `crossusage_${version}_windows_amd64.zip` },
         { platform: "Linux Debian/Ubuntu", file: `crossusage_${version}_amd64.deb` },
         { platform: "Linux Fedora/RHEL", file: `crossusage-${version}-1.x86_64.rpm` },
         { platform: "Linux AppImage", file: `crossusage_${version}_amd64.AppImage` },
