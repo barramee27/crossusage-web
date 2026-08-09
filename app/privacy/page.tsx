@@ -40,6 +40,17 @@ export default function PrivacyPage() {
         </section>
 
         <section className="surface-panel p-6">
+          <h2 className="text-sm font-semibold text-[var(--page-fg)]">Product polls</h2>
+          <p className="mt-3 text-sm leading-relaxed text-[var(--page-fg-muted)]">
+            CrossUsage may show occasional product questions from{" "}
+            <code className="text-xs">crossusage.dev/api/polls</code>. Enabled by default; turn off
+            under Settings → Product polls. A vote only leaves your machine when you tap an option.
+            Payload is poll id, option id, and an opaque install id — not credentials, not usage
+            history, not account email.
+          </p>
+        </section>
+
+        <section className="surface-panel p-6">
           <h2 className="text-sm font-semibold text-[var(--page-fg)]">This website</h2>
           <p className="mt-3 text-sm leading-relaxed text-[var(--page-fg-muted)]">
             This site is static HTML. No tracking cookies here by default. Your host may still log
