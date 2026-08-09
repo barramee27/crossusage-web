@@ -10,12 +10,13 @@ const links = [
 ] as const;
 
 const tickerItems = [
-  "v1.3.3",
+  "v1.4.0",
+  "product polls",
+  "limits api",
   "multi-account",
   "encrypted credentials",
   `${plugins.length} providers`,
   "classic + modern",
-  "openusage 0.7.6",
   "linux",
   "windows",
   "localhost:6736",

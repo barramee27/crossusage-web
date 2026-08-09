@@ -1,25 +1,38 @@
-import { KeyRound, LayoutGrid, LineChart, PieChart, ShieldCheck, Users } from "lucide-react";
+import {
+  Bell,
+  KeyRound,
+  LayoutGrid,
+  MessageSquareText,
+  ShieldCheck,
+  SlidersHorizontal,
+} from "lucide-react";
 import { Eyebrow } from "@/components/marketing/eyebrow";
 import { forkReleasesLatest } from "@/lib/site";
 
 const highlights = [
   {
-    icon: PieChart,
-    title: "Total Spend ring",
-    body: "Cross-provider spend sectors with Cost / Cost·MTok / Tokens — see where money goes at a glance.",
-    badge: "1.3.2+",
+    icon: MessageSquareText,
+    title: "Product polls",
+    body: "Optional in-app questions from crossusage.dev — Polls page, soft badge, Settings toggle (on by default). Vote only leaves when you tap.",
+    badge: "1.4.0",
   },
   {
-    icon: LineChart,
-    title: "Accurate Codex & Claude spend",
-    body: "Subagent replay dedup, session-log fast tier, 272k long-context pricing, and pi agent fold-in so tiles match reality.",
-    badge: "1.3.3",
+    icon: SlidersHorizontal,
+    title: "Limits API & CLI",
+    body: "GET /v1/limits (+ /:providerId) and crossusage-cli limits emit crossusage.limits.v1 — used / limit / remaining / utilization.",
+    badge: "1.4.0",
   },
   {
-    icon: Users,
-    title: "Multi-account everywhere",
-    body: "Add personal + work rows for every provider — Cursor, OpenRouter, Claude, and the rest. Each account probes independently.",
-    badge: "CrossUsage",
+    icon: KeyRound,
+    title: "Windows Antigravity CLI",
+    body: "Keyring read/write fixed for agy (UTF-8 + UTF-16LE) so Antigravity CLI tokens refresh without breaking the CLI.",
+    badge: "1.4.0",
+  },
+  {
+    icon: Bell,
+    title: "New provider notify",
+    body: "When an update bundles new plugins, they still default-disable — you get one desktop notification to enable them in Settings.",
+    badge: "1.4.0",
   },
   {
     icon: ShieldCheck,
@@ -32,12 +45,6 @@ const highlights = [
     title: "Classic & Modern",
     body: "Two layouts, same providers. Modern is the 0.7-style grouped dashboard; Classic stays for anyone who prefers it.",
     badge: "Both",
-  },
-  {
-    icon: KeyRound,
-    title: "Local HTTP API",
-    body: "JSON on 127.0.0.1:6736 — /v1/usage, /v1/insights, history endpoints. Loopback only.",
-    badge: "CrossUsage",
   },
 ] as const;
 
@@ -54,10 +61,11 @@ export function WhatsNewSection({ version }: { version: string | null }) {
               What&apos;s new in {label}
             </h2>
             <p className="mt-3 max-w-2xl text-base leading-relaxed text-[var(--page-fg-muted)]">
-              Ports OpenUsage through{" "}
-              <strong className="font-semibold text-[var(--page-fg)]">v0.7.6</strong> to Linux &amp;
-              Windows — Total Spend, Codex claim resets, spend-accuracy fixes, Cursor Enterprise
-              meters, plus CrossUsage multi-account and encrypted credentials.
+              CrossUsage{" "}
+              <strong className="font-semibold text-[var(--page-fg)]">1.4.0</strong> — product
+              polls, machine-readable limits, Windows Antigravity CLI keyring fix, and a one-shot
+              notify when new providers ship. Still multi-account + encrypted credentials on Linux
+              &amp; Windows.
             </p>
           </div>
           <a

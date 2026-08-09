@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { forkLatestJson, forkReleasesLatest, upstreamReleasesLatest } from "@/lib/site";
+import { forkLatestJson, forkReleasesLatest, upstreamReleasesLatest, fallbackAppVersion } from "@/lib/site";
 import { DocPage } from "@/components/marketing/doc-page";
 
 export const dynamic = "force-static";
@@ -8,22 +8,22 @@ export const dynamic = "force-static";
 export const metadata: Metadata = {
   title: "Download",
   description:
-    "Download CrossUsage 1.3.3 for Linux (.deb, .rpm, AppImage) and Windows (NSIS installer + portable zip). macOS → upstream OpenUsage.",
+    "Download CrossUsage 1.4.0 for Linux (.deb, .rpm, AppImage) and Windows (NSIS, portable zip, onefile). macOS → upstream OpenUsage.",
   openGraph: {
     title: "Download CrossUsage",
     description:
-      "Linux and Windows installers from GitHub Releases. Multi-account, encrypted credentials. MIT licensed.",
+      "Linux and Windows installers from GitHub Releases. Product polls, limits API, multi-account. MIT licensed.",
   },
 };
 
-async function getVersion(): Promise<string | null> {
+async function getVersion(): Promise<string> {
   try {
     const res = await fetch(forkLatestJson, { next: { revalidate: 86400 } });
-    if (!res.ok) return null;
+    if (!res.ok) return fallbackAppVersion;
     const data = await res.json();
-    return data.version || null;
+    return data.version || fallbackAppVersion;
   } catch {
-    return null;
+    return fallbackAppVersion;
   }
 }
 
@@ -35,6 +35,7 @@ export default async function DownloadPage() {
     ? [
         { platform: "Windows installer", file: `crossusage_${version}_x64-setup.exe` },
         { platform: "Windows portable zip", file: `crossusage_${version}_windows_amd64.zip` },
+        { platform: "Windows onefile", file: `crossusage_${version}_windows_amd64_onefile.exe` },
         { platform: "Linux Debian/Ubuntu", file: `crossusage_${version}_amd64.deb` },
         { platform: "Linux Fedora/RHEL", file: `crossusage-${version}-1.x86_64.rpm` },
         { platform: "Linux AppImage", file: `crossusage_${version}_amd64.AppImage` },

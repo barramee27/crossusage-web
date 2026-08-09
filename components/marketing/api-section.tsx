@@ -16,6 +16,7 @@ export function ApiSection() {
           <ul className="mt-8 space-y-3 font-mono text-sm">
             {[
               { method: "GET", path: "/v1/usage" },
+              { method: "GET", path: "/v1/limits" },
               { method: "GET", path: "/v1/insights" },
               { method: "GET", path: "/v1/history/*" },
             ].map((row) => (

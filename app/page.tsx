@@ -8,7 +8,7 @@ import { FeaturesSection } from "@/components/marketing/features-section";
 import { StepsSection } from "@/components/marketing/steps-section";
 import { OpenSourceSection } from "@/components/marketing/open-source-section";
 import { CtaBand } from "@/components/marketing/cta-band";
-import { forkLatestJson } from "@/lib/site";
+import { forkLatestJson, fallbackAppVersion } from "@/lib/site";
 
 export const dynamic = "force-static";
 
@@ -19,14 +19,14 @@ interface Contributor {
   contributions: number;
 }
 
-async function getVersion(): Promise<string | null> {
+async function getVersion(): Promise<string> {
   try {
     const res = await fetch(forkLatestJson, { next: { revalidate: 86400 } });
-    if (!res.ok) return null;
+    if (!res.ok) return fallbackAppVersion;
     const data = await res.json();
-    return data.version || null;
+    return data.version || fallbackAppVersion;
   } catch {
-    return null;
+    return fallbackAppVersion;
   }
 }
 
