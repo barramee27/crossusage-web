@@ -8,11 +8,11 @@ export const dynamic = "force-static";
 export const metadata: Metadata = {
   title: "Download",
   description:
-    "Download CrossUsage 1.4.0 for Linux (.deb, .rpm, AppImage) and Windows (NSIS, portable zip, onefile). macOS → upstream OpenUsage.",
+    "Download CrossUsage 1.5.0 for Linux (.deb, .rpm, AppImage) and Windows (NSIS, portable zip, onefile). macOS → upstream OpenUsage.",
   openGraph: {
     title: "Download CrossUsage",
     description:
-      "Linux and Windows installers from GitHub Releases. Product polls, limits API, multi-account. MIT licensed.",
+      "Linux and Windows installers from GitHub Releases. Gemini Apps, 28 providers, multi-account. MIT licensed.",
   },
 };
 

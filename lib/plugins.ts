@@ -79,6 +79,13 @@ export const plugins: Plugin[] = [
     icon: "/providers/fireworks-ai.svg",
     featured: false,
   },
+  {
+    id: "gemini-apps",
+    name: "Gemini Apps",
+    brandColor: "#3186FF",
+    icon: "/providers/gemini-apps.svg",
+    featured: true,
+  },
   { id: "grok", name: "Grok", brandColor: "#000000", icon: "/providers/grok.svg", featured: false },
   {
     id: "jetbrains-ai-assistant",

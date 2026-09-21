@@ -1,38 +1,38 @@
 import {
-  Bell,
-  KeyRound,
   LayoutGrid,
-  MessageSquareText,
+  Monitor,
   ShieldCheck,
-  SlidersHorizontal,
+  Sparkles,
+  TrendingUp,
+  Workflow,
 } from "lucide-react";
 import { Eyebrow } from "@/components/marketing/eyebrow";
 import { forkReleasesLatest } from "@/lib/site";
 
 const highlights = [
   {
-    icon: MessageSquareText,
-    title: "Product polls",
-    body: "Optional in-app questions from crossusage.dev — Polls page, soft badge, Settings toggle (on by default). Vote only leaves when you tap.",
-    badge: "1.4.0",
+    icon: Sparkles,
+    title: "Gemini Apps",
+    body: "Current and Weekly from gemini.google.com via Chrome cookies or GEMINI_COOKIE. Off by default. Not Antigravity / Gemini CLI quota.",
+    badge: "1.5.0",
   },
   {
-    icon: SlidersHorizontal,
-    title: "Limits API & CLI",
-    body: "GET /v1/limits (+ /:providerId) and crossusage-cli limits emit crossusage.limits.v1 — used / limit / remaining / utilization.",
-    badge: "1.4.0",
+    icon: Monitor,
+    title: "Tray readout & Linux UI",
+    body: "Logo+%, fill, pie, and all-logos open a readout picker. Classic vs Modern logos stay in sync. Linux topbar/tray text no longer clips.",
+    badge: "1.4.4",
   },
   {
-    icon: KeyRound,
-    title: "Windows Antigravity CLI",
-    body: "Keyring read/write fixed for agy (UTF-8 + UTF-16LE) so Antigravity CLI tokens refresh without breaking the CLI.",
-    badge: "1.4.0",
+    icon: TrendingUp,
+    title: "Grok Bot & Antigravity spend",
+    body: "Cursor Grok Bot weekly allowance, Grok session spend from ledgers, and Antigravity Today / Yesterday / 30-day local spend.",
+    badge: "1.4.3",
   },
   {
-    icon: Bell,
-    title: "New provider notify",
-    body: "When an update bundles new plugins, they still default-disable — you get one desktop notification to enable them in Settings.",
-    badge: "1.4.0",
+    icon: Workflow,
+    title: "OpenUsage v0.7.8–v0.7.12",
+    body: "Pricing supplement through 2026-09-11, Codex Business Premium, Claude live plan badge, Devin weekly remaining, Reduce animations, quieter Modern dashboard.",
+    badge: "1.4.1–1.5.0",
   },
   {
     icon: ShieldCheck,
@@ -62,10 +62,9 @@ export function WhatsNewSection({ version }: { version: string | null }) {
             </h2>
             <p className="mt-3 max-w-2xl text-base leading-relaxed text-[var(--page-fg-muted)]">
               CrossUsage{" "}
-              <strong className="font-semibold text-[var(--page-fg)]">1.4.0</strong> — product
-              polls, machine-readable limits, Windows Antigravity CLI keyring fix, and a one-shot
-              notify when new providers ship. Still multi-account + encrypted credentials on Linux
-              &amp; Windows.
+              <strong className="font-semibold text-[var(--page-fg)]">1.5.0</strong> — Gemini Apps,
+              OpenUsage v0.7.8–v0.7.12, and the 1.4.x tray/UI catch-up. Still multi-account +
+              encrypted credentials on Linux &amp; Windows.
             </p>
           </div>
           <a

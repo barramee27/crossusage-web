@@ -7,7 +7,7 @@ const blocks = [
   {
     icon: Gauge,
     title: "All your quotas, one glance",
-    body: `${plugins.length} bundled plugins — Cursor, Claude, Codex, Copilot, OpenRouter, Devin, and more. Multi-account when you run separate logins.`,
+    body: `${plugins.length} bundled plugins — Cursor, Claude, Codex, Copilot, Gemini Apps, OpenRouter, Devin, and more. Multi-account when you run separate logins.`,
     large: true,
   },
   {

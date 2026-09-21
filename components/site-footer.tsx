@@ -10,8 +10,8 @@ const links = [
 ] as const;
 
 const tickerItems = [
-  "v1.4.0",
-  "product polls",
+  "v1.5.0",
+  "gemini apps",
   "limits api",
   "multi-account",
   "encrypted credentials",
