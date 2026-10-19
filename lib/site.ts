@@ -6,4 +6,4 @@ export const forkLatestJson = `${forkRepo}/releases/latest/download/latest.json`
 export const upstreamRepo = "https://github.com/robinebers/openusage";
 export const upstreamReleasesLatest = `${upstreamRepo}/releases/latest`;
 /** Fallback when latest.json cannot be fetched at build time. */
-export const fallbackAppVersion = "1.5.0";
+export const fallbackAppVersion = "1.6.1";

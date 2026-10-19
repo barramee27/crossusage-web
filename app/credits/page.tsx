@@ -45,7 +45,7 @@ export default function CreditsPage() {
             >
               Robin Ebers
             </a>
-            — architecture, plugins, MIT license. CrossUsage ports through v0.7.12 to Linux &
+            — architecture, plugins, MIT license. CrossUsage ports through v0.7.15 to Linux &
             Windows.
           </p>
         </div>

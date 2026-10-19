@@ -8,7 +8,7 @@ export const dynamic = "force-static";
 export const metadata: Metadata = {
   title: "Download",
   description:
-    "Download CrossUsage 1.5.0 for Linux (.deb, .rpm, AppImage) and Windows (NSIS, portable zip, onefile). macOS → upstream OpenUsage.",
+    "Download CrossUsage 1.6.1 for Linux (.deb, .rpm, AppImage) and Windows (NSIS, portable zip, onefile). macOS → upstream OpenUsage.",
   openGraph: {
     title: "Download CrossUsage",
     description:

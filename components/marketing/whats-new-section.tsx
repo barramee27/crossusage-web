@@ -11,28 +11,28 @@ import { forkReleasesLatest } from "@/lib/site";
 
 const highlights = [
   {
+    icon: Workflow,
+    title: "OpenUsage v0.7.13–v0.7.15",
+    body: "Cursor paged usage-events history cache, Ollama /api/balance dollar allowance + Purchased Credits, Claude Rate Limit Resets hourly cache, Codex Pro 100/200/500 & auto-review $0 pricing.",
+    badge: "1.6.1",
+  },
+  {
     icon: Sparkles,
-    title: "Gemini Apps",
-    body: "Current and Weekly from gemini.google.com via Chrome cookies or GEMINI_COOKIE. Off by default. Not Antigravity / Gemini CLI quota.",
-    badge: "1.5.0",
+    title: "Base account labels & slim builds",
+    body: "Rename default provider rows in Settings → Providers without extra accounts. Stripped release binaries, thin LTO, and lazy-loaded UI views.",
+    badge: "1.6.0–1.6.1",
   },
   {
     icon: Monitor,
-    title: "Tray readout & Linux UI",
-    body: "Logo+%, fill, pie, and all-logos open a readout picker. Classic vs Modern logos stay in sync. Linux topbar/tray text no longer clips.",
-    badge: "1.4.4",
+    title: "Gemini Apps & Tray readout",
+    body: "Current and Weekly from gemini.google.com via Chrome cookies. Logo+%, fill, pie, and all-logos readout picker with synced Classic/Modern icons.",
+    badge: "1.4.4–1.5.0",
   },
   {
     icon: TrendingUp,
     title: "Grok Bot & Antigravity spend",
     body: "Cursor Grok Bot weekly allowance, Grok session spend from ledgers, and Antigravity Today / Yesterday / 30-day local spend.",
     badge: "1.4.3",
-  },
-  {
-    icon: Workflow,
-    title: "OpenUsage v0.7.8–v0.7.12",
-    body: "Pricing supplement through 2026-09-11, Codex Business Premium, Claude live plan badge, Devin weekly remaining, Reduce animations, quieter Modern dashboard.",
-    badge: "1.4.1–1.5.0",
   },
   {
     icon: ShieldCheck,
@@ -62,9 +62,9 @@ export function WhatsNewSection({ version }: { version: string | null }) {
             </h2>
             <p className="mt-3 max-w-2xl text-base leading-relaxed text-[var(--page-fg-muted)]">
               CrossUsage{" "}
-              <strong className="font-semibold text-[var(--page-fg)]">1.5.0</strong> — Gemini Apps,
-              OpenUsage v0.7.8–v0.7.12, and the 1.4.x tray/UI catch-up. Still multi-account +
-              encrypted credentials on Linux &amp; Windows.
+              <strong className="font-semibold text-[var(--page-fg)]">1.6.1</strong> — OpenUsage
+              v0.7.13–v0.7.15 ports, base account display labels, Cursor paged usage-events history,
+              Ollama balance credits, and smaller/faster native Linux &amp; Windows builds.
             </p>
           </div>
           <a

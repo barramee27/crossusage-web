@@ -3,6 +3,7 @@ import { ProviderGrid } from "@/components/provider-grid";
 import { ProviderMarquee } from "@/components/marketing/provider-marquee";
 import { HeroSection } from "@/components/marketing/hero-section";
 import { InteractivePreviewSection } from "@/components/marketing/interactive-preview-section";
+import { ScreenshotsSection } from "@/components/marketing/screenshots-section";
 import { ApiSection } from "@/components/marketing/api-section";
 import { FeaturesSection } from "@/components/marketing/features-section";
 import { StepsSection } from "@/components/marketing/steps-section";
@@ -57,6 +58,7 @@ export default async function Home() {
       <HeroSection version={version} />
       <ProviderMarquee />
       <WhatsNewSection version={version} />
+      <ScreenshotsSection version={version} />
       <FeaturesSection />
       <InteractivePreviewSection version={version} />
       <ProviderGrid />

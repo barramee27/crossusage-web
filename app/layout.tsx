@@ -31,7 +31,7 @@ const ibmPlexMono = IBM_Plex_Mono({
 const defaultTitle = "CrossUsage — AI usage tracker for Linux & Windows";
 const description =
   "Track Cursor, Claude, Codex, Copilot, Gemini Apps, OpenRouter, and 28+ providers from your tray. Multi-account, encrypted credentials, Classic or Modern UI. Fork of OpenUsage — Linux & Windows.";
-const ogImageUrl = "/og-crossusage.png?v=3";
+const ogImageUrl = "/og-crossusage.png?v=4";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -49,8 +49,8 @@ export const metadata: Metadata = {
     images: [
       {
         url: ogImageUrl,
-        width: 1536,
-        height: 1024,
+        width: 1980,
+        height: 960,
         alt: "CrossUsage — AI quotas for Linux & Windows, fork of OpenUsage",
       },
     ],

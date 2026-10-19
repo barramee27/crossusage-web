@@ -191,11 +191,8 @@ export function AppViewport({ version }: { version: string | null }) {
       {/* Desktop chrome */}
       <div className="overflow-hidden rounded-[1.25rem] border border-white/10 bg-[#1a1f2e] shadow-[0_40px_80px_-40px_rgba(0,0,0,0.85)]">
         <div className="flex items-center gap-2 border-b border-white/8 bg-[#12161f] px-3 py-2">
-          <span className="h-2.5 w-2.5 rounded-full bg-[#ff5f57]" />
-          <span className="h-2.5 w-2.5 rounded-full bg-[#febc2e]" />
-          <span className="h-2.5 w-2.5 rounded-full bg-[#28c840]" />
-          <span className="ml-2 font-mono text-[11px] text-white/40">
-            CrossUsage demo — {layout === "modern" ? "Modern" : "Classic"}
+          <span className="font-mono text-[11px] text-white/50">
+            CrossUsage — {layout === "modern" ? "Modern" : "Classic"} (Linux / Windows)
           </span>
           <div className="ml-auto flex items-center gap-2">
             <button
@@ -205,6 +202,11 @@ export function AppViewport({ version }: { version: string | null }) {
             >
               Refresh
             </button>
+            <div className="flex items-center gap-1.5 pl-1 text-white/35" aria-hidden>
+              <span className="inline-flex h-4 w-4 items-center justify-center rounded hover:bg-white/10 text-[10px]">─</span>
+              <span className="inline-flex h-4 w-4 items-center justify-center rounded hover:bg-white/10 text-[10px]">□</span>
+              <span className="inline-flex h-4 w-4 items-center justify-center rounded hover:bg-white/10 text-[10px]">×</span>
+            </div>
           </div>
         </div>
 

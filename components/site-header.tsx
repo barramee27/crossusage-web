@@ -7,6 +7,7 @@ import { forkRepo } from "@/lib/site";
 
 const nav = [
   { href: "/#whats-new", label: "What's new" },
+  { href: "/#screenshots", label: "Screenshots" },
   { href: "/#try", label: "Try it" },
   { href: "/#providers", label: "Providers" },
   { href: "/download/", label: "Download" },
