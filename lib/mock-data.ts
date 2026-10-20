@@ -4,7 +4,7 @@ export const providers: Provider[] = [
   {
     id: "codex",
     name: "Codex",
-    planBadge: "Pro",
+    planBadge: "Pro 200",
     brandColor: "#74aa9c",
     overviewMetrics: [
       {
