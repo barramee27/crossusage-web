@@ -50,7 +50,7 @@ export function OpenSourceSection({ contributors }: { contributors: ContributorA
             {contributors.length > 0 && (
               <div>
                 <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[var(--page-fg-dim)]">
-                  Contributors
+                  CrossUsage Contributors
                 </p>
                 <div className="mt-3 flex flex-wrap items-center gap-3">
                   <div className="flex -space-x-2">
