@@ -20,6 +20,10 @@ export interface Provider {
   name: string;
   planBadge: string;
   brandColor: string;
+  /** Today / 30d USD rollup + 14-point local SQLite trend */
+  todaySpend: string;
+  thirtyDaySpend: string;
+  trend30d: number[];
   /** Metrics shown on the overview (summary) */
   overviewMetrics: MetricLine[];
   /** All metrics shown on the detail view */

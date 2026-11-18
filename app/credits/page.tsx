@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import { ExternalLink, GitFork, Users } from "lucide-react";
 import { forkRepo, upstreamRepo } from "@/lib/site";
 import { getCrossUsageContributors } from "@/lib/contributors";
 import { DocPage } from "@/components/marketing/doc-page";
@@ -9,7 +9,7 @@ export const dynamic = "force-static";
 export const metadata: Metadata = {
   title: "Credits",
   description:
-    "CrossUsage credits OpenUsage and Robin Ebers. Thank you to everyone who contributes.",
+    "CrossUsage credits upstream OpenUsage by Robin Ebers and every contributor on barramee27/crossusage.",
   openGraph: {
     title: "Credits — CrossUsage",
     description: "Attribution for OpenUsage, Robin Ebers, and CrossUsage contributors.",
@@ -20,87 +20,111 @@ export default async function CreditsPage() {
   const contributors = await getCrossUsageContributors();
 
   return (
-    <DocPage title="Credits" kicker="credits">
-      <p className="text-base text-[var(--page-fg-muted)]">
-        Maintainers and strangers who filed issues — this fork is yours too.
-      </p>
-
-      <div className="mt-10 space-y-4">
-        <div className="surface-panel border-[var(--page-accent)]/30 p-6">
-          <h2 className="text-sm font-semibold uppercase tracking-wide text-[var(--page-accent-ink)]">
-            Upstream
+    <DocPage
+      title="Credits & Attribution"
+      kicker="CREDITS"
+      subtitle="Open-source software stands on the shoulders of upstream creators, PR authors, bug reporters, and daily testers."
+    >
+      <div className="space-y-5">
+        <section className="rounded-2xl border border-[var(--rule-strong)] bg-[var(--paper-elevated)] p-6 shadow-[0_2px_0_rgba(17,19,23,0.05)] sm:p-8">
+          <div className="flex items-center gap-2 font-mono text-xs font-bold text-[#0d8563]">
+            <GitFork className="size-4" aria-hidden />
+            <span>UPSTREAM FOUNDATION</span>
+          </div>
+          <h2 className="mt-3 text-xl font-extrabold text-[var(--ink)]">
+            OpenUsage by Robin Ebers
           </h2>
-          <p className="mt-3 text-sm leading-relaxed text-[var(--page-fg-muted)]">
+          <p className="mt-2.5 text-sm leading-relaxed text-[var(--ink-secondary)]">
+            CrossUsage is a Linux &amp; Windows native fork of{" "}
             <a
               href={upstreamRepo}
               target="_blank"
               rel="noopener noreferrer"
-              className="font-medium text-[var(--page-fg)] underline-offset-2 hover:underline"
+              className="font-semibold text-[var(--ink)] underline decoration-[var(--rule-strong)] underline-offset-3 hover:decoration-[var(--signal)]"
             >
               OpenUsage
             </a>{" "}
-            by{" "}
+            created by{" "}
             <a
               href="https://github.com/robinebers"
               target="_blank"
               rel="noopener noreferrer"
-              className="font-medium text-[var(--page-fg)] underline-offset-2 hover:underline"
+              className="font-semibold text-[var(--ink)] underline decoration-[var(--rule-strong)] underline-offset-3 hover:decoration-[var(--signal)]"
             >
               Robin Ebers
             </a>
-            — architecture, plugins, MIT license. CrossUsage ports through v0.7.15 to Linux &
-            Windows.
+            , distributed under the MIT License. CrossUsage ports upstream plugin and UI work
+            through v0.7.15 while maintaining native Tauri v2 desktop support for Linux and Windows.
           </p>
-        </div>
+          <div className="mt-5">
+            <a
+              href={upstreamRepo}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="keycap-secondary !py-2 !text-xs"
+            >
+              Visit robinebers/openusage
+              <ExternalLink className="size-3.5" aria-hidden />
+            </a>
+          </div>
+        </section>
 
-        <div className="surface-panel p-6">
-          <h2 className="text-sm font-semibold uppercase tracking-wide text-[var(--page-fg-dim)]">
-            CrossUsage Contributors
+        <section className="rounded-2xl border border-[var(--rule-strong)] bg-[var(--paper-elevated)] p-6 shadow-[0_2px_0_rgba(17,19,23,0.05)] sm:p-8">
+          <div className="flex items-center gap-2 font-mono text-xs font-bold text-[var(--signal)]">
+            <Users className="size-4" aria-hidden />
+            <span>CROSSUSAGE FORK CONTRIBUTORS</span>
+          </div>
+          <h2 className="mt-3 text-xl font-extrabold text-[var(--ink)]">
+            Builders on barramee27/crossusage
           </h2>
-          <p className="mt-3 text-sm leading-relaxed text-[var(--page-fg-muted)]">
-            Code contributors and PR authors on{" "}
+          <p className="mt-2 text-sm leading-relaxed text-[var(--ink-secondary)]">
+            Everyone who has shipped features, provider fixes, and platform improvements directly
+            to{" "}
             <a
               href={forkRepo}
               target="_blank"
               rel="noopener noreferrer"
-              className="font-medium text-[var(--page-accent-ink)] underline-offset-2 hover:underline"
+              className="font-semibold text-[var(--ink)] underline decoration-[var(--rule-strong)] underline-offset-3 hover:decoration-[var(--signal)]"
             >
               barramee27/crossusage
             </a>
             :
           </p>
-          {contributors.length > 0 && (
-            <ul className="mt-4 flex flex-wrap gap-2.5">
+
+          {contributors.length > 0 ? (
+            <ul className="mt-6 grid gap-2.5 sm:grid-cols-2">
               {contributors.map((c) => (
                 <li key={c.login}>
                   <a
                     href={c.html_url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 rounded-full border border-[var(--page-border)] bg-[var(--page-stripe)] py-1 pr-3 pl-1 text-xs font-medium text-[var(--page-fg)] transition-colors hover:border-[var(--page-accent)]/50"
+                    className="flex items-center gap-3 rounded-xl border border-[var(--rule-strong)] bg-white px-3.5 py-2.5 text-sm font-medium text-[var(--ink)] transition-all hover:-translate-y-0.5 hover:border-[var(--signal)]"
                   >
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
-                      src={`${c.avatar_url}&s=48`}
+                      src={`${c.avatar_url}&s=72`}
                       alt={c.login}
-                      width={22}
-                      height={22}
-                      className="rounded-full"
+                      width={32}
+                      height={32}
+                      className="rounded-full border border-[var(--rule)]"
                     />
-                    <span>@{c.login}</span>
+                    <div className="min-w-0 flex-1">
+                      <p className="truncate font-bold text-[var(--ink)]">@{c.login}</p>
+                      <p className="font-mono text-[11px] text-[var(--ink-muted)]">
+                        {c.login === "barramee27"
+                          ? "Creator & Lead"
+                          : `${c.contributions} merged PR${c.contributions !== 1 ? "s" : ""}`}
+                      </p>
+                    </div>
+                    <ExternalLink className="size-3.5 shrink-0 text-[var(--ink-muted)]" />
                   </a>
                 </li>
               ))}
             </ul>
-          )}
-        </div>
+          ) : null}
+        </section>
       </div>
-
-      <p className="mt-14 text-sm">
-        <Link href="/" className="text-[var(--page-fg-muted)] hover:text-[var(--page-accent)]">
-          ← Back home
-        </Link>
-      </p>
     </DocPage>
   );
 }

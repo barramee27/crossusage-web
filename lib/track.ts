@@ -3,6 +3,9 @@
  * Replace with analytics if you add a provider later.
  */
 export function track(
-  _event: string,
-  _props?: Record<string, string | number | boolean>
-): void {}
+  event: string,
+  props?: Record<string, string | number | boolean>
+): void {
+  void event;
+  void props;
+}

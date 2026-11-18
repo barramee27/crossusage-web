@@ -1,20 +1,22 @@
 import Link from "next/link";
+import { ArrowLeft } from "lucide-react";
 
 export default function NotFound() {
   return (
-    <div className="relative z-[1] flex min-h-[55vh] flex-col items-center justify-center px-4 py-24">
-      <div className="fx-reveal surface-panel max-w-md px-10 py-12 text-center sm:px-14 sm:py-14">
-        <p className="font-mono text-[11px] uppercase tracking-[0.28em] text-[var(--page-accent-ink)]">
-          Not found
+    <div className="drafting-frame flex min-h-[65vh] flex-col items-center justify-center px-5 py-24">
+      <div className="max-w-md rounded-2xl border border-[var(--rule-strong)] bg-[var(--paper-elevated)] px-10 py-12 text-center shadow-[0_4px_0_rgba(17,19,23,0.08)] sm:px-14">
+        <p className="font-mono text-[11px] font-bold uppercase tracking-[0.22em] text-[var(--signal)]">
+          STATUS 404
         </p>
-        <h1 className="font-display mt-4 text-6xl font-extrabold tracking-tighter text-[var(--page-fg)] sm:text-7xl">
+        <h1 className="mt-3 text-6xl font-extrabold tracking-tighter text-[var(--ink)] sm:text-7xl">
           404
         </h1>
-        <p className="mt-4 text-sm leading-relaxed text-[var(--page-fg-muted)]">
-          This path is not in the static export map.
+        <p className="mt-4 text-sm leading-relaxed text-[var(--ink-secondary)]">
+          This route does not exist in the CrossUsage static export.
         </p>
-        <Link href="/" className="btn-primary mt-8 inline-flex">
-          Back home
+        <Link href="/" className="keycap-primary mt-8 inline-flex">
+          <ArrowLeft className="size-4" aria-hidden />
+          Return to CrossUsage
         </Link>
       </div>
     </div>

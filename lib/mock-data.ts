@@ -6,6 +6,9 @@ export const providers: Provider[] = [
     name: "Codex",
     planBadge: "Pro 200",
     brandColor: "#74aa9c",
+    todaySpend: "$4.20",
+    thirtyDaySpend: "$89.40",
+    trend30d: [14, 22, 19, 31, 45, 38, 52, 48, 60, 55, 68, 72, 64, 79],
     overviewMetrics: [
       {
         label: "Session",
@@ -58,6 +61,9 @@ export const providers: Provider[] = [
     name: "Claude",
     planBadge: "Max",
     brandColor: "#de7356",
+    todaySpend: "$2.35",
+    thirtyDaySpend: "$72.10",
+    trend30d: [28, 34, 41, 37, 52, 64, 58, 71, 68, 82, 76, 89, 93, 86],
     overviewMetrics: [
       {
         label: "Session",
@@ -110,6 +116,9 @@ export const providers: Provider[] = [
     name: "Cursor",
     planBadge: "Ultra",
     brandColor: "#000000",
+    todaySpend: "$6.40",
+    thirtyDaySpend: "$154.20",
+    trend30d: [42, 48, 39, 55, 61, 53, 66, 72, 64, 70, 78, 74, 83, 81],
     overviewMetrics: [
       {
         label: "Plan usage",
@@ -141,6 +150,9 @@ export const providers: Provider[] = [
     name: "Cursor (Work)",
     planBadge: "Business",
     brandColor: "#000000",
+    todaySpend: "$3.10",
+    thirtyDaySpend: "$61.80",
+    trend30d: [18, 25, 29, 24, 32, 36, 41, 38, 44, 49, 46, 52, 55, 58],
     overviewMetrics: [
       {
         label: "Total usage",

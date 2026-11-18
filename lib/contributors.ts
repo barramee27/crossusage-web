@@ -7,6 +7,58 @@ export interface Contributor {
 
 const BOT_LOGINS = new Set(["dependabot", "cursoragent", "claude", "Copilot"]);
 
+const FALLBACK_CONTRIBUTORS: Contributor[] = [
+  {
+    login: "barramee27",
+    avatar_url: "https://avatars.githubusercontent.com/u/105411143?v=4",
+    html_url: "https://github.com/barramee27",
+    contributions: 1,
+  },
+  {
+    login: "sonanchenko",
+    avatar_url: "https://github.com/sonanchenko.png?size=64",
+    html_url: "https://github.com/sonanchenko",
+    contributions: 3,
+  },
+  {
+    login: "Or1j1n",
+    avatar_url: "https://github.com/Or1j1n.png?size=64",
+    html_url: "https://github.com/Or1j1n",
+    contributions: 2,
+  },
+  {
+    login: "R0SEWT",
+    avatar_url: "https://github.com/R0SEWT.png?size=64",
+    html_url: "https://github.com/R0SEWT",
+    contributions: 2,
+  },
+  {
+    login: "orvoss",
+    avatar_url: "https://github.com/orvoss.png?size=64",
+    html_url: "https://github.com/orvoss",
+    contributions: 1,
+  },
+  {
+    login: "HiImSunny",
+    avatar_url: "https://github.com/HiImSunny.png?size=64",
+    html_url: "https://github.com/HiImSunny",
+    contributions: 1,
+  },
+  {
+    login: "idkwhodatis",
+    avatar_url: "https://github.com/idkwhodatis.png?size=64",
+    html_url: "https://github.com/idkwhodatis",
+    contributions: 1,
+  },
+];
+
+function githubHeaders(): HeadersInit {
+  const token = process.env.GITHUB_TOKEN;
+  return token
+    ? { Accept: "application/vnd.github+json", Authorization: `Bearer ${token}` }
+    : { Accept: "application/vnd.github+json" };
+}
+
 /**
  * Fetch human contributors directly to CrossUsage (barramee27/crossusage).
  *
@@ -17,8 +69,10 @@ const BOT_LOGINS = new Set(["dependabot", "cursoragent", "claude", "Copilot"]);
 export async function getCrossUsageContributors(): Promise<Contributor[]> {
   try {
     const byLogin = new Map<string, Contributor>();
+    const headers = githubHeaders();
 
     const ownerRes = await fetch("https://api.github.com/users/barramee27", {
+      headers,
       next: { revalidate: 86400 },
     });
     if (ownerRes.ok) {
@@ -40,7 +94,7 @@ export async function getCrossUsageContributors(): Promise<Contributor[]> {
     for (let page = 1; page <= 10; page++) {
       const res = await fetch(
         `https://api.github.com/repos/barramee27/crossusage/pulls?state=closed&per_page=100&page=${page}`,
-        { next: { revalidate: 86400 } }
+        { headers, next: { revalidate: 86400 } }
       );
       if (!res.ok) break;
       const pulls = (await res.json()) as Array<{
@@ -75,8 +129,9 @@ export async function getCrossUsageContributors(): Promise<Contributor[]> {
       if (pulls.length < 100) break;
     }
 
+    if (byLogin.size === 0) return FALLBACK_CONTRIBUTORS;
     return [...byLogin.values()].sort((a, b) => b.contributions - a.contributions);
   } catch {
-    return [];
+    return FALLBACK_CONTRIBUTORS;
   }
 }

@@ -2,45 +2,63 @@
 
 import { providers } from "@/lib/mock-data";
 
-/** Lightweight Customize tab — show/hide chips, not full drag-and-drop. */
-export function ModernCustomize() {
+export function ModernCustomize({
+  enabledMetrics,
+  onToggleMetric,
+}: {
+  enabledMetrics: Record<string, string[]>;
+  onToggleMetric: (providerId: string, label: string) => void;
+}) {
   return (
     <div className="space-y-3 py-1">
       <div>
-        <h3 className="text-base font-semibold text-foreground">Customize</h3>
+        <h3 className="text-sm font-semibold text-foreground">Customize</h3>
         <p className="mt-0.5 text-[11px] text-muted-foreground">
-          Demo — pick which metrics appear on the dashboard. Real app supports drag reorder + tray
-          pins.
+          Tap chips to toggle metrics on the live Dashboard tab. Real app also supports drag-reorder
+          + tray pins.
         </p>
       </div>
 
-      {providers.map((provider) => (
-        <div
-          key={provider.id}
-          className="rounded-lg border bg-card/80 px-3 py-2.5"
-          style={{ borderColor: `${provider.brandColor}33` }}
-        >
-          <div className="mb-2 flex items-center justify-between gap-2">
-            <p className="text-sm font-semibold text-foreground">{provider.name}</p>
-            <span className="text-[10px] text-muted-foreground">Show all</span>
-          </div>
-          <div className="flex flex-wrap gap-1.5">
-            {provider.detailMetrics.map((m, i) => (
-              <span
-                key={m.label}
-                className={`rounded-md border px-2 py-1 text-[11px] ${
-                  i < 2
-                    ? "border-[var(--page-accent)]/40 bg-[var(--page-accent-soft)] text-[var(--page-accent-ink)]"
-                    : "border-border text-muted-foreground"
-                }`}
-              >
-                {i < 2 ? "✓ " : ""}
-                {m.label}
+      {providers.map((provider) => {
+        const isCursor = provider.id === "cursor" || provider.id === "cursor-work";
+        const borderAccent = isCursor ? "var(--border)" : `${provider.brandColor}40`;
+        const activeList = enabledMetrics[provider.id] ?? [];
+
+        return (
+          <div
+            key={provider.id}
+            className="rounded-lg border bg-card/90 px-3 py-2.5"
+            style={{ borderColor: borderAccent }}
+          >
+            <div className="mb-2 flex items-center justify-between gap-2">
+              <p className="text-xs font-semibold text-foreground">{provider.name}</p>
+              <span className="font-mono text-[10px] text-muted-foreground">
+                {activeList.length}/{provider.detailMetrics.length} shown
               </span>
-            ))}
+            </div>
+            <div className="flex flex-wrap gap-1.5">
+              {provider.detailMetrics.map((m) => {
+                const isEnabled = activeList.includes(m.label);
+                return (
+                  <button
+                    key={m.label}
+                    type="button"
+                    onClick={() => onToggleMetric(provider.id, m.label)}
+                    className={`rounded-md border px-2 py-1 text-[11px] font-medium transition-colors ${
+                      isEnabled
+                        ? "border-primary bg-primary text-primary-foreground"
+                        : "border-border bg-transparent text-muted-foreground hover:text-foreground"
+                    }`}
+                  >
+                    {isEnabled ? "✓ " : "+ "}
+                    {m.label}
+                  </button>
+                );
+              })}
+            </div>
           </div>
-        </div>
-      ))}
+        );
+      })}
     </div>
   );
 }

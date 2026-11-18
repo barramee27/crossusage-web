@@ -1,82 +1,120 @@
+import Link from "next/link";
 import { TrackedLink } from "@/components/tracked-link";
-import { forkRepo, upstreamRepo } from "@/lib/site";
+import { forkRepo, forkReleasesLatest, upstreamRepo } from "@/lib/site";
 import { plugins } from "@/lib/plugins";
+import { BrandMark } from "@/components/brand-mark";
 
-const links = [
-  { href: "/download/", label: "Download", event: "footer_download_clicked" as const },
-  { href: "/privacy/", label: "Privacy", event: "footer_privacy_clicked" as const },
-  { href: "/credits/", label: "Credits", event: "footer_credits_clicked" as const },
-  { href: forkRepo, label: "GitHub", event: "footer_github_clicked" as const, external: true },
+const PRODUCT_LINKS = [
+  { href: "/download", label: "Download Packages", event: "footer_download_clicked" as const },
+  { href: "/#architecture", label: "Architecture" },
+  { href: "/#providers", label: `Providers (${plugins.length})` },
+  { href: "/#api", label: "Loopback API & CLI" },
 ] as const;
 
-const tickerItems = [
-  "v1.6.1",
-  "gemini apps",
-  "limits api",
-  "multi-account",
-  "encrypted credentials",
-  `${plugins.length} providers`,
-  "classic + modern",
-  "linux",
-  "windows",
-  "localhost:6736",
-  "mit",
+const PROJECT_LINKS = [
+  {
+    href: forkRepo,
+    label: "GitHub Repository",
+    event: "footer_github_clicked" as const,
+    external: true,
+  },
+  { href: forkReleasesLatest, label: "Release Notes", external: true },
+  { href: "/credits", label: "Credits & Lineage", event: "footer_credits_clicked" as const },
+  { href: "/privacy", label: "Privacy Policy", event: "footer_privacy_clicked" as const },
 ] as const;
 
 export function SiteFooter() {
   return (
-    <footer className="relative z-[1] border-t border-[var(--page-border)] bg-[var(--page-stripe)]">
-      <div className="provider-marquee-wrap overflow-hidden border-b border-[var(--page-border)] py-3">
-        <div className="provider-marquee gap-10 font-mono text-[11px] uppercase tracking-[0.22em] text-[var(--page-fg-dim)]">
-          {[...tickerItems, ...tickerItems].map((item, i) => (
-            <span key={`${item}-${i}`} className="shrink-0">
-              {item}
-            </span>
-          ))}
-        </div>
-      </div>
+    <footer className="relative bg-[var(--paper-recessed)]">
+      <div className="drafting-frame px-5 py-14 sm:px-8 lg:px-12">
+        <div className="grid gap-10 md:grid-cols-12">
+          <div className="md:col-span-6">
+            <Link href="/" className="inline-flex items-center gap-2.5">
+              <BrandMark size={30} />
+              <span className="text-lg font-extrabold tracking-[-0.03em] text-[var(--ink)]">
+                CrossUsage
+              </span>
+            </Link>
+            <p className="mt-4 max-w-md text-sm leading-relaxed text-[var(--ink-secondary)]">
+              Native AI subscription &amp; API quota instrument for Linux and Windows. Fork of{" "}
+              <a
+                href={upstreamRepo}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-semibold text-[var(--ink)] underline decoration-[var(--rule-strong)] underline-offset-3 hover:decoration-[var(--signal)]"
+              >
+                OpenUsage
+              </a>{" "}
+              by Robin Ebers.
+            </p>
+            <p className="mt-4 font-mono text-[11px] text-[var(--ink-muted)]">
+              STATIC EXPORT · ZERO TRACKING COOKIES · LOCAL-FIRST TELEMETRY · MIT LICENSE
+            </p>
+          </div>
 
-      <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6 lg:px-8">
-        <div className="surface-panel px-6 py-8 sm:px-8">
-          <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
+          <div className="grid grid-cols-2 gap-8 sm:gap-12 md:col-span-6 md:justify-items-end">
             <div>
-              <p className="font-display text-2xl font-bold tracking-tight">
-                Cross<span className="text-[var(--page-accent)]">Usage</span>
+              <p className="font-mono text-[10.5px] font-bold uppercase tracking-wider text-[var(--ink-muted)]">
+                Instrument
               </p>
-              <p className="mt-3 max-w-md text-sm leading-relaxed text-[var(--page-fg-muted)]">
-                Fork of{" "}
-                <a
-                  href={upstreamRepo}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="font-medium text-[var(--page-fg)] underline-offset-2 hover:underline"
-                >
-                  OpenUsage
-                </a>{" "}
-                by Robin Ebers — Linux & Windows native builds with multi-account and encrypted
-                credentials.
-              </p>
+              <ul className="mt-3 space-y-2.5 text-sm font-medium">
+                {PRODUCT_LINKS.map((item) => (
+                  <li key={item.href}>
+                    {"event" in item && item.event ? (
+                      <TrackedLink
+                        event={item.event}
+                        href={item.href}
+                        className="text-[var(--ink-secondary)] transition-colors hover:text-[var(--signal)]"
+                      >
+                        {item.label}
+                      </TrackedLink>
+                    ) : (
+                      <Link
+                        href={item.href}
+                        className="text-[var(--ink-secondary)] transition-colors hover:text-[var(--signal)]"
+                      >
+                        {item.label}
+                      </Link>
+                    )}
+                  </li>
+                ))}
+              </ul>
             </div>
-            <div className="flex flex-wrap gap-x-5 gap-y-2 text-sm font-medium">
-              {links.map((l) => (
-                <TrackedLink
-                  key={l.href}
-                  event={l.event}
-                  href={l.href}
-                  {...("external" in l && l.external
-                    ? { target: "_blank", rel: "noopener noreferrer" }
-                    : {})}
-                  className="text-[var(--page-fg-muted)] transition-colors hover:text-[var(--page-fg)]"
-                >
-                  {l.label}
-                </TrackedLink>
-              ))}
+
+            <div>
+              <p className="font-mono text-[10.5px] font-bold uppercase tracking-wider text-[var(--ink-muted)]">
+                Open Source
+              </p>
+              <ul className="mt-3 space-y-2.5 text-sm font-medium">
+                {PROJECT_LINKS.map((item) => (
+                  <li key={item.href}>
+                    {"event" in item && item.event ? (
+                      <TrackedLink
+                        event={item.event}
+                        href={item.href}
+                        {...("external" in item && item.external
+                          ? { target: "_blank", rel: "noopener noreferrer" }
+                          : {})}
+                        className="text-[var(--ink-secondary)] transition-colors hover:text-[var(--signal)]"
+                      >
+                        {item.label}
+                      </TrackedLink>
+                    ) : (
+                      <a
+                        href={item.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-[var(--ink-secondary)] transition-colors hover:text-[var(--signal)]"
+                      >
+                        {item.label}
+                      </a>
+                    )}
+                  </li>
+                ))}
+              </ul>
             </div>
           </div>
         </div>
-        <p className="mt-8 text-center text-xs text-[var(--page-fg-dim)]">
-          Static site · no cookies by default · MIT licensed
-        </p>
       </div>
     </footer>
   );

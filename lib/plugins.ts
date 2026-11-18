@@ -1,22 +1,46 @@
+export type PluginCategory = "ide" | "model" | "router";
+
 export interface Plugin {
   id: string;
   name: string;
   brandColor: string;
   /** Path under `public/` — real asset from repo `plugins/<id>/icon.*` */
   icon: string;
-  /** Shown by name in the hero icon row */
+  /** Shown by name in featured highlights */
   featured: boolean;
+  category: PluginCategory;
+  authMode: string;
+  localSource: string;
+  metrics: string[];
+  /** True when the plugin auto-discovers local configs/DBs/RPCs without manual key pasting */
+  autoDiscover: boolean;
 }
 
 /** Bundled plugins (excludes dev-only mock). Keep in sync with repo `plugins/`. */
 export const plugins: Plugin[] = [
-  { id: "amp", name: "Amp", brandColor: "#F34E3F", icon: "/providers/amp.svg", featured: false },
+  {
+    id: "amp",
+    name: "Amp",
+    brandColor: "#F34E3F",
+    icon: "/providers/amp.svg",
+    featured: false,
+    category: "ide",
+    authMode: "Local CLI / token",
+    localSource: "~/.local/share/amp/secrets.json",
+    metrics: ["Free", "Bonus", "Credits"],
+    autoDiscover: true,
+  },
   {
     id: "antigravity",
     name: "Antigravity",
     brandColor: "#4285F4",
     icon: "/providers/antigravity.svg",
     featured: true,
+    category: "ide",
+    authMode: "State DB + LS RPC",
+    localSource: "~/.config/Antigravity/User/globalStorage/state.vscdb",
+    metrics: ["Session", "Weekly", "Claude & GPT Models"],
+    autoDiscover: true,
   },
   {
     id: "antigravity-cli",
@@ -24,6 +48,11 @@ export const plugins: Plugin[] = [
     brandColor: "#4285F4",
     icon: "/providers/antigravity-cli.svg",
     featured: false,
+    category: "ide",
+    authMode: "Keyring / CLI token",
+    localSource: "~/.antigravitycli/ & OS Keyring",
+    metrics: ["Session", "Weekly", "Claude & GPT Models"],
+    autoDiscover: true,
   },
   {
     id: "antigravity-ide",
@@ -31,15 +60,47 @@ export const plugins: Plugin[] = [
     brandColor: "#000000",
     icon: "/providers/antigravity-ide.svg",
     featured: false,
+    category: "ide",
+    authMode: "Local IDE state",
+    localSource: "~/.antigravity/ & running LS process",
+    metrics: ["Gemini Pro", "Gemini Flash", "Claude"],
+    autoDiscover: true,
   },
-  { id: "claude", name: "Claude", brandColor: "#DE7356", icon: "/providers/claude.svg", featured: true },
-  { id: "codex", name: "Codex", brandColor: "#74AA9C", icon: "/providers/codex.svg", featured: true },
+  {
+    id: "claude",
+    name: "Claude",
+    brandColor: "#DE7356",
+    icon: "/providers/claude.svg",
+    featured: true,
+    category: "model",
+    authMode: "OAuth / session",
+    localSource: "~/.claude/.credentials.json + JSONL logs",
+    metrics: ["Session", "Weekly", "Sonnet", "Today", "30-Day Trend"],
+    autoDiscover: true,
+  },
+  {
+    id: "codex",
+    name: "Codex",
+    brandColor: "#74AA9C",
+    icon: "/providers/codex.svg",
+    featured: true,
+    category: "ide",
+    authMode: "auth.json / OAuth",
+    localSource: "~/.codex/auth.json + sessions/*.jsonl",
+    metrics: ["Session", "Weekly", "Spark", "Reviews", "Credits", "30-Day Trend"],
+    autoDiscover: true,
+  },
   {
     id: "command-code",
     name: "Command Code",
     brandColor: "#000000",
     icon: "/providers/command-code.svg",
     featured: false,
+    category: "ide",
+    authMode: "Local credentials",
+    localSource: "~/.commandcode/credentials.json",
+    metrics: ["Monthly credits", "Total spent", "Tokens used", "Models"],
+    autoDiscover: true,
   },
   {
     id: "copilot",
@@ -47,15 +108,47 @@ export const plugins: Plugin[] = [
     brandColor: "#A855F7",
     icon: "/providers/copilot.svg",
     featured: true,
+    category: "ide",
+    authMode: "gh / OAuth token",
+    localSource: "~/.config/github-copilot/hosts.json & gh CLI",
+    metrics: ["Credits", "Extra Usage", "Chat", "Completions"],
+    autoDiscover: true,
   },
-  { id: "crofai", name: "CrofAI", brandColor: "#000000", icon: "/providers/crofai.svg", featured: false },
-  { id: "cursor", name: "Cursor", brandColor: "#000000", icon: "/providers/cursor.svg", featured: true },
+  {
+    id: "crofai",
+    name: "CrofAI",
+    brandColor: "#000000",
+    icon: "/providers/crofai.svg",
+    featured: false,
+    category: "router",
+    authMode: "API key",
+    localSource: "Encrypted AES-256-GCM account vault",
+    metrics: ["Requests", "Credits"],
+    autoDiscover: false,
+  },
+  {
+    id: "cursor",
+    name: "Cursor",
+    brandColor: "#000000",
+    icon: "/providers/cursor.svg",
+    featured: true,
+    category: "ide",
+    authMode: "SQLite / CLI auth",
+    localSource: "~/.config/Cursor/User/globalStorage/state.vscdb",
+    metrics: ["Credits", "Total usage", "Requests", "Auto", "API", "On-demand"],
+    autoDiscover: true,
+  },
   {
     id: "cursor-nightly",
     name: "Cursor Nightly",
     brandColor: "#E85D3A",
     icon: "/providers/cursor-nightly.png",
     featured: false,
+    category: "ide",
+    authMode: "Nightly profile DB",
+    localSource: "~/.config/Cursor Nightly/User/globalStorage/state.vscdb",
+    metrics: ["Credits", "Total usage", "Requests", "Auto", "API", "On-demand"],
+    autoDiscover: true,
   },
   {
     id: "deepseek",
@@ -63,21 +156,47 @@ export const plugins: Plugin[] = [
     brandColor: "#4D6BFE",
     icon: "/providers/deepseek.svg",
     featured: false,
+    category: "model",
+    authMode: "API balance",
+    localSource: "Encrypted AES-256-GCM account vault",
+    metrics: ["Balance"],
+    autoDiscover: false,
   },
-  { id: "devin", name: "Devin", brandColor: "#000000", icon: "/providers/devin.svg", featured: false },
+  {
+    id: "devin",
+    name: "Devin",
+    brandColor: "#14B8A6",
+    icon: "/providers/devin.svg",
+    featured: false,
+    category: "ide",
+    authMode: "Session / token",
+    localSource: "Encrypted AES-256-GCM account vault",
+    metrics: ["Weekly quota", "Daily quota", "Extra usage balance"],
+    autoDiscover: false,
+  },
   {
     id: "factory",
     name: "Factory",
     brandColor: "#020202",
     icon: "/providers/factory.svg",
     featured: false,
+    category: "ide",
+    authMode: "Auth v2 store",
+    localSource: "~/.factory/auth.v2.file + auth.v2.key",
+    metrics: ["Standard", "Premium"],
+    autoDiscover: true,
   },
   {
     id: "fireworks-ai",
     name: "Fireworks AI",
-    brandColor: "#5019C5",
+    brandColor: "#8B5CF6",
     icon: "/providers/fireworks-ai.svg",
     featured: false,
+    category: "router",
+    authMode: "API key",
+    localSource: "Encrypted AES-256-GCM account vault",
+    metrics: ["Serverless usage", "Prompt tokens", "Generated tokens", "Month spend"],
+    autoDiscover: false,
   },
   {
     id: "gemini-apps",
@@ -85,23 +204,71 @@ export const plugins: Plugin[] = [
     brandColor: "#3186FF",
     icon: "/providers/gemini-apps.svg",
     featured: true,
+    category: "model",
+    authMode: "Browser cookies",
+    localSource: "Local Chromium / Firefox gemini.google.com session",
+    metrics: ["Current", "Weekly"],
+    autoDiscover: true,
   },
-  { id: "grok", name: "Grok", brandColor: "#000000", icon: "/providers/grok.svg", featured: false },
+  {
+    id: "grok",
+    name: "Grok",
+    brandColor: "#000000",
+    icon: "/providers/grok.svg",
+    featured: false,
+    category: "model",
+    authMode: "Session / ledger",
+    localSource: "xAI Console / local session + ledger",
+    metrics: ["Credits used", "Pay as you go"],
+    autoDiscover: true,
+  },
   {
     id: "jetbrains-ai-assistant",
-    name: "JetBrains AI Assistant",
-    brandColor: "#7d5fe6",
+    name: "JetBrains AI",
+    brandColor: "#8B6FF7",
     icon: "/providers/jetbrains-ai-assistant.svg",
     featured: false,
+    category: "ide",
+    authMode: "Live IDE RPC + XML",
+    localSource: "~/.config/JetBrains/*/options/AIAssistantQuotaManager2.xml",
+    metrics: ["Quota", "Used", "Remaining"],
+    autoDiscover: true,
   },
-  { id: "kiro", name: "Kiro", brandColor: "#C09CFF", icon: "/providers/kiro.svg", featured: false },
-  { id: "kimi", name: "Kimi", brandColor: "#000000", icon: "/providers/kimi.svg", featured: false },
+  {
+    id: "kiro",
+    name: "Kiro",
+    brandColor: "#C09CFF",
+    icon: "/providers/kiro.svg",
+    featured: false,
+    category: "ide",
+    authMode: "Local session",
+    localSource: "~/.aws/sso/cache/kiro-auth-token.json",
+    metrics: ["Credits", "Bonus Credits", "Overages"],
+    autoDiscover: true,
+  },
+  {
+    id: "kimi",
+    name: "Kimi",
+    brandColor: "#000000",
+    icon: "/providers/kimi.svg",
+    featured: false,
+    category: "model",
+    authMode: "Kimi Code auth",
+    localSource: "~/.kimi/credentials/kimi-code.json",
+    metrics: ["Session", "Weekly"],
+    autoDiscover: true,
+  },
   {
     id: "minimax",
     name: "MiniMax",
     brandColor: "#F5433C",
     icon: "/providers/minimax.svg",
     featured: false,
+    category: "model",
+    authMode: "API / coding plan",
+    localSource: "Encrypted AES-256-GCM account vault",
+    metrics: ["Session", "TTS HD", "TTS Turbo", "Image Gen"],
+    autoDiscover: false,
   },
   {
     id: "neuralwatt",
@@ -109,28 +276,59 @@ export const plugins: Plugin[] = [
     brandColor: "#D55934",
     icon: "/providers/neuralwatt.svg",
     featured: false,
+    category: "router",
+    authMode: "API key",
+    localSource: "Encrypted AES-256-GCM account vault",
+    metrics: ["Subscription", "Balance", "Method", "Status"],
+    autoDiscover: false,
   },
-  { id: "ollama", name: "Ollama", brandColor: "#000000", icon: "/providers/ollama.svg", featured: false },
+  {
+    id: "ollama",
+    name: "Ollama",
+    brandColor: "#000000",
+    icon: "/providers/ollama.svg",
+    featured: false,
+    category: "router",
+    authMode: "Cloud session / key",
+    localSource: "Ollama Cloud session + /api/balance",
+    metrics: ["Session", "Weekly", "Balance", "Source"],
+    autoDiscover: true,
+  },
   {
     id: "opencode-go",
     name: "OpenCode Go",
     brandColor: "#000000",
     icon: "/providers/opencode-go.svg",
     featured: false,
+    category: "ide",
+    authMode: "Local config",
+    localSource: "~/.local/share/opencode/auth.json",
+    metrics: ["Session", "Weekly", "Monthly"],
+    autoDiscover: true,
   },
   {
     id: "openrouter",
     name: "OpenRouter",
     brandColor: "#6366F1",
     icon: "/providers/openrouter.svg",
-    featured: false,
+    featured: true,
+    category: "router",
+    authMode: "API key",
+    localSource: "Encrypted AES-256-GCM account vault",
+    metrics: ["Credits", "Balance", "Today", "This Week", "This Month"],
+    autoDiscover: false,
   },
   {
     id: "perplexity",
     name: "Perplexity",
-    brandColor: "#20808D",
+    brandColor: "#22B8CF",
     icon: "/providers/perplexity.svg",
     featured: false,
+    category: "model",
+    authMode: "Session cookie",
+    localSource: "Local browser perplexity.ai session",
+    metrics: ["API credits", "Queries", "Deep Research", "Labs"],
+    autoDiscover: true,
   },
   {
     id: "synthetic",
@@ -138,18 +336,47 @@ export const plugins: Plugin[] = [
     brandColor: "#000000",
     icon: "/providers/synthetic.svg",
     featured: false,
+    category: "router",
+    authMode: "API key",
+    localSource: "Encrypted AES-256-GCM account vault",
+    metrics: ["5h Rate Limit", "Mana Bar", "Quotas", "Search"],
+    autoDiscover: false,
   },
-  { id: "zai", name: "Z.ai", brandColor: "#2D2D2D", icon: "/providers/zai.svg", featured: false },
+  {
+    id: "zai",
+    name: "Z.ai",
+    brandColor: "#2D2D2D",
+    icon: "/providers/zai.svg",
+    featured: false,
+    category: "model",
+    authMode: "API token",
+    localSource: "Encrypted AES-256-GCM account vault",
+    metrics: ["Session", "Weekly", "Web Searches"],
+    autoDiscover: false,
+  },
 ];
 
 /**
- * Visible ink for brand accents on the light marketing page.
- * Near-white brands → dark ink; dark brands stay as-is (old dark-page
- * logic mapped blacks to white and made Cursor/Grok/etc invisible).
+ * Visible brand accent on warm drafting paper.
+ * Near-white brands become crisp carbon ink; dark & saturated brands stay authentic.
  */
 export function displayColor(hex: string): string {
-  const r = parseInt(hex.slice(1, 3), 16);
-  const g = parseInt(hex.slice(3, 5), 16);
-  const b = parseInt(hex.slice(5, 7), 16);
-  return (r + g + b) / 3 > 220 ? "#111111" : hex;
+  const clean = hex.replace("#", "");
+  const r = parseInt(clean.slice(0, 2), 16);
+  const g = parseInt(clean.slice(2, 4), 16);
+  const b = parseInt(clean.slice(4, 6), 16);
+  const luminance = 0.2126 * r + 0.7152 * g + 0.0722 * b;
+  return luminance > 215 ? "#111317" : hex;
+}
+
+/**
+ * Visible brand accent on dark anodized hardware surfaces.
+ */
+export function displayColorOnDark(hex: string): string {
+  const clean = hex.replace("#", "");
+  const r = parseInt(clean.slice(0, 2), 16);
+  const g = parseInt(clean.slice(2, 4), 16);
+  const b = parseInt(clean.slice(4, 6), 16);
+  const luminance = 0.2126 * r + 0.7152 * g + 0.0722 * b;
+  return luminance < 65 ? "#f1f4f9" : hex;
 }

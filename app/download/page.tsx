@@ -1,131 +1,342 @@
 import type { Metadata } from "next";
-import Link from "next/link";
-import { forkLatestJson, forkReleasesLatest, upstreamReleasesLatest, fallbackAppVersion } from "@/lib/site";
+import { Download, ExternalLink, Terminal } from "lucide-react";
+import {
+  cliInstallCmd,
+  forkRepo,
+  forkReleasesLatest,
+  getLatestVersion,
+  linuxInstallCmd,
+  upstreamReleasesLatest,
+  windowsInstallCmd,
+} from "@/lib/site";
 import { DocPage } from "@/components/marketing/doc-page";
+import { CopyCommand } from "@/components/copy-command";
+import { DownloadOsBanner } from "@/components/download-os-banner";
 
 export const dynamic = "force-static";
 
 export const metadata: Metadata = {
   title: "Download",
   description:
-    "Download CrossUsage 1.6.1 for Linux (.deb, .rpm, AppImage) and Windows (NSIS, portable zip, onefile). macOS → upstream OpenUsage.",
+    "Download CrossUsage for Linux (.deb, .rpm, AppImage, portable tar.gz) and Windows (NSIS setup, portable zip, onefile exe), or install via one-line shell script.",
   openGraph: {
     title: "Download CrossUsage",
     description:
-      "Linux and Windows installers from GitHub Releases. Gemini Apps, 28 providers, multi-account. MIT licensed.",
+      "Native Linux and Windows installers from GitHub Releases. 28+ AI providers, multi-account, encrypted credentials. MIT licensed.",
   },
 };
 
-async function getVersion(): Promise<string> {
-  try {
-    const res = await fetch(forkLatestJson, { next: { revalidate: 86400 } });
-    if (!res.ok) return fallbackAppVersion;
-    const data = await res.json();
-    return data.version || fallbackAppVersion;
-  } catch {
-    return fallbackAppVersion;
-  }
-}
+const FORMAT_MATRIX = [
+  {
+    format: ".deb (Debian/Ubuntu)",
+    updater: "Signed auto-updater",
+    cli: "Included",
+    keyring: "Secret Service / libsecret",
+  },
+  {
+    format: ".rpm (Fedora/RHEL)",
+    updater: "Manual / repo",
+    cli: "Included",
+    keyring: "Secret Service / libsecret",
+  },
+  {
+    format: ".AppImage (Universal)",
+    updater: "Signed auto-updater",
+    cli: "Sidecar inside bundle",
+    keyring: "Secret Service / libsecret",
+  },
+  {
+    format: "NSIS Setup (.exe)",
+    updater: "Signed auto-updater",
+    cli: "Included",
+    keyring: "Windows Credential Manager",
+  },
+] as const;
 
 export default async function DownloadPage() {
-  const version = await getVersion();
-  const tag = version ?? "latest";
+  const version = await getLatestVersion();
+  const dlBase = `${forkRepo}/releases/download/v${version}`;
 
-  const assets = version
-    ? [
-        { platform: "Windows installer", file: `crossusage_${version}_x64-setup.exe` },
-        { platform: "Windows portable zip", file: `crossusage_${version}_windows_amd64.zip` },
-        { platform: "Windows onefile", file: `crossusage_${version}_windows_amd64_onefile.exe` },
-        { platform: "Linux Debian/Ubuntu", file: `crossusage_${version}_amd64.deb` },
-        { platform: "Linux Fedora/RHEL", file: `crossusage-${version}-1.x86_64.rpm` },
-        { platform: "Linux AppImage", file: `crossusage_${version}_amd64.AppImage` },
-      ]
-    : [];
+  const linuxAssets = [
+    {
+      format: "Debian / Ubuntu (.deb)",
+      note: "Recommended · Includes Tauri auto-updater + CLI sidecar",
+      file: `crossusage_${version}_amd64.deb`,
+      href: `${dlBase}/crossusage_${version}_amd64.deb`,
+    },
+    {
+      format: "Fedora / RHEL / openSUSE (.rpm)",
+      note: "x86_64 native RPM package",
+      file: `crossusage-${version}-1.x86_64.rpm`,
+      href: `${dlBase}/crossusage-${version}-1.x86_64.rpm`,
+    },
+    {
+      format: "Universal AppImage",
+      note: "Portable single binary for any Linux distribution",
+      file: `crossusage_${version}_amd64.AppImage`,
+      href: `${dlBase}/crossusage_${version}_amd64.AppImage`,
+    },
+    {
+      format: "Portable Linux Archive (.tar.gz)",
+      note: "Self-contained GUI + CLI bundle for custom installs",
+      file: `crossusage_${version}_linux_amd64.tar.gz`,
+      href: `${dlBase}/crossusage_${version}_linux_amd64.tar.gz`,
+    },
+  ];
+
+  const windowsAssets = [
+    {
+      format: "Windows Installer (NSIS .exe)",
+      note: "Recommended · Per-user install + signed auto-updates",
+      file: `crossusage_${version}_x64-setup.exe`,
+      href: `${dlBase}/crossusage_${version}_x64-setup.exe`,
+    },
+    {
+      format: "Windows One-File Portable (.exe)",
+      note: "Zero-install standalone executable",
+      file: `crossusage_${version}_windows_amd64_onefile.exe`,
+      href: `${dlBase}/crossusage_${version}_windows_amd64_onefile.exe`,
+    },
+    {
+      format: "Windows Portable Archive (.zip)",
+      note: "Unpack anywhere + crossusage-cli included",
+      file: `crossusage_${version}_windows_amd64.zip`,
+      href: `${dlBase}/crossusage_${version}_windows_amd64.zip`,
+    },
+  ];
 
   return (
-    <DocPage title="Download" kicker="download">
-      <p className="text-base leading-relaxed text-[var(--page-fg-muted)]">
-        Installers and portable builds live on GitHub Releases. In-app updates use the{" "}
-        <code className="rounded bg-[var(--page-stripe)] px-1.5 py-0.5 text-sm">.deb</code> / NSIS{" "}
-        <code className="rounded bg-[var(--page-stripe)] px-1.5 py-0.5 text-sm">.exe</code> plus
-        bundled signatures.
-      </p>
-
-      <div className="mt-10 space-y-8">
+    <DocPage
+      title={`Download CrossUsage v${version}`}
+      kicker="DOWNLOADS"
+      subtitle="Signed native packages for Linux and Windows hosted directly on GitHub Releases. Zero account signup required."
+      wide
+    >
+      {/* Release status bar */}
+      <div className="flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-[var(--rule-strong)] bg-[var(--paper-elevated)] px-5 py-4 shadow-[0_2px_0_rgba(17,19,23,0.05)]">
+        <div className="text-sm">
+          <span className="font-extrabold text-[var(--ink)]">
+            Latest stable release: v{version}
+          </span>
+          <span className="ml-2 text-[var(--ink-secondary)]">
+            In-app updates verified via signed{" "}
+            <code className="rounded border border-[var(--rule)] bg-[var(--paper-recessed)] px-1.5 py-0.5 font-mono text-xs text-[var(--ink)]">
+              latest.json
+            </code>
+          </span>
+        </div>
         <a
           href={forkReleasesLatest}
           target="_blank"
           rel="noopener noreferrer"
-          className="btn-primary inline-flex w-full sm:w-auto"
+          className="keycap-primary !py-2 !text-xs"
         >
-          Download {version ? `v${version}` : "latest release"}
+          All GitHub Release Assets
+          <ExternalLink className="size-3.5" aria-hidden />
         </a>
+      </div>
 
-        {assets.length > 0 && (
-          <div className="surface-panel overflow-hidden text-sm">
-            <div className="border-b border-[var(--page-border)] bg-[var(--page-stripe)] px-5 py-3 text-[var(--page-fg-dim)]">
-              Typical assets for v{version}
+      {/* Client OS auto-detection banner */}
+      <DownloadOsBanner version={version} dlBase={dlBase} />
+
+      {/* Linux & Windows side-by-side */}
+      <div className="mt-6 grid gap-5 lg:grid-cols-2">
+        <section className="flex flex-col justify-between rounded-2xl border border-[var(--rule-strong)] bg-[var(--paper-elevated)] p-6 shadow-[0_2px_0_rgba(17,19,23,0.05)]">
+          <div>
+            <div className="flex items-center justify-between">
+              <h2 className="text-xl font-extrabold text-[var(--ink)]">Linux</h2>
+              <span className="rounded border border-[var(--rule-strong)] bg-[var(--paper-recessed)] px-2 py-0.5 font-mono text-[10.5px] font-semibold text-[var(--ink-secondary)]">
+                x86_64 · GTK3 / Ayatana
+              </span>
             </div>
-            <ul className="divide-y divide-[var(--page-border)]">
-              {assets.map(({ platform, file }) => (
-                <li
-                  key={file}
-                  className="flex flex-col gap-1 px-5 py-3.5 sm:flex-row sm:items-center sm:justify-between sm:gap-4"
+            <p className="mt-2 text-xs text-[var(--ink-secondary)]">
+              One-line installer (auto-detects Debian/Ubuntu, Fedora/RHEL, or AppImage):
+            </p>
+            <div className="mt-3">
+              <CopyCommand
+                command={linuxInstallCmd}
+                promptSymbol="$"
+                label="dl_linux_script"
+              />
+            </div>
+
+            <div className="mt-5 space-y-2.5">
+              {linuxAssets.map((a) => (
+                <a
+                  key={a.file}
+                  href={a.href}
+                  className="group flex items-center justify-between gap-3 rounded-xl border border-[var(--rule-strong)] bg-white px-4 py-3 transition-all hover:-translate-y-0.5 hover:border-[var(--signal)]"
                 >
-                  <span className="font-medium text-[var(--page-fg)]">{platform}</span>
-                  <code className="break-all rounded-lg border border-[var(--page-border)] bg-[var(--page-stripe)] px-2 py-1 font-mono text-[11px] text-[var(--page-fg-muted)]">
-                    {file}
-                  </code>
-                </li>
+                  <div className="min-w-0">
+                    <p className="text-sm font-bold text-[var(--ink)] group-hover:text-[var(--signal)]">
+                      {a.format}
+                    </p>
+                    <p className="mt-0.5 text-[11px] text-[var(--ink-secondary)]">
+                      {a.note}
+                    </p>
+                    <code className="mt-1 block truncate font-mono text-[11px] text-[var(--ink-muted)]">
+                      {a.file}
+                    </code>
+                  </div>
+                  <Download className="size-4 shrink-0 text-[var(--ink-muted)] transition-colors group-hover:text-[var(--signal)]" />
+                </a>
               ))}
-            </ul>
+            </div>
           </div>
-        )}
+        </section>
 
-        <div className="surface-panel divide-y divide-[var(--page-border)] text-sm">
-          <div className="px-5 py-4">
-            <p className="font-semibold text-[var(--page-fg)]">Quick install</p>
-            <p className="mt-2 font-mono text-xs leading-relaxed text-[var(--page-fg-muted)]">
-              Linux: <code className="text-[var(--page-fg)]">curl -fsSL …/install.sh | bash</code>
-              <br />
-              Windows: <code className="text-[var(--page-fg)]">irm …/install.ps1 | iex</code>
-              <br />
-              <span className="text-[var(--page-fg-dim)]">Scripts in the main repo README.</span>
+        <section className="flex flex-col justify-between rounded-2xl border border-[var(--rule-strong)] bg-[var(--paper-elevated)] p-6 shadow-[0_2px_0_rgba(17,19,23,0.05)]">
+          <div>
+            <div className="flex items-center justify-between">
+              <h2 className="text-xl font-extrabold text-[var(--ink)]">Windows</h2>
+              <span className="rounded border border-[var(--rule-strong)] bg-[var(--paper-recessed)] px-2 py-0.5 font-mono text-[10.5px] font-semibold text-[var(--ink-secondary)]">
+                Windows 10 / 11 (x64)
+              </span>
+            </div>
+            <p className="mt-2 text-xs text-[var(--ink-secondary)]">
+              One-line PowerShell installer:
             </p>
+            <div className="mt-3">
+              <CopyCommand
+                command={windowsInstallCmd}
+                promptSymbol="PS>"
+                label="dl_windows_script"
+              />
+            </div>
+
+            <div className="mt-5 space-y-2.5">
+              {windowsAssets.map((a) => (
+                <a
+                  key={a.file}
+                  href={a.href}
+                  className="group flex items-center justify-between gap-3 rounded-xl border border-[var(--rule-strong)] bg-white px-4 py-3 transition-all hover:-translate-y-0.5 hover:border-[var(--signal)]"
+                >
+                  <div className="min-w-0">
+                    <p className="text-sm font-bold text-[var(--ink)] group-hover:text-[var(--signal)]">
+                      {a.format}
+                    </p>
+                    <p className="mt-0.5 text-[11px] text-[var(--ink-secondary)]">
+                      {a.note}
+                    </p>
+                    <code className="mt-1 block truncate font-mono text-[11px] text-[var(--ink-muted)]">
+                      {a.file}
+                    </code>
+                  </div>
+                  <Download className="size-4 shrink-0 text-[var(--ink-muted)] transition-colors group-hover:text-[var(--signal)]" />
+                </a>
+              ))}
+            </div>
+
+            <div className="mt-4 rounded-xl border border-[var(--rule)] bg-[var(--paper)] px-4 py-3 text-xs leading-relaxed text-[var(--ink-secondary)]">
+              <p className="font-mono text-[10.5px] font-bold uppercase tracking-wider text-[var(--ink)]">
+                Verification &amp; Keyring
+              </p>
+              <p className="mt-1">
+                Uses native Windows Credential Manager + WebView2 runtime. In-app updates verify
+                signed <code className="font-mono text-[11px] text-[var(--ink)]">latest.json</code>{" "}
+                signatures before applying.
+              </p>
+            </div>
           </div>
-          <div className="px-5 py-4">
-            <p className="font-semibold text-[var(--page-fg)]">CLI-only</p>
-            <p className="mt-2 text-[var(--page-fg-muted)]">
-              Headless <code className="rounded bg-[var(--page-stripe)] px-1">crossusage-cli</code>{" "}
-              tarballs/zips on the same release — see INSTALL.md.
-            </p>
-          </div>
+        </section>
+      </div>
+
+      {/* Package format matrix */}
+      <section className="mt-6 overflow-hidden rounded-2xl border border-[var(--rule-strong)] bg-[var(--paper-elevated)] shadow-[0_2px_0_rgba(17,19,23,0.05)]">
+        <div className="border-b border-[var(--rule)] bg-[var(--paper-recessed)] px-5 py-3">
+          <p className="font-mono text-[11px] font-bold uppercase tracking-wider text-[var(--ink)]">
+            Package Format Matrix · v{version}
+          </p>
         </div>
+        <div className="overflow-x-auto">
+          <table className="w-full text-left text-xs">
+            <thead>
+              <tr className="border-b border-[var(--rule)] font-mono text-[10.5px] uppercase tracking-wider text-[var(--ink-muted)]">
+                <th className="px-5 py-3 font-semibold">Format</th>
+                <th className="px-5 py-3 font-semibold">Updater</th>
+                <th className="px-5 py-3 font-semibold">CLI Sidecar</th>
+                <th className="px-5 py-3 font-semibold">Vault Backend</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-[var(--rule)]">
+              {FORMAT_MATRIX.map((row) => (
+                <tr key={row.format} className="bg-white/60">
+                  <td className="px-5 py-3 font-mono font-semibold text-[var(--ink)]">
+                    {row.format}
+                  </td>
+                  <td className="px-5 py-3 text-[var(--ink-secondary)]">{row.updater}</td>
+                  <td className="px-5 py-3 text-[#0d8563] font-semibold">{row.cli}</td>
+                  <td className="px-5 py-3 font-mono text-[11px] text-[var(--ink-secondary)]">
+                    {row.keyring}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </section>
 
-        <p className="text-sm text-[var(--page-fg-muted)]">
-          <span className="font-medium text-[var(--page-fg)]">macOS GUI</span> →{" "}
+      {/* Headless CLI + macOS note */}
+      <div id="headless-cli" className="mt-6 grid gap-5 lg:grid-cols-12">
+        <section className="rounded-2xl border border-[var(--rule-strong)] bg-[var(--paper-elevated)] p-6 shadow-[0_2px_0_rgba(17,19,23,0.05)] lg:col-span-7">
+          <div className="flex items-center gap-2 font-mono text-xs font-bold text-[var(--signal)]">
+            <Terminal className="size-4" aria-hidden />
+            <span>HEADLESS CLI &amp; TUI</span>
+          </div>
+          <h3 className="mt-2 text-base font-extrabold text-[var(--ink)]">
+            Install <code className="font-mono text-sm">crossusage-cli</code> standalone
+          </h3>
+          <p className="mt-1.5 text-xs leading-relaxed text-[var(--ink-secondary)]">
+            Runs on Linux, Windows, and macOS terminals without needing a desktop GUI session:
+          </p>
+          <div className="mt-3">
+            <CopyCommand
+              command={cliInstallCmd}
+              promptSymbol="$"
+              label="dl_cli_script"
+            />
+          </div>
+          <div className="mt-4 flex flex-wrap gap-2">
+            <a
+              href={`${dlBase}/crossusage-cli_${version}_linux_amd64.tar.gz`}
+              className="inline-flex items-center gap-1.5 rounded-lg border border-[var(--rule-strong)] bg-white px-3 py-1.5 font-mono text-[11px] font-semibold text-[var(--ink)] transition-colors hover:border-[var(--signal)] hover:text-[var(--signal)]"
+            >
+              <Download className="size-3.5" aria-hidden />
+              Linux CLI (.tar.gz)
+            </a>
+            <a
+              href={`${dlBase}/crossusage-cli_${version}_windows_amd64.zip`}
+              className="inline-flex items-center gap-1.5 rounded-lg border border-[var(--rule-strong)] bg-white px-3 py-1.5 font-mono text-[11px] font-semibold text-[var(--ink)] transition-colors hover:border-[var(--signal)] hover:text-[var(--signal)]"
+            >
+              <Download className="size-3.5" aria-hidden />
+              Windows CLI (.zip)
+            </a>
+          </div>
+        </section>
+
+        <section className="flex flex-col justify-between rounded-2xl border border-[var(--rule-strong)] bg-[var(--paper-elevated)] p-6 shadow-[0_2px_0_rgba(17,19,23,0.05)] lg:col-span-5">
+          <div>
+            <p className="font-mono text-xs font-bold uppercase tracking-wider text-[var(--ink-muted)]">
+              macOS Desktop GUI
+            </p>
+            <h3 className="mt-2 text-base font-extrabold text-[var(--ink)]">
+              Looking for macOS menu bar?
+            </h3>
+            <p className="mt-1.5 text-xs leading-relaxed text-[var(--ink-secondary)]">
+              CrossUsage focuses on native Linux &amp; Windows builds (plus cross-platform CLI).
+              For the native Swift macOS menu-bar app, grab upstream OpenUsage directly:
+            </p>
+          </div>
           <a
             href={upstreamReleasesLatest}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-[var(--page-accent-ink)] underline-offset-2 hover:underline"
+            className="keycap-secondary mt-4 w-fit !py-2 !text-xs"
           >
-            OpenUsage releases
-          </a>{" "}
-          (upstream Swift app)
-        </p>
-
-        {version && (
-          <p className="font-mono text-[11px] text-[var(--page-fg-dim)]">
-            Updater manifest: latest.json · tag v{tag}
-          </p>
-        )}
-
-        <p className="text-sm">
-          <Link href="/" className="text-[var(--page-fg-muted)] hover:text-[var(--page-accent)]">
-            ← Back home
-          </Link>
-        </p>
+            OpenUsage macOS Releases
+            <ExternalLink className="size-3.5" aria-hidden />
+          </a>
+        </section>
       </div>
     </DocPage>
   );

@@ -1,6 +1,7 @@
 "use client";
 
 import type { PaceStatus } from "@/lib/types";
+import type { DisplayMode } from "./settings-demo";
 import { cn } from "@/lib/utils";
 
 const paceDot: Record<PaceStatus, string> = {
@@ -15,20 +16,40 @@ const paceFill: Record<PaceStatus, string> = {
   behind: "bg-[var(--pace-red)]",
 };
 
+export function formatDisplayPrimary(
+  primaryValue: string,
+  percent: number,
+  displayMode: DisplayMode
+): string {
+  if (displayMode === "left") return primaryValue;
+  const pctMatch = primaryValue.match(/^(\d+)%\s+left$/i);
+  if (pctMatch) {
+    const used = Math.max(0, 100 - Number(pctMatch[1]));
+    return `${used}% used`;
+  }
+  if (primaryValue.includes("left")) {
+    return `${Math.max(0, 100 - percent)}% used`;
+  }
+  return primaryValue;
+}
+
 export function ModernWidgetRow({
   label,
   primaryValue,
   secondaryValue,
   percent,
   pace,
+  displayMode = "left",
 }: {
   label: string;
   primaryValue: string;
   secondaryValue?: string;
   percent: number;
   pace: PaceStatus;
+  displayMode?: DisplayMode;
 }) {
   const clamped = Math.min(100, Math.max(0, percent));
+  const barWidth = displayMode === "used" ? 100 - clamped : clamped;
 
   return (
     <div className="py-1.5">
@@ -38,12 +59,14 @@ export function ModernWidgetRow({
           title={pace}
         />
         <span className="min-w-0 flex-1 truncate font-medium text-foreground">{label}</span>
-        <span className="shrink-0 tabular-nums text-foreground">{primaryValue}</span>
+        <span className="shrink-0 tabular-nums text-foreground">
+          {formatDisplayPrimary(primaryValue, percent, displayMode)}
+        </span>
       </div>
       <div className="h-1.5 overflow-hidden rounded-full bg-muted">
         <div
-          className={cn("h-full rounded-full transition-all", paceFill[pace])}
-          style={{ width: `${clamped}%` }}
+          className={cn("h-full rounded-full transition-all duration-300", paceFill[pace])}
+          style={{ width: `${barWidth}%` }}
         />
       </div>
       {secondaryValue && (

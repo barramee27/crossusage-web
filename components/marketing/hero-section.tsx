@@ -1,92 +1,184 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowDown, Github } from "lucide-react";
+import {
+  ArrowUpRight,
+  Cpu,
+  Download,
+  Github,
+  KeyRound,
+  Layers,
+  Terminal,
+} from "lucide-react";
 import { track } from "@/lib/track";
-import { forkRepo } from "@/lib/site";
+import { forkRepo, upstreamRepo } from "@/lib/site";
 import { plugins } from "@/lib/plugins";
+import { CopyCommand } from "@/components/copy-command";
 import { HeroClassicViewport } from "@/components/marketing/hero-classic-viewport";
 
-const pluginCount = plugins.length;
+const TARGET_PACKAGES = [
+  { label: ".deb", note: "Ubuntu / Debian" },
+  { label: ".rpm", note: "Fedora / RHEL" },
+  { label: "AppImage", note: "Any Linux" },
+  { label: ".exe", note: "Win 10/11 NSIS" },
+] as const;
 
 export function HeroSection({ version }: { version: string | null }) {
   return (
     <section
-      className="hero-viewport relative z-[1] overflow-hidden border-b border-[var(--page-border)]"
+      className="relative border-b border-[var(--rule)]"
       aria-labelledby="hero-heading"
     >
-      <div className="relative mx-auto grid min-h-[calc(100svh-4.25rem)] max-w-6xl lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)]">
-        {/* Copy */}
-        <div className="relative z-[1] flex flex-col justify-center px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
-          <div className="max-w-xl lg:max-w-[34rem]">
-            <p className="hero-rise font-display text-[clamp(2.75rem,8vw,5.5rem)] font-extrabold leading-[0.9] tracking-[-0.05em] text-[var(--page-fg)]">
-              Cross
-              <span className="text-[var(--page-accent)]">Usage</span>
-            </p>
+      <div className="drafting-frame px-5 py-12 sm:px-8 lg:px-12 lg:py-16">
+        <div className="grid items-start gap-12 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:gap-12">
+          {/* Left Editorial & Engineering Column */}
+          <div className="pt-1">
+            <div className="flex flex-wrap items-center gap-2.5">
+              <span className="spec-tag">
+                INSTRUMENT SPEC // {version ? `v${version}` : "v1.6.1"}
+              </span>
+              <span className="rounded border border-[var(--rule-strong)] bg-[var(--paper-elevated)] px-2 py-0.5 font-mono text-[10.5px] font-semibold text-[var(--ink-secondary)]">
+                NATIVE LINUX &amp; WINDOWS
+              </span>
+            </div>
 
             <h1
               id="hero-heading"
-              className="hero-rise-delay mt-6 max-w-[16ch] font-display text-[clamp(1.75rem,4.2vw,2.75rem)] font-bold leading-[1.05] tracking-[-0.03em] text-[var(--page-fg)]"
+              className="mt-6 text-[clamp(2.55rem,5.2vw,4.35rem)] font-extrabold leading-[0.98] tracking-[-0.04em] text-[var(--ink)]"
             >
-              Every AI quota in one tray panel.
+              Every AI quota &amp; dollar,{" "}
+              <span className="font-editorial italic font-normal tracking-[-0.01em] text-[var(--signal)]">
+                calibrated
+              </span>{" "}
+              in your system tray.
             </h1>
 
-            <p className="hero-rise-delay mt-5 max-w-md text-base leading-relaxed text-[var(--page-fg-muted)] sm:text-lg">
-              Track {pluginCount}+ providers on Linux & Windows — multi-account, encrypted
-              credentials, Classic or Modern UI. Local-first.
+            <p className="mt-5 max-w-xl text-[16.5px] leading-[1.65] text-[var(--ink-secondary)]">
+              One native Rust + Tauri v2 desktop instrument for{" "}
+              <strong className="font-semibold text-[var(--ink)]">
+                Cursor, Claude, Codex, Copilot, Gemini Apps, OpenRouter
+              </strong>
+              , and {plugins.length}+ AI tools. Reads your existing local sessions
+              with zero login popups, aggregates daily spend, and exposes a loopback
+              JSON API.
             </p>
 
-            <div className="hero-rise-delay-2 mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
+            {/* Tactile Mechanical Keycap CTAs */}
+            <div className="mt-7 flex flex-wrap items-center gap-3">
               <Link
-                href="/download/"
-                className="btn-primary"
+                href="/download"
+                className="keycap-signal"
                 onClick={() => track("hero_download_clicked")}
               >
-                Download {version ? `v${version}` : "latest"}
+                <Download className="size-4" aria-hidden />
+                Download {version ? `v${version}` : "v1.6.1"}
               </Link>
-              <a
-                href="#try"
-                className="btn-secondary"
-                onClick={() => track("hero_try_clicked")}
-              >
-                Try in browser
-              </a>
+
               <a
                 href={forkRepo}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn-secondary"
+                className="keycap-secondary"
                 onClick={() => track("hero_contribute_clicked")}
               >
-                <Github className="h-4 w-4" />
-                GitHub
+                <Github className="size-4" aria-hidden />
+                GitHub Repository
+                <ArrowUpRight className="size-3.5 text-[var(--ink-muted)]" aria-hidden />
               </a>
             </div>
-          </div>
-        </div>
 
-        {/* Classic viewport plane — desktop wash + live panel */}
-        <div className="hero-rise-delay-2 relative hidden min-h-[32rem] lg:block">
-          <div className="absolute inset-y-0 -right-[max(0px,calc((100vw-72rem)/2))] left-0">
-            <HeroClassicViewport version={version} />
-          </div>
-        </div>
+            {/* Anodized Terminal Quick-Install Card */}
+            <div className="mt-8">
+              <CopyCommand />
+            </div>
 
-        {/* Mobile: Classic panel under copy */}
-        <div className="hero-rise-delay-2 relative -mx-4 sm:-mx-6 lg:hidden">
-          <div className="overflow-hidden rounded-t-[1.5rem] border border-[var(--page-border)] border-b-0 shadow-[0_-20px_60px_-30px_rgba(12,18,34,0.35)]">
+            {/* Precision Engineering Spec Ledger */}
+            <dl className="mt-8 grid grid-cols-3 gap-3 border-t border-[var(--rule)] pt-6">
+              <div>
+                <dt className="flex items-center gap-1.5 font-mono text-[10.5px] uppercase tracking-wider text-[var(--ink-muted)]">
+                  <Layers className="size-3 text-[var(--signal)]" aria-hidden />
+                  PROVIDERS
+                </dt>
+                <dd className="mt-1 text-xl font-extrabold tracking-tight text-[var(--ink)]">
+                  {plugins.length} Bundled
+                </dd>
+                <p className="mt-0.5 text-xs text-[var(--ink-secondary)]">
+                  Multi-account vaults
+                </p>
+              </div>
+
+              <div className="border-l border-[var(--rule)] pl-3.5">
+                <dt className="flex items-center gap-1.5 font-mono text-[10.5px] uppercase tracking-wider text-[var(--ink-muted)]">
+                  <KeyRound className="size-3 text-[#0d8563]" aria-hidden />
+                  SECURITY
+                </dt>
+                <dd className="mt-1 text-xl font-extrabold tracking-tight text-[var(--ink)]">
+                  AES-256
+                </dd>
+                <p className="mt-0.5 text-xs text-[var(--ink-secondary)]">
+                  OS Keyring · 0 cloud
+                </p>
+              </div>
+
+              <div className="border-l border-[var(--rule)] pl-3.5">
+                <dt className="flex items-center gap-1.5 font-mono text-[10.5px] uppercase tracking-wider text-[var(--ink-muted)]">
+                  <Terminal className="size-3 text-[var(--ink)]" aria-hidden />
+                  LINEAGE
+                </dt>
+                <dd className="mt-1 text-xl font-extrabold tracking-tight text-[var(--ink)]">
+                  MIT Open
+                </dd>
+                <p className="mt-0.5 text-xs text-[var(--ink-secondary)]">
+                  Fork of{" "}
+                  <a
+                    href={upstreamRepo}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="font-medium text-[var(--ink)] underline decoration-[var(--rule-strong)] underline-offset-3 hover:decoration-[var(--signal)]"
+                  >
+                    OpenUsage
+                  </a>
+                </p>
+              </div>
+            </dl>
+
+            {/* Native Runtime & Package Targets Matrix */}
+            <div className="mt-5 space-y-2.5">
+              <div className="flex flex-wrap items-center gap-2 rounded-xl border border-[var(--rule)] bg-[var(--paper-elevated)] px-3.5 py-2.5 font-mono text-[11px] text-[var(--ink-secondary)]">
+                <Cpu className="size-3.5 shrink-0 text-[var(--signal)]" aria-hidden />
+                <span className="font-semibold text-[var(--ink)]">Zero Electron bloat:</span>
+                <span>Wayland &amp; X11</span>
+                <span className="text-[var(--ink-faint)]">·</span>
+                <span>Win 10/11 WebView2</span>
+                <span className="text-[var(--ink-faint)]">·</span>
+                <span>SQLite 30d history</span>
+              </div>
+
+              <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
+                {TARGET_PACKAGES.map((pkg) => (
+                  <Link
+                    key={pkg.label}
+                    href="/download"
+                    className="group rounded-lg border border-[var(--rule-strong)] bg-[var(--paper-elevated)] px-3 py-2 transition-all hover:-translate-y-0.5 hover:border-[var(--signal)] hover:bg-white"
+                  >
+                    <p className="font-mono text-xs font-bold text-[var(--ink)] group-hover:text-[var(--signal)]">
+                      {pkg.label}
+                    </p>
+                    <p className="mt-0.5 text-[10.5px] text-[var(--ink-muted)]">
+                      {pkg.note}
+                    </p>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Right Live Interactive Hardware Stage */}
+          <div>
             <HeroClassicViewport version={version} />
           </div>
         </div>
       </div>
-
-      <a
-        href="#whats-new"
-        className="hero-scroll-cue absolute bottom-6 left-1/2 z-[2] hidden -translate-x-1/2 items-center gap-2 text-xs font-medium text-[var(--page-fg-dim)] transition-colors hover:text-[var(--page-fg)] lg:inline-flex"
-      >
-        What&apos;s new
-        <ArrowDown className="h-3.5 w-3.5 animate-bounce" aria-hidden />
-      </a>
     </section>
   );
 }

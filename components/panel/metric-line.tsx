@@ -1,4 +1,6 @@
 import type { MetricLine as MetricLineType } from "@/lib/types";
+import type { DisplayMode } from "./settings-demo";
+import { formatDisplayPrimary } from "./modern-widget-row";
 import { Progress } from "@/components/ui/progress";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 
@@ -14,14 +16,21 @@ const paceLabels: Record<string, string> = {
   behind: "Using fast",
 };
 
-export function MetricLine({ metric }: { metric: MetricLineType }) {
+export function MetricLine({
+  metric,
+  displayMode = "left",
+}: {
+  metric: MetricLineType;
+  displayMode?: DisplayMode;
+}) {
   const dotColor = paceColors[metric.pace];
   const dotLabel = paceLabels[metric.pace];
+  const value = displayMode === "used" ? 100 - metric.percent : metric.percent;
 
   return (
     <div>
       {/* Label + pace dot */}
-      <div className="text-sm font-medium mb-1.5 flex items-center gap-1.5">
+      <div className="mb-1.5 flex items-center gap-1.5 text-sm font-medium">
         <span className="text-foreground">{metric.label}</span>
         <Tooltip>
           <TooltipTrigger
@@ -29,7 +38,7 @@ export function MetricLine({ metric }: { metric: MetricLineType }) {
             onClick={(e) => e.preventDefault()}
           >
             <span
-              className="block w-2 h-2 rounded-full"
+              className="block h-2 w-2 rounded-full"
               style={{ backgroundColor: dotColor }}
             />
           </TooltipTrigger>
@@ -38,12 +47,12 @@ export function MetricLine({ metric }: { metric: MetricLineType }) {
       </div>
 
       {/* Progress bar */}
-      <Progress value={metric.percent} indicatorColor={metric.barColor} />
+      <Progress value={value} indicatorColor={metric.barColor} />
 
       {/* Values */}
-      <div className="flex justify-between items-center mt-1.5">
-        <span className="text-xs text-muted-foreground tabular-nums">
-          {metric.primaryValue}
+      <div className="mt-1.5 flex items-center justify-between">
+        <span className="text-xs tabular-nums text-muted-foreground">
+          {formatDisplayPrimary(metric.primaryValue, metric.percent, displayMode)}
         </span>
         <span className="text-xs text-muted-foreground">
           {metric.secondaryValue}

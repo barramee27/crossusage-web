@@ -17,7 +17,6 @@ Work style: Be radically precise. No fluff. Pure information only (drop grammar;
 - Use `trash` for deletes.
 - Use `mv` / `cp` to move and copy files.
 - Bugs: add regression test when it fits.
-- Keep files <~400 LOC; split/refactor as needed.
 - Simplicity first: handle only important cases; no enterprise over-engineering/fallbacks.
 - New functionality: small OR absolutely necessary.
 - NEVER delete files, folders or other data unless explicilty approved or part of a plan.
@@ -88,3 +87,4 @@ Work style: Be radically precise. No fluff. Pure information only (drop grammar;
 Use below list to store and recall user notes when asked to do so.
 
 - When asked to update the icons, sync with available plugins in `../openusage`.
+- **No file line-count budget.** Do not split, truncate, or drop code because a file is “too long.” Keep a feature in one place if that is clearer.

@@ -5,11 +5,5 @@ export function Eyebrow({
   children: React.ReactNode;
   className?: string;
 }) {
-  return (
-    <p
-      className={`pill pill-accent w-fit font-mono text-[11px] uppercase tracking-[0.16em] ${className}`}
-    >
-      {children}
-    </p>
-  );
+  return <span className={`spec-tag ${className}`}>{children}</span>;
 }

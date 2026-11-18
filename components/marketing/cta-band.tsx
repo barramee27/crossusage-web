@@ -1,40 +1,61 @@
 import Link from "next/link";
-import { upstreamReleasesLatest } from "@/lib/site";
+import { ArrowUpRight, Download } from "lucide-react";
+import { linuxInstallCmd, upstreamReleasesLatest } from "@/lib/site";
+import { CopyCommand } from "@/components/copy-command";
 
 export function CtaBand({ version }: { version: string | null }) {
   return (
-    <section className="relative z-[1] px-4 py-20 sm:px-6 lg:px-8 lg:py-28">
-      <div className="fx-reveal mx-auto max-w-4xl">
-        <div className="relative overflow-hidden rounded-[2rem] bg-[var(--hero-wash)] px-8 py-16 text-center text-white sm:px-12 sm:py-20">
+    <section className="relative border-b border-[var(--rule)]">
+      <div className="drafting-frame reg-mark px-5 py-20 sm:px-8 lg:px-12 lg:py-24">
+        <div className="relative overflow-hidden rounded-3xl border border-[#1d222c] bg-[#0e1015] px-6 py-14 text-center text-[#f1f3f7] shadow-[0_36px_90px_-34px_rgba(14,16,21,0.65)] sm:px-12 sm:py-16">
           <div
-            className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_60%_50%_at_50%_0%,rgba(15,159,122,0.28),transparent_60%)]"
+            className="pointer-events-none absolute inset-0"
+            style={{
+              background:
+                "radial-gradient(ellipse 60% 50% at 50% 0%, rgba(224,72,25,0.22), transparent 65%), radial-gradient(ellipse 50% 45% at 80% 100%, rgba(45,212,191,0.12), transparent 60%)",
+            }}
             aria-hidden
           />
-          <div className="relative">
-            <p className="font-mono text-[11px] uppercase tracking-[0.28em] text-[var(--page-accent)]">
-              Ready when you are
-            </p>
-            <h2 className="font-display mt-4 text-3xl font-bold tracking-tight sm:text-5xl">
-              Get CrossUsage {version ? `v${version}` : ""}
+
+          <div className="relative mx-auto max-w-2xl">
+            <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.06] px-3 py-1 font-mono text-[10.5px] font-semibold uppercase tracking-widest text-[#2dd4bf]">
+              READY IN UNDER 30 SECONDS
+            </span>
+
+            <h2 className="mt-5 text-3xl font-extrabold tracking-[-0.035em] text-white sm:text-5xl">
+              Calibrate every AI quota{" "}
+              <span className="font-editorial italic font-normal text-[#ff7349]">
+                today.
+              </span>
             </h2>
-            <p className="mx-auto mt-5 max-w-md text-sm leading-relaxed text-white/65 sm:text-base">
-              .deb, .rpm, AppImage, Windows installer, or one-file portable exe. macOS GUI → upstream
-              OpenUsage.
+
+            <p className="mx-auto mt-4 max-w-lg text-sm leading-relaxed text-[#98a2b3] sm:text-base">
+              Native packages for Linux (.deb, .rpm, AppImage) and Windows (NSIS setup, portable
+              zip, one-file exe). 100% free &amp; MIT licensed.
             </p>
-            <div className="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
-              <Link
-                href="/download/"
-                className="inline-flex min-w-[200px] items-center justify-center rounded-full bg-[var(--page-accent)] px-8 py-3.5 text-sm font-semibold text-[var(--hero-wash)] transition-transform hover:-translate-y-0.5"
-              >
-                Download
+
+            <div className="mx-auto mt-8 max-w-xl text-left">
+              <CopyCommand
+                command={linuxInstallCmd}
+                promptSymbol="$"
+                label="cta_linux"
+                className="!border-white/15 !bg-[#151922]"
+              />
+            </div>
+
+            <div className="mt-7 flex flex-col items-center justify-center gap-3 sm:flex-row">
+              <Link href="/download" className="keycap-signal min-w-[215px]">
+                <Download className="size-4" aria-hidden />
+                Download {version ? `v${version}` : "CrossUsage"}
               </Link>
               <a
                 href={upstreamReleasesLatest}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-sm font-medium text-white/55 transition-colors hover:text-white"
+                className="inline-flex items-center gap-1.5 rounded-lg border border-white/18 bg-white/[0.06] px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:border-white/35 hover:bg-white/[0.12]"
               >
-                OpenUsage releases (macOS)
+                macOS GUI → OpenUsage
+                <ArrowUpRight className="size-3.5 text-[#98a2b3]" aria-hidden />
               </a>
             </div>
           </div>

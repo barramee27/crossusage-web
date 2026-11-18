@@ -7,19 +7,35 @@ import { Sidebar } from "./sidebar";
 import { Overview } from "./overview";
 import { ProviderCard } from "./provider-card";
 import { PanelFooter } from "./panel-footer";
-import { SettingsDemo } from "./settings-demo";
+import { SettingsDemo, type DisplayMode } from "./settings-demo";
 import { track } from "@/lib/track";
+import { cn } from "@/lib/utils";
 
 interface PanelProps {
   version: string | null;
-  /** Controlled view — when set, parent owns navigation */
   view?: ActiveView;
   onViewChange?: (view: ActiveView) => void;
-  /** Flash a brief “refreshed” state in the footer */
   refreshKey?: number;
+  isRefreshing?: boolean;
+  theme?: "dark" | "light";
+  onToggleTheme?: () => void;
+  onToggleLayout?: () => void;
+  displayMode?: DisplayMode;
+  onToggleDisplayMode?: () => void;
 }
 
-export function Panel({ version, view, onViewChange, refreshKey = 0 }: PanelProps) {
+export function Panel({
+  version,
+  view,
+  onViewChange,
+  refreshKey = 0,
+  isRefreshing = false,
+  theme = "dark",
+  onToggleTheme,
+  onToggleLayout,
+  displayMode = "left",
+  onToggleDisplayMode,
+}: PanelProps) {
   const [internalView, setInternalView] = useState<ActiveView>("overview");
   const activeView = view ?? internalView;
 
@@ -43,31 +59,54 @@ export function Panel({ version, view, onViewChange, refreshKey = 0 }: PanelProp
       : null;
 
   return (
-    <div className="panel mx-auto w-full max-w-[400px]">
+    <div
+      className={cn(
+        "mx-auto w-full max-w-[398px]",
+        theme === "light" ? "app-sim-light" : "app-sim-dark"
+      )}
+    >
       <div
-        className="panel-box w-full max-w-[400px] overflow-hidden rounded-xl border border-border bg-card shadow-[0_24px_80px_-12px_rgba(0,0,0,0.45)]"
+        className="w-full max-w-[398px] overflow-hidden rounded-[18px] border border-border bg-card shadow-[0_32px_90px_-18px_rgba(0,0,0,0.75)]"
         style={{
-          fontFamily: "system-ui, -apple-system, BlinkMacSystemFont, sans-serif",
+          fontFamily: "var(--font-jakarta), system-ui, -apple-system, sans-serif",
         }}
       >
-        <div className="flex" style={{ maxHeight: "580px" }}>
+        <div className="flex" style={{ height: "518px" }}>
           <Sidebar activeView={activeView} onNavigate={setActiveView} />
 
-          <div className="flex min-h-0 flex-1 flex-col overflow-y-auto px-3 pt-2 pb-1.5">
-            <div className="flex-1">
+          <div className="flex min-h-0 flex-1 flex-col px-3 pt-2.5 pb-1">
+            <div className="min-h-0 flex-1 overflow-y-auto scrollbar-none pr-0.5">
               {activeView === "overview" ? (
-                <Overview onOpenProvider={(id) => setActiveView(id as ActiveView)} />
+                <Overview
+                  onOpenProvider={(id) => setActiveView(id as ActiveView)}
+                  displayMode={displayMode}
+                />
               ) : activeView === "settings" ? (
-                <SettingsDemo layout="Classic" />
+                <SettingsDemo
+                  layout="Classic"
+                  onToggleLayout={onToggleLayout}
+                  theme={theme}
+                  onToggleTheme={onToggleTheme}
+                  displayMode={displayMode}
+                  onToggleDisplayMode={onToggleDisplayMode}
+                />
               ) : activeProvider ? (
                 <ProviderCard
                   provider={activeProvider}
                   metrics={activeProvider.detailMetrics}
+                  displayMode={displayMode}
+                  showTrend
                 />
               ) : null}
             </div>
 
-            <PanelFooter version={version} refreshKey={refreshKey} />
+            <div className="border-t border-border/50 pt-0.5">
+              <PanelFooter
+                version={version}
+                refreshKey={refreshKey}
+                isRefreshing={isRefreshing}
+              />
+            </div>
           </div>
         </div>
       </div>

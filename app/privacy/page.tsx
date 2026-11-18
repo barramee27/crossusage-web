@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import { EyeOff, Globe, HardDrive, Vote } from "lucide-react";
 import { DocPage } from "@/components/marketing/doc-page";
 
 export const dynamic = "force-static";
@@ -7,63 +7,66 @@ export const dynamic = "force-static";
 export const metadata: Metadata = {
   title: "Privacy",
   description:
-    "How CrossUsage and this website handle your data — local-first usage, encrypted credentials, optional analytics, and hosting logs.",
+    "How CrossUsage and crossusage.dev handle your data — local-first usage storage, AES-256-GCM encrypted credentials, anonymous product polls, and zero tracking cookies.",
   openGraph: {
     title: "Privacy — CrossUsage",
-    description: "Privacy practices for the CrossUsage app and crossusage.dev.",
+    description: "Privacy practices for the CrossUsage desktop app and crossusage.dev.",
   },
 };
 
+const SECTIONS = [
+  {
+    icon: HardDrive,
+    tag: "LOCAL STORAGE & CREDENTIALS",
+    title: "Your tokens and usage stay on your machine",
+    body: "CrossUsage probes provider quotas directly from your machine to each AI provider's official endpoint. Usage history (when enabled) is written strictly to a local SQLite database on disk. Extra multi-account credentials in provider_accounts.json are encrypted at rest with AES-256-GCM backed by your OS keychain (libsecret / Windows Credential Manager).",
+  },
+  {
+    icon: EyeOff,
+    tag: "APP TELEMETRY",
+    title: "Minimal, transparent, and controllable",
+    body: "CrossUsage never uploads your API keys, prompts, file paths, account emails, or provider spend ledgers to us. Any optional anonymous launch ping can be inspected in source code and disabled in Settings.",
+  },
+  {
+    icon: Vote,
+    tag: "COMMUNITY PRODUCT POLLS",
+    title: "Opt-out polls with zero identity data",
+    body: "CrossUsage occasionally fetches product governance questions from crossusage.dev/api/polls (toggleable anytime under Settings → Product Polls). A vote request is sent only if you explicitly click an option, containing solely the poll ID, option ID, and a random local install UUID.",
+  },
+  {
+    icon: Globe,
+    tag: "THIS WEBSITE (CROSSUSAGE.DEV)",
+    title: "Static HTML, zero tracking cookies",
+    body: "This marketing site compiles to static HTML/CSS/JS with no third-party ad pixels or tracking cookies. Standard web server access logs (IP address, request path, user-agent) may be transiently processed by our hosting VM for security and uptime.",
+  },
+] as const;
+
 export default function PrivacyPage() {
   return (
-    <DocPage title="Privacy" kicker="privacy">
-      <p className="text-sm text-[var(--page-fg-muted)]">
-        Non-lawyer summary. Authoritative text may live in-repo or in-app.
-      </p>
-
-      <div className="mt-10 space-y-4">
-        <section className="surface-panel p-6">
-          <h2 className="text-sm font-semibold text-[var(--page-fg)]">Local data</h2>
-          <p className="mt-3 text-sm leading-relaxed text-[var(--page-fg-muted)]">
-            CrossUsage records usage on your machine. Core flows do not require uploading your full
-            history to us. Provider credentials are encrypted at rest (AES-256-GCM) with a master key
-            in your OS keychain when available.
-          </p>
-        </section>
-
-        <section className="surface-panel p-6">
-          <h2 className="text-sm font-semibold text-[var(--page-fg)]">Telemetry</h2>
-          <p className="mt-3 text-sm leading-relaxed text-[var(--page-fg-muted)]">
-            Some builds may ship optional analytics. Expect opt-in or off-by-default. Confirm in
-            settings for the binary you installed.
-          </p>
-        </section>
-
-        <section className="surface-panel p-6">
-          <h2 className="text-sm font-semibold text-[var(--page-fg)]">Product polls</h2>
-          <p className="mt-3 text-sm leading-relaxed text-[var(--page-fg-muted)]">
-            CrossUsage may show occasional product questions from{" "}
-            <code className="text-xs">crossusage.dev/api/polls</code>. Enabled by default; turn off
-            under Settings → Product polls. A vote only leaves your machine when you tap an option.
-            Payload is poll id, option id, and an opaque install id — not credentials, not usage
-            history, not account email.
-          </p>
-        </section>
-
-        <section className="surface-panel p-6">
-          <h2 className="text-sm font-semibold text-[var(--page-fg)]">This website</h2>
-          <p className="mt-3 text-sm leading-relaxed text-[var(--page-fg-muted)]">
-            This site is static HTML. No tracking cookies here by default. Your host may still log
-            IPs and paths like any web server.
-          </p>
-        </section>
+    <DocPage
+      title="Privacy Policy"
+      kicker="PRIVACY"
+      subtitle="Plain-English summary of how CrossUsage and crossusage.dev treat your data. Every line in the app is open source and auditable on GitHub."
+    >
+      <div className="space-y-4">
+        {SECTIONS.map(({ icon: Icon, tag, title, body }) => (
+          <section
+            key={tag}
+            className="rounded-2xl border border-[var(--rule-strong)] bg-[var(--paper-elevated)] p-6 shadow-[0_2px_0_rgba(17,19,23,0.05)] sm:p-7"
+          >
+            <div className="flex items-center gap-2 font-mono text-xs font-bold text-[var(--signal)]">
+              <Icon className="size-4" aria-hidden />
+              <span>{tag}</span>
+            </div>
+            <h2 className="mt-2.5 text-lg font-extrabold text-[var(--ink)]">
+              {title}
+            </h2>
+            <p className="mt-2 text-sm leading-relaxed text-[var(--ink-secondary)]">
+              {body}
+            </p>
+          </section>
+        ))}
       </div>
-
-      <p className="mt-14 text-sm">
-        <Link href="/" className="text-[var(--page-fg-muted)] hover:text-[var(--page-accent)]">
-          ← Back home
-        </Link>
-      </p>
     </DocPage>
   );
 }

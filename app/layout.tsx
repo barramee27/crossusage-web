@@ -1,36 +1,42 @@
 import type { Metadata } from "next";
-import { IBM_Plex_Mono, Manrope, Syne } from "next/font/google";
+import Script from "next/script";
+import {
+  Instrument_Serif,
+  JetBrains_Mono,
+  Plus_Jakarta_Sans,
+} from "next/font/google";
 import "./globals.css";
-import { siteUrl } from "@/lib/site";
+import { getLatestVersion, siteUrl } from "@/lib/site";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { MarketingShell } from "@/components/marketing/marketing-shell";
 import { SkipToContent } from "@/components/skip-to-content";
 
-const syne = Syne({
-  subsets: ["latin"],
-  weight: ["500", "600", "700", "800"],
-  variable: "--font-syne",
-  display: "swap",
-});
-
-const manrope = Manrope({
+const jakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700", "800"],
-  variable: "--font-manrope",
+  variable: "--font-jakarta",
   display: "swap",
 });
 
-const ibmPlexMono = IBM_Plex_Mono({
+const instrumentSerif = Instrument_Serif({
   subsets: ["latin"],
-  weight: ["400", "500", "600"],
-  variable: "--font-ibm-plex-mono",
+  weight: ["400"],
+  style: ["normal", "italic"],
+  variable: "--font-serif",
   display: "swap",
 });
 
-const defaultTitle = "CrossUsage — AI usage tracker for Linux & Windows";
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-mono-jb",
+  display: "swap",
+});
+
+const defaultTitle = "CrossUsage — Native AI Quota & Spend Instrument for Linux & Windows";
 const description =
-  "Track Cursor, Claude, Codex, Copilot, Gemini Apps, OpenRouter, and 28+ providers from your tray. Multi-account, encrypted credentials, Classic or Modern UI. Fork of OpenUsage — Linux & Windows.";
+  "One native system-tray instrument for Cursor, Claude, Codex, Copilot, Gemini Apps, OpenRouter, and 28+ AI providers. Zero-config local discovery, multi-account vaults, Classic & Modern UI, loopback HTTP API.";
 const ogImageUrl = "/og-crossusage.png?v=4";
 
 export const metadata: Metadata = {
@@ -51,7 +57,7 @@ export const metadata: Metadata = {
         url: ogImageUrl,
         width: 1980,
         height: 960,
-        alt: "CrossUsage — AI quotas for Linux & Windows, fork of OpenUsage",
+        alt: "CrossUsage — Native AI quota & spend instrument for Linux & Windows",
       },
     ],
   },
@@ -63,25 +69,35 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const version = await getLatestVersion();
+
   return (
     <html lang="en">
+      <head>
+        <Script
+          defer
+          src="https://analytics.alaikubota.com/script.js"
+          data-website-id="2c6e73a6-46f1-45c0-9d39-4519c0c53cc1"
+          strategy="afterInteractive"
+        />
+      </head>
       <body
-        className={`${syne.variable} ${manrope.variable} ${ibmPlexMono.variable} font-sans antialiased text-[var(--page-fg)]`}
+        className={`${jakarta.variable} ${instrumentSerif.variable} ${jetbrainsMono.variable} font-sans antialiased`}
       >
-        <div className="page-atmosphere" aria-hidden />
+        <div className="paper-grain" aria-hidden />
         <div className="relative z-[1] flex min-h-screen flex-col">
           <SkipToContent />
           <MarketingShell>
-            <SiteHeader />
+            <SiteHeader version={version} />
             <main
               id="main-content"
               tabIndex={-1}
-              className="relative z-[1] flex-1 outline-none focus-visible:ring-2 focus-visible:ring-[var(--page-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--page-bg)]"
+              className="relative z-[1] flex-1 outline-none"
             >
               {children}
             </main>
