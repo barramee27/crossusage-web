@@ -79,7 +79,7 @@ export function ProviderGrid() {
     [selectedId]
   );
 
-  const cliCmd = `crossusage-cli list ${inspected.id}`;
+  const cliCmd = `crossusage-cli probe --human ${inspected.id}`;
 
   const copyCli = async () => {
     try {
@@ -218,7 +218,7 @@ export function ProviderGrid() {
                 type="button"
                 onClick={() => void copyCli()}
                 className="inline-flex items-center gap-1.5 rounded-lg border border-white/15 bg-[#151922] px-3 py-1.5 font-mono text-[11px] text-[#cbd5e1] transition-colors hover:border-white/30 hover:text-white"
-                title="Copy crossusage-cli list command"
+                title="Copy crossusage-cli probe command"
               >
                 {copiedCli ? (
                   <>

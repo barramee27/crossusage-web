@@ -72,18 +72,22 @@ export function SiteHeader({ version }: { version: string }) {
     <header className="sticky top-0 z-50 border-b border-[var(--rule)] bg-[#f4f1ea]/92 backdrop-blur-md">
       {/* Top micro specification tape */}
       <div className="hidden border-b border-[var(--rule)] bg-[#ebe7de]/80 sm:block">
-        <div className="mx-auto flex h-7 max-w-[82rem] items-center justify-between border-x border-[var(--rule-strong)] px-5 font-mono text-[10.5px] tracking-wide text-[var(--ink-secondary)]">
-          <div className="flex items-center gap-4">
-            <span className="inline-flex items-center gap-1.5 font-semibold text-[var(--ink)]">
+        <div className="mx-auto flex h-7 max-w-[82rem] items-center justify-between gap-4 overflow-hidden whitespace-nowrap border-x border-[var(--rule-strong)] px-5 font-mono text-[10.5px] tracking-wide text-[var(--ink-secondary)]">
+          <div className="flex min-w-0 items-center gap-3">
+            <span className="inline-flex shrink-0 items-center gap-1.5 font-semibold text-[var(--ink)]">
               <span className="size-1.5 rounded-full bg-[#0d8563]" />
               RELEASE v{version} STABLE
             </span>
             <span className="text-[var(--ink-faint)]">/</span>
-            <span>LINUX X64 (.DEB · .RPM · APPIMAGE) · WINDOWS 10/11</span>
-            <span className="hidden text-[var(--ink-faint)] md:inline">/</span>
-            <span className="hidden md:inline">RUST + TAURI v2 · LOCAL-FIRST</span>
+            <span className="truncate">
+              LINUX X64
+              <span className="hidden xl:inline"> (.DEB · .RPM · APPIMAGE)</span>
+              {" · WINDOWS 10/11"}
+            </span>
+            <span className="hidden text-[var(--ink-faint)] lg:inline">/</span>
+            <span className="hidden shrink-0 lg:inline">RUST + TAURI v2 · LOCAL-FIRST</span>
           </div>
-          <div className="flex items-center gap-4">
+          <div className="flex shrink-0 items-center gap-3">
             <a
               href={`${githubRepoUrl}/discussions`}
               target="_blank"
@@ -92,8 +96,8 @@ export function SiteHeader({ version }: { version: string }) {
             >
               DISCUSSIONS &amp; POLLS ↗
             </a>
-            <span className="text-[var(--ink-faint)]">·</span>
-            <span className="font-semibold text-[var(--ink)]">MIT LICENSE</span>
+            <span className="hidden text-[var(--ink-faint)] md:inline">·</span>
+            <span className="hidden font-semibold text-[var(--ink)] md:inline">MIT LICENSE</span>
           </div>
         </div>
       </div>
