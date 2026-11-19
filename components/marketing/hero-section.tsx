@@ -17,9 +17,9 @@ import { CopyCommand } from "@/components/copy-command";
 import { HeroClassicViewport } from "@/components/marketing/hero-classic-viewport";
 
 const TARGET_PACKAGES = [
-  { label: ".deb", note: "Ubuntu / Debian" },
-  { label: ".rpm", note: "Fedora / RHEL" },
-  { label: "AppImage", note: "Any Linux" },
+  { label: ".deb", note: "Debian / Ubuntu" },
+  { label: ".rpm", note: "Fedora / openSUSE" },
+  { label: "AppImage", note: "Arch / Any Linux" },
   { label: ".exe", note: "Win 10/11 NSIS" },
 ] as const;
 

@@ -75,8 +75,8 @@ export function CommandPalette() {
         id: "act-download",
         group: "Actions",
         label: "Download CrossUsage Packages",
-        sublabel: ".deb · .rpm · AppImage · Windows NSIS",
-        keywords: "install download deb rpm exe appimage",
+        sublabel: ".deb · .rpm · AppImage · tar.gz · Windows NSIS",
+        keywords: "install download deb rpm exe appimage arch fedora ubuntu opensuse nixos tar.gz",
         onSelect: () => navTo("/download"),
       },
       {
@@ -84,7 +84,7 @@ export function CommandPalette() {
         group: "Actions",
         label: "Copy Linux One-Line Installer",
         sublabel: "curl -fsSL .../install.sh | bash",
-        keywords: "copy linux ubuntu debian fedora bash",
+        keywords: "copy linux ubuntu debian fedora opensuse arch manjaro nixos bash zypper dnf",
         onSelect: () => copyCmd("act-linux", linuxInstallCmd),
       },
       {
@@ -117,7 +117,7 @@ export function CommandPalette() {
       {
         id: "sec-providers",
         group: "Sections",
-        label: "02 // Plugin Catalog (28 Providers)",
+        label: `02 // Plugin Catalog (${plugins.length} Providers)`,
         sublabel: "Search QuickJS manifests & local discovery",
         keywords: "providers plugins catalog",
         onSelect: () => navTo("/#providers"),

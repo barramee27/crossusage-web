@@ -1,11 +1,25 @@
+declare global {
+  interface Window {
+    umami?: {
+      track: (
+        event: string,
+        props?: Record<string, string | number | boolean>
+      ) => void;
+    };
+  }
+}
+
 /**
- * No-op event tracking for self-hosted static builds (nginx).
- * Replace with analytics if you add a provider later.
+ * Forward custom UI events to self-hosted Umami when loaded; silent no-op otherwise.
  */
 export function track(
   event: string,
   props?: Record<string, string | number | boolean>
 ): void {
-  void event;
-  void props;
+  if (typeof window === "undefined") return;
+  try {
+    window.umami?.track(event, props);
+  } catch {
+    // ignore analytics errors
+  }
 }

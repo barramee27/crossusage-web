@@ -36,8 +36,8 @@ const SECTIONS = [
   {
     icon: Globe,
     tag: "THIS WEBSITE (CROSSUSAGE.DEV)",
-    title: "Static HTML, zero tracking cookies",
-    body: "This marketing site compiles to static HTML/CSS/JS with no third-party ad pixels or tracking cookies. Standard web server access logs (IP address, request path, user-agent) may be transiently processed by our hosting VM for security and uptime.",
+    title: "Static HTML, cookieless self-hosted analytics",
+    body: "This marketing site compiles to static HTML/CSS/JS with zero tracking cookies or third-party ad pixels. We run a self-hosted, cookieless Umami instance to count anonymous pageviews and download clicks (no personal data or cross-site tracking). Standard web server access logs may also be transiently processed on our hosting VM for security and uptime.",
   },
 ] as const;
 

@@ -23,7 +23,7 @@ const TABS = [
     label: "Linux (.deb / .rpm / AppImage)",
     prompt: "$",
     cmd: linuxInstallCmd,
-    note: "Detects distro & arch automatically · sets up system tray autostart",
+    note: "Auto-detects Debian/Ubuntu (.deb), Fedora/RHEL/openSUSE (.rpm), or Arch/other (.AppImage)",
   },
   {
     id: "windows" as const,

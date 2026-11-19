@@ -6,13 +6,14 @@ import { useEffect, useState } from "react";
 import { Download, Github, Menu, X } from "lucide-react";
 import { BrandMark } from "@/components/brand-mark";
 import { CommandPalette } from "@/components/command-palette";
+import { plugins } from "@/lib/plugins";
 import { githubRepoUrl } from "@/lib/site";
 import { track } from "@/lib/track";
 import { cn } from "@/lib/utils";
 
 const NAV_ITEMS = [
   { href: "/#architecture", sectionId: "architecture", index: "01", label: "Architecture" },
-  { href: "/#providers", sectionId: "providers", index: "02", label: "28 Providers" },
+  { href: "/#providers", sectionId: "providers", index: "02", label: `${plugins.length} Providers` },
   { href: "/#api", sectionId: "api", index: "03", label: "Local API & CLI" },
   { href: "/#governance", sectionId: "governance", index: "04", label: "Poll-First" },
   { href: "/download", sectionId: null, index: "05", label: "Downloads" },
@@ -20,6 +21,7 @@ const NAV_ITEMS = [
 
 export function SiteHeader({ version }: { version: string }) {
   const pathname = usePathname();
+  const normPath = pathname?.replace(/\/+$/, "") || "/";
   const [open, setOpen] = useState(false);
   const [scrollPct, setScrollPct] = useState(0);
   const [activeSection, setActiveSection] = useState<string | null>(null);
@@ -40,7 +42,7 @@ export function SiteHeader({ version }: { version: string }) {
       const pct = max > 0 ? Math.min(100, Math.max(0, (window.scrollY / max) * 100)) : 0;
       setScrollPct(pct);
 
-      if (pathname !== "/") {
+      if (normPath !== "/") {
         setActiveSection(null);
         return;
       }
@@ -64,7 +66,7 @@ export function SiteHeader({ version }: { version: string }) {
       window.removeEventListener("scroll", updateScroll);
       window.removeEventListener("resize", updateScroll);
     };
-  }, [pathname]);
+  }, [normPath]);
 
   return (
     <header className="sticky top-0 z-50 border-b border-[var(--rule)] bg-[#f4f1ea]/92 backdrop-blur-md">
@@ -77,9 +79,9 @@ export function SiteHeader({ version }: { version: string }) {
               RELEASE v{version} STABLE
             </span>
             <span className="text-[var(--ink-faint)]">/</span>
-            <span>LINUX X64 &amp; ARM64 · WINDOWS 10/11</span>
+            <span>LINUX X64 (.DEB · .RPM · APPIMAGE) · WINDOWS 10/11</span>
             <span className="hidden text-[var(--ink-faint)] md:inline">/</span>
-            <span className="hidden md:inline">RUST + TAURI v2 · ZERO TELEMETRY</span>
+            <span className="hidden md:inline">RUST + TAURI v2 · LOCAL-FIRST</span>
           </div>
           <div className="flex items-center gap-4">
             <a
@@ -120,8 +122,8 @@ export function SiteHeader({ version }: { version: string }) {
         >
           {NAV_ITEMS.map((item) => {
             const active =
-              (item.href === "/download" && pathname === "/download") ||
-              (item.sectionId !== null && pathname === "/" && activeSection === item.sectionId);
+              (item.href === "/download" && normPath === "/download") ||
+              (item.sectionId !== null && normPath === "/" && activeSection === item.sectionId);
             return (
               <Link
                 key={item.href}

@@ -18,37 +18,49 @@ export const dynamic = "force-static";
 export const metadata: Metadata = {
   title: "Download",
   description:
-    "Download CrossUsage for Linux (.deb, .rpm, AppImage, portable tar.gz) and Windows (NSIS setup, portable zip, onefile exe), or install via one-line shell script.",
+    "Download CrossUsage for Linux (Debian/Ubuntu .deb, Fedora/RHEL/openSUSE .rpm, Arch/NixOS/universal AppImage, portable tar.gz) and Windows (NSIS setup, portable zip, onefile exe), or install via one-line shell script.",
   openGraph: {
     title: "Download CrossUsage",
     description:
-      "Native Linux and Windows installers from GitHub Releases. 28+ AI providers, multi-account, encrypted credentials. MIT licensed.",
+      "Native Linux (.deb, .rpm, AppImage, tar.gz) and Windows installers from GitHub Releases. 28+ AI providers, multi-account, encrypted credentials. MIT licensed.",
   },
 };
 
 const FORMAT_MATRIX = [
   {
-    format: ".deb (Debian/Ubuntu)",
-    updater: "Signed auto-updater",
-    cli: "Included",
+    format: ".deb (Debian / Ubuntu / Mint)",
+    updater: "Signed auto-updater (latest.json)",
+    cli: "Included (/usr/bin)",
     keyring: "Secret Service / libsecret",
   },
   {
-    format: ".rpm (Fedora/RHEL)",
-    updater: "Manual / repo",
-    cli: "Included",
+    format: ".rpm (Fedora / RHEL / openSUSE)",
+    updater: "Manual / install.sh",
+    cli: "Included (/usr/bin)",
     keyring: "Secret Service / libsecret",
   },
   {
-    format: ".AppImage (Universal)",
-    updater: "Signed auto-updater",
+    format: ".AppImage (Arch / NixOS / Any Linux)",
+    updater: "Manual / install.sh",
     cli: "Sidecar inside bundle",
     keyring: "Secret Service / libsecret",
   },
   {
-    format: "NSIS Setup (.exe)",
-    updater: "Signed auto-updater",
+    format: "Portable Archive (.tar.gz — Linux)",
+    updater: "Manual",
+    cli: "Included in archive",
+    keyring: "Secret Service / libsecret",
+  },
+  {
+    format: "NSIS Setup (.exe — Windows)",
+    updater: "Signed auto-updater (latest.json)",
     cli: "Included",
+    keyring: "Windows Credential Manager",
+  },
+  {
+    format: "Portable (.zip / onefile .exe)",
+    updater: "Manual",
+    cli: "Included (.zip)",
     keyring: "Windows Credential Manager",
   },
 ] as const;
@@ -59,26 +71,26 @@ export default async function DownloadPage() {
 
   const linuxAssets = [
     {
-      format: "Debian / Ubuntu (.deb)",
-      note: "Recommended · Includes Tauri auto-updater + CLI sidecar",
+      format: "Debian / Ubuntu / Mint / Pop!_OS (.deb)",
+      note: "Includes signed Tauri auto-updater + crossusage-cli · sudo apt install ./crossusage_..._amd64.deb",
       file: `crossusage_${version}_amd64.deb`,
       href: `${dlBase}/crossusage_${version}_amd64.deb`,
     },
     {
-      format: "Fedora / RHEL / openSUSE (.rpm)",
-      note: "x86_64 native RPM package",
+      format: "Fedora / RHEL / Rocky / openSUSE (.rpm)",
+      note: "Native x86_64 RPM + crossusage-cli · sudo dnf install or sudo zypper install",
       file: `crossusage-${version}-1.x86_64.rpm`,
       href: `${dlBase}/crossusage-${version}-1.x86_64.rpm`,
     },
     {
-      format: "Universal AppImage",
-      note: "Portable single binary for any Linux distribution",
+      format: "Arch / Manjaro / NixOS / Any Linux (.AppImage)",
+      note: "Universal single-file binary for any distro · chmod +x && ./crossusage_...AppImage",
       file: `crossusage_${version}_amd64.AppImage`,
       href: `${dlBase}/crossusage_${version}_amd64.AppImage`,
     },
     {
       format: "Portable Linux Archive (.tar.gz)",
-      note: "Self-contained GUI + CLI bundle for custom installs",
+      note: "Self-contained GUI + crossusage-cli bundle (great for Arch, Gentoo, Void, or no-FUSE setups)",
       file: `crossusage_${version}_linux_amd64.tar.gz`,
       href: `${dlBase}/crossusage_${version}_linux_amd64.tar.gz`,
     },
@@ -87,7 +99,7 @@ export default async function DownloadPage() {
   const windowsAssets = [
     {
       format: "Windows Installer (NSIS .exe)",
-      note: "Recommended · Per-user install + signed auto-updates",
+      note: "Recommended · Per-user install + signed auto-updates + crossusage-cli",
       file: `crossusage_${version}_x64-setup.exe`,
       href: `${dlBase}/crossusage_${version}_x64-setup.exe`,
     },
@@ -109,7 +121,7 @@ export default async function DownloadPage() {
     <DocPage
       title={`Download CrossUsage v${version}`}
       kicker="DOWNLOADS"
-      subtitle="Signed native packages for Linux and Windows hosted directly on GitHub Releases. Zero account signup required."
+      subtitle="Native packages for every major Linux distro (.deb, .rpm, AppImage, tar.gz) and Windows hosted directly on GitHub Releases. Zero account signup required."
       wide
     >
       {/* Release status bar */}
@@ -122,7 +134,8 @@ export default async function DownloadPage() {
             In-app updates verified via signed{" "}
             <code className="rounded border border-[var(--rule)] bg-[var(--paper-recessed)] px-1.5 py-0.5 font-mono text-xs text-[var(--ink)]">
               latest.json
-            </code>
+            </code>{" "}
+            (.deb &amp; Windows NSIS)
           </span>
         </div>
         <a
@@ -136,21 +149,25 @@ export default async function DownloadPage() {
         </a>
       </div>
 
-      {/* Client OS auto-detection banner */}
+      {/* Client OS & Linux distro auto-detection banner */}
       <DownloadOsBanner version={version} dlBase={dlBase} />
 
       {/* Linux & Windows side-by-side */}
-      <div className="mt-6 grid gap-5 lg:grid-cols-2">
+      <div id="linux-downloads" className="mt-6 grid gap-5 lg:grid-cols-2">
         <section className="flex flex-col justify-between rounded-2xl border border-[var(--rule-strong)] bg-[var(--paper-elevated)] p-6 shadow-[0_2px_0_rgba(17,19,23,0.05)]">
           <div>
             <div className="flex items-center justify-between">
               <h2 className="text-xl font-extrabold text-[var(--ink)]">Linux</h2>
               <span className="rounded border border-[var(--rule-strong)] bg-[var(--paper-recessed)] px-2 py-0.5 font-mono text-[10.5px] font-semibold text-[var(--ink-secondary)]">
-                x86_64 · GTK3 / Ayatana
+                x86_64 · Wayland / X11
               </span>
             </div>
             <p className="mt-2 text-xs text-[var(--ink-secondary)]">
-              One-line installer (auto-detects Debian/Ubuntu, Fedora/RHEL, or AppImage):
+              One-line installer (reads <code className="font-mono text-[11px]">/etc/os-release</code>{" "}
+              to pick <code className="font-mono text-[11px]">.deb</code>,{" "}
+              <code className="font-mono text-[11px]">.rpm</code>, or{" "}
+              <code className="font-mono text-[11px]">.AppImage</code> — override with{" "}
+              <code className="font-mono text-[11px]">INSTALL_KIND=deb|rpm|appimage|tarball</code>):
             </p>
             <div className="mt-3">
               <CopyCommand
@@ -183,6 +200,17 @@ export default async function DownloadPage() {
               ))}
             </div>
           </div>
+
+          <div className="mt-4 rounded-xl border border-[var(--rule)] bg-[var(--paper)] px-4 py-3 text-xs leading-relaxed text-[var(--ink-secondary)]">
+            <p className="font-mono text-[10.5px] font-bold uppercase tracking-wider text-[var(--ink)]">
+              Distro &amp; Tray Notes
+            </p>
+            <p className="mt-1">
+              Works across Debian/Ubuntu, Fedora/RHEL, openSUSE, Arch/Manjaro, NixOS, and Void.
+              Requires GTK3 + WebKitGTK 4.1 and a Secret Service keyring (GNOME Keyring / KWallet)
+              for encrypted multi-account vaults.
+            </p>
+          </div>
         </section>
 
         <section className="flex flex-col justify-between rounded-2xl border border-[var(--rule-strong)] bg-[var(--paper-elevated)] p-6 shadow-[0_2px_0_rgba(17,19,23,0.05)]">
@@ -194,7 +222,9 @@ export default async function DownloadPage() {
               </span>
             </div>
             <p className="mt-2 text-xs text-[var(--ink-secondary)]">
-              One-line PowerShell installer:
+              One-line PowerShell installer (downloads latest NSIS setup; set{" "}
+              <code className="font-mono text-[11px]">$env:INSTALL_MODE=&apos;cli&apos;</code> for
+              standalone CLI):
             </p>
             <div className="mt-3">
               <CopyCommand
@@ -226,17 +256,17 @@ export default async function DownloadPage() {
                 </a>
               ))}
             </div>
+          </div>
 
-            <div className="mt-4 rounded-xl border border-[var(--rule)] bg-[var(--paper)] px-4 py-3 text-xs leading-relaxed text-[var(--ink-secondary)]">
-              <p className="font-mono text-[10.5px] font-bold uppercase tracking-wider text-[var(--ink)]">
-                Verification &amp; Keyring
-              </p>
-              <p className="mt-1">
-                Uses native Windows Credential Manager + WebView2 runtime. In-app updates verify
-                signed <code className="font-mono text-[11px] text-[var(--ink)]">latest.json</code>{" "}
-                signatures before applying.
-              </p>
-            </div>
+          <div className="mt-4 rounded-xl border border-[var(--rule)] bg-[var(--paper)] px-4 py-3 text-xs leading-relaxed text-[var(--ink-secondary)]">
+            <p className="font-mono text-[10.5px] font-bold uppercase tracking-wider text-[var(--ink)]">
+              Verification &amp; Keyring
+            </p>
+            <p className="mt-1">
+              Uses native Windows Credential Manager + WebView2 runtime. In-app updates verify
+              signed <code className="font-mono text-[11px] text-[var(--ink)]">latest.json</code>{" "}
+              signatures before applying.
+            </p>
           </div>
         </section>
       </div>
@@ -265,7 +295,7 @@ export default async function DownloadPage() {
                     {row.format}
                   </td>
                   <td className="px-5 py-3 text-[var(--ink-secondary)]">{row.updater}</td>
-                  <td className="px-5 py-3 text-[#0d8563] font-semibold">{row.cli}</td>
+                  <td className="px-5 py-3 font-semibold text-[#0d8563]">{row.cli}</td>
                   <td className="px-5 py-3 font-mono text-[11px] text-[var(--ink-secondary)]">
                     {row.keyring}
                   </td>
@@ -287,7 +317,10 @@ export default async function DownloadPage() {
             Install <code className="font-mono text-sm">crossusage-cli</code> standalone
           </h3>
           <p className="mt-1.5 text-xs leading-relaxed text-[var(--ink-secondary)]">
-            Runs on Linux, Windows, and macOS terminals without needing a desktop GUI session:
+            Prebuilt standalone binaries for Linux (<code className="font-mono">x86_64</code>) and
+            Windows (<code className="font-mono">x64</code>) — no desktop GUI session needed. On
+            macOS or ARM64, build directly from source with{" "}
+            <code className="font-mono">cargo build --release -p crossusage-cli</code>:
           </p>
           <div className="mt-3">
             <CopyCommand

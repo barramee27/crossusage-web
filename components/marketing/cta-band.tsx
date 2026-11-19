@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { ArrowUpRight, Download } from "lucide-react";
-import { linuxInstallCmd, upstreamReleasesLatest } from "@/lib/site";
+import { upstreamReleasesLatest } from "@/lib/site";
 import { CopyCommand } from "@/components/copy-command";
 
 export function CtaBand({ version }: { version: string | null }) {
@@ -30,17 +30,12 @@ export function CtaBand({ version }: { version: string | null }) {
             </h2>
 
             <p className="mx-auto mt-4 max-w-lg text-sm leading-relaxed text-[#98a2b3] sm:text-base">
-              Native packages for Linux (.deb, .rpm, AppImage) and Windows (NSIS setup, portable
-              zip, one-file exe). 100% free &amp; MIT licensed.
+              Native packages for Linux (.deb, .rpm, AppImage, tar.gz) and Windows (NSIS setup,
+              portable zip, one-file exe). 100% free &amp; MIT licensed.
             </p>
 
             <div className="mx-auto mt-8 max-w-xl text-left">
-              <CopyCommand
-                command={linuxInstallCmd}
-                promptSymbol="$"
-                label="cta_linux"
-                className="!border-white/15 !bg-[#151922]"
-              />
+              <CopyCommand className="!border-white/15 !bg-[#151922]" />
             </div>
 
             <div className="mt-7 flex flex-col items-center justify-center gap-3 sm:flex-row">
